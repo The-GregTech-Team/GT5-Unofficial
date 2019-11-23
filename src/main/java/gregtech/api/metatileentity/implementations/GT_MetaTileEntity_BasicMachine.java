@@ -741,13 +741,13 @@ public abstract class GT_MetaTileEntity_BasicMachine extends GT_MetaTileEntity_B
                 EnumChatFormatting.BLUE + mNEIName + EnumChatFormatting.RESET,
                 "Progress:",
                 EnumChatFormatting.GREEN + Integer.toString(mProgresstime/20) + EnumChatFormatting.RESET +" s / "+
-                EnumChatFormatting.YELLOW + Integer.toString(mMaxProgresstime/20) + EnumChatFormatting.RESET +" s",
+                        EnumChatFormatting.YELLOW + mMaxProgresstime / 20 + EnumChatFormatting.RESET + " s",
                 "Stored Energy:",
                 EnumChatFormatting.GREEN + Long.toString(getBaseMetaTileEntity().getStoredEU()) + EnumChatFormatting.RESET +" EU / "+
-                EnumChatFormatting.YELLOW + Long.toString(getBaseMetaTileEntity().getEUCapacity()) + EnumChatFormatting.RESET +" EU",
+                        EnumChatFormatting.YELLOW + getBaseMetaTileEntity().getEUCapacity() + EnumChatFormatting.RESET + " EU",
                 "Probably uses: " +
-                        EnumChatFormatting.RED + Integer.toString(mEUt) + EnumChatFormatting.RESET + " EU/t at " +
-                        EnumChatFormatting.RED + Integer.toString(mEUt==0?0:mAmperage) + EnumChatFormatting.RESET +" A"
+                        EnumChatFormatting.RED + mEUt + EnumChatFormatting.RESET + " EU/t at " +
+                        EnumChatFormatting.RED + (mEUt == 0 ? 0 : mAmperage) + EnumChatFormatting.RESET + " A"
         };
     }
 
@@ -820,9 +820,15 @@ public abstract class GT_MetaTileEntity_BasicMachine extends GT_MetaTileEntity_B
      */
     public int checkRecipe(boolean skipOC){
         GT_Recipe_Map tMap = getRecipeList();
-        if (tMap == null) return DID_NOT_FIND_RECIPE;
+        if (tMap == null)
+            return DID_NOT_FIND_RECIPE;
         GT_Recipe tRecipe = tMap.findRecipe(getBaseMetaTileEntity(), mLastRecipe, false, V[mTier], new FluidStack[]{getFillableStack()}, getSpecialSlot(), getAllInputs());
-        if (tRecipe == null) return DID_NOT_FIND_RECIPE;
+        return checkRecipe(skipOC, tRecipe);
+    }
+
+    public int checkRecipe(boolean skipOC, GT_Recipe tRecipe) {
+        if (tRecipe == null)
+            return DID_NOT_FIND_RECIPE;
 
         if (GT_Mod.gregtechproxy.mLowGravProcessing && (tRecipe.mSpecialValue == -100 || tRecipe.mSpecialValue == -300) &&
                 !isValidForLowGravity(tRecipe,getBaseMetaTileEntity().getWorld().provider.dimensionId))
@@ -843,12 +849,12 @@ public abstract class GT_MetaTileEntity_BasicMachine extends GT_MetaTileEntity_B
             for (int i = 0; i < mOutputItems.length; i++)
                 if (mOutputItems[i] != null && getBaseMetaTileEntity().getRandomNumber(10000) > mCleanroom.mEfficiency)
                 {
-					if (debugCleanroom) {
-						GT_Log.out.println(
-							"BasicMachine: Voiding output due to efficiency failure. mEfficiency = " + 
-							mCleanroom.mEfficiency
-						);
-					}
+                    if (debugCleanroom) {
+                        GT_Log.out.println(
+                                "BasicMachine: Voiding output due to efficiency failure. mEfficiency = " +
+                                        mCleanroom.mEfficiency
+                        );
+                    }
                     mOutputItems[i] = null;
                 }
         mOutputFluid = tRecipe.getFluidOutput(0);

@@ -11,7 +11,6 @@ import gregtech.api.enchants.Enchantment_Radioactivity;
 import gregtech.api.enums.*;
 import gregtech.api.interfaces.internal.IGT_Mod;
 import gregtech.api.objects.ItemData;
-import gregtech.api.objects.MaterialStack;
 import gregtech.api.objects.XSTR;
 import gregtech.api.util.*;
 import gregtech.common.GT_DummyWorld;
@@ -375,8 +374,8 @@ public class GT_Mod implements IGT_Mod {
         GregTech_API.mUseOnlyGoodSolderingMaterials = GregTech_API.sRecipeFile.get(ConfigCategories.Recipes.harderrecipes, "useonlygoodsolderingmaterials", GregTech_API.mUseOnlyGoodSolderingMaterials);
         gregtechproxy.mChangeHarvestLevels = GregTech_API.sMaterialProperties.get("havestLevel", "activateHarvestLevelChange", false);//TODO CHECK
         if(gregtechproxy.mChangeHarvestLevels) {
-            gregtechproxy.mGraniteHavestLevel = (int) GregTech_API.sMaterialProperties.get("havestLevel", "graniteHarvestLevel", 3);
-            gregtechproxy.mMaxHarvestLevel = (int) Math.min(15, GregTech_API.sMaterialProperties.get("havestLevel", "maxLevel", 7));
+            gregtechproxy.mGraniteHavestLevel = GregTech_API.sMaterialProperties.get("havestLevel", "graniteHarvestLevel", 3);
+            gregtechproxy.mMaxHarvestLevel = Math.min(15, GregTech_API.sMaterialProperties.get("havestLevel", "maxLevel", 7));
             for (Materials tMaterial : Materials.values()) {
                 if (tMaterial != null && tMaterial.mToolQuality > 0 && tMaterial.mMetaItemSubID < gregtechproxy.mHarvestLevel.length && tMaterial.mMetaItemSubID >= 0) {
                     gregtechproxy.mHarvestLevel[tMaterial.mMetaItemSubID] = GregTech_API.sMaterialProperties.get("materialHavestLevel", tMaterial.mDefaultLocalName, tMaterial.mToolQuality);
@@ -631,7 +630,7 @@ public class GT_Mod implements IGT_Mod {
                 ModContainer tGregTech = null;
                 short tModList_sS= (short) tModList.size();
                 for (short i = 0; i < tModList_sS; i = (short) (i + 1)) {
-                    ModContainer tMod = (ModContainer) tModList.get(i);
+                    ModContainer tMod = tModList.get(i);
                     if (tMod.getModId().equalsIgnoreCase("gregtech")) {
                         tGregTech = tMod;
                     } else {
@@ -738,11 +737,11 @@ public class GT_Mod implements IGT_Mod {
         GT_RecipeRegistrator.registerUsagesForMaterials(new ItemStack(Blocks.stone, 1), null, false);
         GT_RecipeRegistrator.registerUsagesForMaterials(new ItemStack(Items.leather, 1), null, false);
 
-        GT_OreDictUnificator.addItemData(GT_ModHandler.getRecipeOutput(new ItemStack[]{null, GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L), null, GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L), null, GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L), null, null, null}), new ItemData(Materials.Tin, 10886400L, new MaterialStack[0]));
+        GT_OreDictUnificator.addItemData(GT_ModHandler.getRecipeOutput(null, GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L), null, GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L), null, GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L), null, null, null), new ItemData(Materials.Tin, 10886400L));
         if (!GregTech_API.sRecipeFile.get(ConfigCategories.Recipes.storageblockcrafting, "tile.glowstone", false)) {
-            GT_ModHandler.removeRecipe(new ItemStack[]{new ItemStack(Items.glowstone_dust, 1), new ItemStack(Items.glowstone_dust, 1), null, new ItemStack(Items.glowstone_dust, 1), new ItemStack(Items.glowstone_dust, 1)});
+            GT_ModHandler.removeRecipe(new ItemStack(Items.glowstone_dust, 1), new ItemStack(Items.glowstone_dust, 1), null, new ItemStack(Items.glowstone_dust, 1), new ItemStack(Items.glowstone_dust, 1));
         }
-        GT_ModHandler.removeRecipe(new ItemStack[]{new ItemStack(Blocks.wooden_slab, 1, 0), new ItemStack(Blocks.wooden_slab, 1, 1), new ItemStack(Blocks.wooden_slab, 1, 2)});
+        GT_ModHandler.removeRecipe(new ItemStack(Blocks.wooden_slab, 1, 0), new ItemStack(Blocks.wooden_slab, 1, 1), new ItemStack(Blocks.wooden_slab, 1, 2));
         GT_ModHandler.addCraftingRecipe(new ItemStack(Blocks.wooden_slab, 6, 0), GT_ModHandler.RecipeBits.NOT_REMOVABLE, new Object[]{"WWW", 'W', new ItemStack(Blocks.planks, 1, 0)});
 
         //Save a copy of these list before activateOreDictHandler(), then loop over them.
@@ -754,8 +753,9 @@ public class GT_Mod implements IGT_Mod {
 
         GT_Log.out.println("GT_Mod: Activating OreDictionary Handler, this can take some time, as it scans the whole OreDictionary");
         GT_FML_LOGGER.info("If your Log stops here, you were too impatient. Wait a bit more next time, before killing Minecraft with the Task Manager.");
+        long ms = System.currentTimeMillis();
         gregtechproxy.activateOreDictHandler();
-        GT_FML_LOGGER.info("Congratulations, you have been waiting long enough. Have a Cake.");
+        GT_FML_LOGGER.info("Congratulations, you have been waiting long enough (" + (System.currentTimeMillis() - ms) / 1000 + "s / " + (System.currentTimeMillis() - ms) + "ms). Have a Cake.");
         GT_Log.out.println("GT_Mod: List of Lists of Tool Recipes: "+GT_ModHandler.sSingleNonBlockDamagableRecipeList_list.toString());
         GT_Log.out.println("GT_Mod: Vanilla Recipe List -> Outputs null or stackSize <=0: " + GT_ModHandler.sVanillaRecipeList_warntOutput.toString());
         GT_Log.out.println("GT_Mod: Single Non Block Damagable Recipe List -> Outputs null or stackSize <=0: " + GT_ModHandler.sSingleNonBlockDamagableRecipeList_warntOutput.toString());
@@ -1217,7 +1217,7 @@ public class GT_Mod implements IGT_Mod {
                 GT_Log.out.println("*");
                 GT_Log.out.println("*");
 
-                tList = (String[]) FluidRegistry.getRegisteredFluids().keySet().toArray(new String[FluidRegistry.getRegisteredFluids().keySet().size()]);
+                tList = FluidRegistry.getRegisteredFluids().keySet().toArray(new String[FluidRegistry.getRegisteredFluids().keySet().size()]);
                 Arrays.sort(tList);
                 for (String tFluidName : tList) {
                     GT_Log.out.println(tFluidName);

@@ -79,8 +79,8 @@ public class GT_Recipe implements Comparable<GT_Recipe> {
     private String[] neiDesc = null;
     
     private GT_Recipe(GT_Recipe aRecipe) {
-        mInputs = GT_Utility.copyStackArray((Object[]) aRecipe.mInputs);
-        mOutputs = GT_Utility.copyStackArray((Object[]) aRecipe.mOutputs);
+        mInputs = GT_Utility.copyStackArray(aRecipe.mInputs);
+        mOutputs = GT_Utility.copyStackArray(aRecipe.mOutputs);
         mSpecialItems = aRecipe.mSpecialItems;
         mChances = aRecipe.mChances;
         mFluidInputs = GT_Utility.copyFluidArray(aRecipe.mFluidInputs);
@@ -94,7 +94,8 @@ public class GT_Recipe implements Comparable<GT_Recipe> {
         mEnabled = aRecipe.mEnabled;
         mHidden = aRecipe.mHidden;
     }
-    protected GT_Recipe(boolean aOptimize, ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecialItems, int[] aChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
+
+    public GT_Recipe(boolean aOptimize, ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecialItems, int[] aChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
         if (aInputs == null) aInputs = new ItemStack[0];
         if (aOutputs == null) aOutputs = new ItemStack[0];
         if (aFluidInputs == null) aFluidInputs = new FluidStack[0];
@@ -574,7 +575,7 @@ public class GT_Recipe implements Comparable<GT_Recipe> {
         public static final GT_Recipe_Map sCrakingRecipes = new GT_Recipe_Map(new HashSet<GT_Recipe>(70), "gt.recipe.craker", "Oil Cracker", null, RES_PATH_GUI + "basicmachines/OilCracker", 1, 1, 1, 2, 1, E, 1, E, true, true);
         public static final GT_Recipe_Map sPyrolyseRecipes = new GT_Recipe_Map(new HashSet<GT_Recipe>(150), "gt.recipe.pyro", "Pyrolyse Oven", null, RES_PATH_GUI + "basicmachines/Default", 2, 1, 1, 0, 1, E, 1, E, true, true);
         public static final GT_Recipe_Map sWiremillRecipes = new GT_Recipe_Map(new HashSet<GT_Recipe>(450), "gt.recipe.wiremill", "Wiremill", null, RES_PATH_GUI + "basicmachines/Wiremill", 1, 1, 1, 0, 1, E, 1, E, true, true);
-        public static final GT_Recipe_Map sBenderRecipes = new GT_Recipe_Map(new HashSet<GT_Recipe>(5000), "gt.recipe.metalbender", "Bending Machine", null, RES_PATH_GUI + "basicmachines/Bender", 2, 1, 2, 0, 1, E, 1, E, true, true);
+        public static final GT_Recipe_Map sBenderRecipes = new GT_Recipe_Map(new HashSet<GT_Recipe>(100), "gt.recipe.metalbender", "Bending Machine", null, RES_PATH_GUI + "basicmachines/Bender", 2, 1, 2, 0, 1, E, 1, E, true, true);
         public static final GT_Recipe_Map sAlloySmelterRecipes = new GT_Recipe_Map(new HashSet<GT_Recipe>(12000), "gt.recipe.alloysmelter", "Alloy Smelter", null, RES_PATH_GUI + "basicmachines/AlloySmelter", 2, 1, 2, 0, 1, E, 1, E, true, true);
         public static final GT_Recipe_Map sAssemblerRecipes = new GT_Recipe_Map_Assembler(new HashSet<GT_Recipe>(8200), "gt.recipe.assembler", "Assembler", null, RES_PATH_GUI + "basicmachines/Assembler2", 9, 1, 1, 0, 1, E, 1, E, true, true);
         public static final GT_Recipe_Map sCircuitAssemblerRecipes = new GT_Recipe_Map_Assembler(new HashSet<GT_Recipe>(605), "gt.recipe.circuitassembler", "Circuit Assembler", null, RES_PATH_GUI + "basicmachines/CircuitAssembler", 6, 1, 1, 0, 1, E, 1, E, true, true);
@@ -728,8 +729,7 @@ public class GT_Recipe implements Comparable<GT_Recipe> {
                     Collection<GT_Recipe> tList = mRecipeFluidMap.get(aFluid.getFluid());
                     if (tList == null) mRecipeFluidMap.put(aFluid.getFluid(), tList = new HashSet<GT_Recipe>(1));
                     tList.add(aRecipe);
-                    if(!mRecipeFluidNameMap.contains(aFluid.getFluid().getName()))
-                    	mRecipeFluidNameMap.add(aFluid.getFluid().getName());
+                    mRecipeFluidNameMap.add(aFluid.getFluid().getName());
                 }
             return addToItemMap(aRecipe);
         }
@@ -819,7 +819,7 @@ public class GT_Recipe implements Comparable<GT_Recipe> {
             }
 
             // Unification happens here in case the Input isn't already unificated.
-            if (aNotUnificated) aInputs = GT_OreDictUnificator.getStackArray(true, (Object[]) aInputs);
+            if (aNotUnificated) aInputs = GT_OreDictUnificator.getStackArray(true, aInputs);
 
             // Check the Recipe which has been used last time in order to not have to search for it again, if possible.
             if (aRecipe != null)

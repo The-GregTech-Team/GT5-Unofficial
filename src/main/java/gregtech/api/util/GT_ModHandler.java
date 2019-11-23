@@ -18,6 +18,8 @@ import ic2.api.reactor.IReactorComponent;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.RecipeInputItemStack;
 import ic2.api.recipe.RecipeOutput;
+import mods.railcraft.api.crafting.IRockCrusherRecipe;
+import mods.railcraft.api.crafting.RailcraftCraftingManager;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityLivingBase;
@@ -576,7 +578,7 @@ public class GT_ModHandler {
                     if (GregTech_API.sRecipeFile.get(ConfigCategories.Machines.rockcrushing, aInput, true)) {
                         try {
                             if (GT_Utility.getBlockFromStack(aInput) != Blocks.obsidian && GT_Utility.getBlockFromStack(aInput) != Blocks.gravel) {
-                                mods.railcraft.api.crafting.IRockCrusherRecipe tRecipe = mods.railcraft.api.crafting.RailcraftCraftingManager.rockCrusher.createNewRecipe(GT_Utility.copyAmount(1, aInput), aInput.getItemDamage() != W, false);
+                                IRockCrusherRecipe tRecipe = RailcraftCraftingManager.rockCrusher.createNewRecipe(GT_Utility.copyAmount(1, aInput), aInput.getItemDamage() != W, false);
                                 tRecipe.addOutput(GT_Utility.copy(aOutput1), 1.0F / aInput.stackSize);
                                 if (aOutput2 != null)
                                     tRecipe.addOutput(GT_Utility.copy(aOutput2), (0.01F * (aChance2 <= 0 ? 10 : aChance2)) / aInput.stackSize);
@@ -1014,7 +1016,7 @@ public class GT_ModHandler {
                 Character chr = (Character) aRecipe[idx];
                 Object in = aRecipe[idx + 1];
                 if (in instanceof ItemStack) {
-                    tItemStackMap.put(chr, GT_Utility.copy((ItemStack) in));
+                    tItemStackMap.put(chr, GT_Utility.copy(in));
                     tItemDataMap.put(chr, GT_OreDictUnificator.getItemData((ItemStack) in));
                 } else if (in instanceof ItemData) {
                     String tString = in.toString();
@@ -1538,7 +1540,7 @@ public class GT_ModHandler {
             for (Entry<IRecipeInput, RecipeOutput> tEntry : aRecipeList.entrySet()) {
                 if (tEntry.getKey().matches(aInput)) {
                     if (tEntry.getKey().getAmount() <= aInput.stackSize) {
-                        ItemStack[] tList = (ItemStack[]) tEntry.getValue().items.toArray(new ItemStack[tEntry.getValue().items.size()]);
+                        ItemStack[] tList = tEntry.getValue().items.toArray(new ItemStack[tEntry.getValue().items.size()]);
                         if (tList.length == 0) break;
                         ItemStack[] rList = new ItemStack[aOutputSlots.length];
                         rRecipeMetaData.setTag("return", tEntry.getValue().metadata);
