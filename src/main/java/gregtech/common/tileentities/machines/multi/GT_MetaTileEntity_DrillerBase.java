@@ -64,8 +64,50 @@ public abstract class GT_MetaTileEntity_DrillerBase extends GT_MetaTileEntity_Mu
 
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, byte aSide, byte aFacing, byte aColorIndex, boolean aActive, boolean aRedstone) {
         if (aSide == aFacing)
-            return new ITexture[]{Textures.BlockIcons.CASING_BLOCKS[casingTextureIndex],new GT_RenderedTexture(aActive ? Textures.BlockIcons.OVERLAY_FRONT_ORE_DRILL_ACTIVE : Textures.BlockIcons.OVERLAY_FRONT_ORE_DRILL)};
+            return new ITexture[]{Textures.BlockIcons.CASING_BLOCKS[casingTextureIndex], new GT_RenderedTexture(aActive ? Textures.BlockIcons.OVERLAY_FRONT_ORE_DRILL_ACTIVE : Textures.BlockIcons.OVERLAY_FRONT_ORE_DRILL)};
         return new ITexture[]{Textures.BlockIcons.CASING_BLOCKS[casingTextureIndex]};
+    }
+
+    protected static Materials getMaterialFromTier(byte tier) {
+        switch (tier) {
+            case 1:
+                return Materials.Steel;
+            case 2:
+                return Materials.Titanium;
+            case 3:
+                return Materials.TungstenSteel;
+            case 4:
+                return Materials.Osmiridium;
+        }
+        return Materials._NULL;
+    }
+
+    protected static ItemList getCasingFromTier(byte tier) {
+        switch (tier) {
+            case 1:
+                return ItemList.Casing_SolidSteel;
+            case 2:
+                return ItemList.Casing_StableTitanium;
+            case 3:
+                return ItemList.Casing_RobustTungstenSteel;
+            case 4:
+                return ItemList.Casing_MiningOsmiridium;
+        }
+        return null;
+    }
+
+    protected static int getTextureIndexFromTier(byte tier) {
+        switch (tier) {
+            case 1:
+                return 16;
+            case 2:
+                return 50;
+            case 3:
+                return 48;
+            case 4:
+                return 62;
+        }
+        return 0;
     }
 
     @Override

@@ -1208,11 +1208,12 @@ public class GT_Loader_MetaTileEntities implements Runnable {//TODO CHECK CIRCUI
         GT_ModHandler.addCraftingRecipe(ItemList.Seismic_Prospector_Adv_LV.get(1L), bitsd, new Object[]{"WWW", "EME", "CXC", 'M', ItemList.Hull_LV, 'W', OrePrefixes.plateDouble.get(Materials.Steel), 'E', OrePrefixes.circuit.get(Materials.Basic), 'C', ItemList.Sensor_LV, 'X', OrePrefixes.cableGt02.get(Materials.Tin)});
         GT_ModHandler.addCraftingRecipe(ItemList.Seismic_Prospector_Adv_MV.get(1L), bitsd, new Object[]{"WWW", "EME", "CXC", 'M', ItemList.Hull_MV, 'W', OrePrefixes.plateDouble.get(Materials.BlackSteel), 'E', OrePrefixes.circuit.get(Materials.Good), 'C', ItemList.Sensor_MV, 'X', OrePrefixes.cableGt02.get(Materials.Copper)});
         GT_ModHandler.addCraftingRecipe(ItemList.Seismic_Prospector_Adv_HV.get(1L), bitsd, new Object[]{"WWW", "EME", "CXC", 'M', ItemList.Hull_HV, 'W', OrePrefixes.plateDouble.get(Materials.StainlessSteel), 'E', OrePrefixes.circuit.get(Materials.Advanced), 'C', ItemList.Sensor_HV, 'X', OrePrefixes.cableGt04.get(Materials.Gold)});
-        GT_ModHandler.addCraftingRecipe(ItemList.Seismic_Prospector_Adv_EV.get(1L), bitsd, new Object[] { "WWW", "EME", "CXC", 'M', ItemList.Hull_EV, 'W', OrePrefixes.plateDouble.get(Materials.VanadiumSteel),'E', OrePrefixes.circuit.get(Materials.Data), 'C', ItemList.Sensor_EV, 'X', OrePrefixes.cableGt04.get(Materials.Aluminium) });
+        GT_ModHandler.addCraftingRecipe(ItemList.Seismic_Prospector_Adv_EV.get(1L), bitsd, new Object[]{"WWW", "EME", "CXC", 'M', ItemList.Hull_EV, 'W', OrePrefixes.plateDouble.get(Materials.VanadiumSteel), 'E', OrePrefixes.circuit.get(Materials.Data), 'C', ItemList.Sensor_EV, 'X', OrePrefixes.cableGt04.get(Materials.Aluminium)});
 
-        ItemList.OilDrill1.set(new GT_MetaTileEntity_OilDrill1(1157, "multimachine.oildrill1", "Oil/Gas/Fluid Drilling Rig").getStackForm(1));
-        ItemList.OilDrill2.set(new GT_MetaTileEntity_OilDrill2(141, "multimachine.oildrill2", "Oil/Gas/Fluid Drilling Rig II").getStackForm(1));
-        ItemList.OilDrill3.set(new GT_MetaTileEntity_OilDrill3(142, "multimachine.oildrill3", "Oil/Gas/Fluid Drilling Rig III").getStackForm(1));
+        ItemList.OilDrill1.set(new GT_MetaTileEntity_OilDrillTiered(1157, "multimachine.oildrill1", "Oil/Gas/Fluid Drilling Rig", 1).getStackForm(1));
+        ItemList.OilDrill2.set(new GT_MetaTileEntity_OilDrillTiered(141, "multimachine.oildrill2", "Oil/Gas/Fluid Drilling Rig II", 2).getStackForm(1));
+        ItemList.OilDrill3.set(new GT_MetaTileEntity_OilDrillTiered(142, "multimachine.oildrill3", "Oil/Gas/Fluid Drilling Rig III", 3).getStackForm(1));
+
         GT_ModHandler.addCraftingRecipe(ItemList.OilDrill1.get(1L), bitsd, new Object[]{"WWW", "EME", "CCC", 'M', ItemList.Hull_MV, 'W', OrePrefixes.frameGt.get(Materials.Steel), 'E', OrePrefixes.circuit.get(Materials.Good), 'C', ItemList.Electric_Motor_MV});
         GT_ModHandler.addCraftingRecipe(ItemList.OilDrill2.get(1L), bitsd, new Object[]{"WWW", "EME", "CCC", 'M', ItemList.OilDrill1, 'W', OrePrefixes.frameGt.get(Materials.Titanium), 'E', OrePrefixes.circuit.get(Materials.Advanced), 'C', ItemList.Electric_Motor_HV});
         GT_ModHandler.addCraftingRecipe(ItemList.OilDrill3.get(1L), bitsd, new Object[]{"WWW", "EME", "CCC", 'M', ItemList.OilDrill2, 'W', OrePrefixes.frameGt.get(Materials.TungstenSteel), 'E', OrePrefixes.circuit.get(Materials.Data), 'C', ItemList.Electric_Motor_EV});
@@ -1222,16 +1223,16 @@ public class GT_Loader_MetaTileEntities implements Runnable {//TODO CHECK CIRCUI
         GT_ModHandler.addCraftingRecipe(ItemList.ConcreteBackfiller1.get(1L), bitsd, new Object[]{"WPW", "EME", "CQC", 'M', ItemList.Hull_MV, 'W', OrePrefixes.frameGt.get(Materials.Steel), 'E', OrePrefixes.circuit.get(Materials.Good), 'C', ItemList.Electric_Motor_MV, 'P', OrePrefixes.pipeLarge.get(Materials.Steel), 'Q', ItemList.Electric_Pump_MV});
         GT_ModHandler.addCraftingRecipe(ItemList.ConcreteBackfiller2.get(1L), bitsd, new Object[]{"WPW", "EME", "CQC", 'M', ItemList.ConcreteBackfiller1, 'W', OrePrefixes.frameGt.get(Materials.Titanium), 'E', OrePrefixes.circuit.get(Materials.Data), 'C', ItemList.Electric_Motor_EV, 'P', OrePrefixes.pipeLarge.get(Materials.Steel), 'Q', ItemList.Electric_Pump_EV});
 
-        ItemList.OreDrill1.set(new GT_MetaTileEntity_OreDrillingPlant1(1158, "multimachine.oredrill1", "Ore Drilling Plant").getStackForm(1));
+        ItemList.OreDrill1.set(new GT_MetaTileEntity_OreDrillingPlantTiered(1158, "multimachine.oredrill1", "Ore Drilling Plant", 1).getStackForm(1));
         GT_ModHandler.addCraftingRecipe(ItemList.OreDrill1.get(1L), bitsd, new Object[]{"WWW", "EME", "CCC", 'M', ItemList.Hull_EV, 'W', OrePrefixes.frameGt.get(Materials.Titanium), 'E', OrePrefixes.circuit.get(Materials.Data), 'C', ItemList.Electric_Motor_EV});
 
-        ItemList.OreDrill2.set(new GT_MetaTileEntity_OreDrillingPlant2(1177, "multimachine.oredrill2", "Ore Drilling Plant II").getStackForm(1));
+        ItemList.OreDrill2.set(new GT_MetaTileEntity_OreDrillingPlantTiered(1177, "multimachine.oredrill2", "Ore Drilling Plant II", 2).getStackForm(1));
         GT_ModHandler.addCraftingRecipe(ItemList.OreDrill2.get(1L), bitsd, new Object[]{"WWW", "EME", "CCC", 'M', ItemList.OreDrill1, 'W', OrePrefixes.frameGt.get(Materials.TungstenSteel), 'E', OrePrefixes.circuit.get(Materials.Elite), 'C', ItemList.Electric_Motor_IV});
 
-        ItemList.OreDrill3.set(new GT_MetaTileEntity_OreDrillingPlant3(1178, "multimachine.oredrill3", "Ore Drilling Plant III").getStackForm(1));
+        ItemList.OreDrill3.set(new GT_MetaTileEntity_OreDrillingPlantTiered(1178, "multimachine.oredrill3", "Ore Drilling Plant III", 3).getStackForm(1));
         GT_ModHandler.addCraftingRecipe(ItemList.OreDrill3.get(1L), bitsd, new Object[]{"WWW", "EME", "CCC", 'M', ItemList.OreDrill2, 'W', OrePrefixes.frameGt.get(Materials.Osmiridium), 'E', OrePrefixes.circuit.get(Materials.Master), 'C', ItemList.Electric_Motor_LuV});
 
-        ItemList.OreDrill4.set(new GT_MetaTileEntity_OreDrillingPlant4(1179, "multimachine.oredrill4", "Ore Drilling Plant IV").getStackForm(1));
+        ItemList.OreDrill4.set(new GT_MetaTileEntity_OreDrillingPlantTiered(1179, "multimachine.oredrill4", "Ore Drilling Plant IV", 4).getStackForm(1));
         GT_ModHandler.addCraftingRecipe(ItemList.OreDrill4.get(1L), bitsd, new Object[]{"WWW", "EME", "CCC", 'M', ItemList.OreDrill3, 'W', OrePrefixes.frameGt.get(Materials.Tritanium), 'E', OrePrefixes.circuit.get(Materials.Ultimate), 'C', ItemList.Electric_Motor_ZPM});
 
         ItemList.PyrolyseOven.set(new GT_MetaTileEntity_PyrolyseOven(1159, "multimachine.pyro", "Pyrolyse Oven").getStackForm(1));

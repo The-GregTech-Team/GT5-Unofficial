@@ -31,7 +31,7 @@ import static gregtech.api.enums.GT_Values.VN;
 public abstract class GT_MetaTileEntity_OreDrillingPlantBase extends GT_MetaTileEntity_DrillerBase {
 
     private final ArrayList<ChunkPosition> oreBlockPositions = new ArrayList<>();
-    protected int mTier=1;
+    protected byte mTier = 1;
 
     private int chunkRadiusConfig = getRadiusInChunks();
 
