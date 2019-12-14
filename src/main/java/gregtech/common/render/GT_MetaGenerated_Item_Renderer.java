@@ -56,10 +56,8 @@ public class GT_MetaGenerated_Item_Renderer
             if (RenderItem.renderInFrame) {
                 GL11.glScalef(0.85F, 0.85F, 0.85F);
                 GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
-                GL11.glTranslated(-0.5D, -0.42D, 0.0D);
-            } else {
-                GL11.glTranslated(-0.5D, -0.42D, 0.0D);
             }
+            GL11.glTranslated(-0.5D, -0.42D, 0.0D);
         }
         GL11.glColor3f(1.0F, 1.0F, 1.0F);
         if (aMetaData < aItem.mOffset) {
@@ -120,17 +118,17 @@ public class GT_MetaGenerated_Item_Renderer
             if (aItem.mIconList[(aMetaData - aItem.mOffset)].length > 1) {
                 Long[] tStats = aItem.mElectricStats.get(Short.valueOf(aMetaData));
 
-                if ((tStats != null) && (tStats[3].longValue() < 0L)) {
+                if ((tStats != null) && (tStats[3] < 0L)) {
                     long tCharge = aItem.getRealCharge(aStack);
 
                     if (tCharge <= 0L) {
                         tIcon = aItem.mIconList[(aMetaData - aItem.mOffset)][1];
                     } else {
 
-                        if (tCharge >= tStats[0].longValue()) {
+                        if (tCharge >= tStats[0]) {
                             tIcon = aItem.mIconList[(aMetaData - aItem.mOffset)][8];
                         } else {
-                            tIcon = aItem.mIconList[(aMetaData - aItem.mOffset)][(7 - (int) java.lang.Math.max(0L, java.lang.Math.min(5L, (tStats[0].longValue() - tCharge) * 6L / tStats[0].longValue())))];
+                            tIcon = aItem.mIconList[(aMetaData - aItem.mOffset)][(7 - (int) java.lang.Math.max(0L, java.lang.Math.min(5L, (tStats[0] - tCharge) * 6L / tStats[0])))];
                         }
                     }
                 } else {

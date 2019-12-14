@@ -174,7 +174,7 @@ public final class GT_GUIContainerVolumetricFlask extends GuiContainer {
         return 0;
     }
 
-    public class GuiIntegerBox extends GuiTextField {
+    public static class GuiIntegerBox extends GuiTextField {
         private final int maxValue;
 
         public GuiIntegerBox(FontRenderer fontRenderer, int x, int y, int width, int height) {

@@ -561,10 +561,9 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
         if ((aInput2 = GregTech_API.sRecipeFile.get("implosion", aInput1, aInput2)) <= 0) {
             return false;
         }
-        int tExplosives = aInput2 > 0 ? aInput2 < 64 ? aInput2 : 64 : 1;
+        int tExplosives = aInput2 > 0 ? Math.min(aInput2, 64) : 1;
         int tGunpowder = tExplosives<<1;//Worst
         int tDynamite = Math.max(1, tExplosives>>1);//good
-        int tTNT = tExplosives;//Slightly better
         int tITNT = Math.max(1, tExplosives>>2);//the best
         //new GT_Recipe(aInput1, aInput2, aOutput1, aOutput2);
         if(tGunpowder<65){
@@ -573,7 +572,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
         if(tDynamite<17){
             GT_Recipe.GT_Recipe_Map.sImplosionRecipes.addRecipe(true, new ItemStack[]{aInput1, GT_ModHandler.getIC2Item("dynamite", tDynamite, null)}, new ItemStack[]{aOutput1, aOutput2}, null, null, null, null, 20, 30, 0);
         }
-        GT_Recipe.GT_Recipe_Map.sImplosionRecipes.addRecipe(true, new ItemStack[]{aInput1, new ItemStack(Blocks.tnt,tTNT)}, new ItemStack[]{aOutput1, aOutput2}, null, null, null, null, 20, 30, 0);
+        GT_Recipe.GT_Recipe_Map.sImplosionRecipes.addRecipe(true, new ItemStack[]{aInput1, new ItemStack(Blocks.tnt, tExplosives)}, new ItemStack[]{aOutput1, aOutput2}, null, null, null, null, 20, 30, 0);
         GT_Recipe.GT_Recipe_Map.sImplosionRecipes.addRecipe(true, new ItemStack[]{aInput1, GT_ModHandler.getIC2Item("industrialTnt", tITNT, null)}, new ItemStack[]{aOutput1, aOutput2}, null, null, null, null, 20, 30, 0);
 
         return true;
@@ -1272,7 +1271,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
                                     tInputs[i] = uStack;
                             }
                         }
-                        tAlts[i] = uList.toArray(new ItemStack[uList.size()]);
+                        tAlts[i] = uList.toArray(new ItemStack[0]);
                         continue;
                     } catch (Exception t) {
                     }

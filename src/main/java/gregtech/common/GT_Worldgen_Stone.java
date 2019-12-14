@@ -42,7 +42,7 @@ public class GT_Worldgen_Stone
         }
         // I think the real size of the balls is mSize/8, but the original code was difficult to understand.
         // Overall there will be less GT stones since they aren't spheres any more. /16 since this code uses it as a radius.
-        double realSize = mSize/16;
+        double realSize = (float) mSize/16f;
         int windowWidth = ((int)realSize)/16 + 1; // Width of chunks to check for a potential stoneseed
         // Check stone seeds to see if they have been added
         for( int x = aChunkX/16 - windowWidth; x < (aChunkX/16 + windowWidth + 1); x++ ) {
@@ -63,13 +63,13 @@ public class GT_Worldgen_Stone
                                         " realSize=" + realSize
                         );
                     } else {
-                        validStoneSeeds.put( hash, new StoneSeeds(false) );
+                        validStoneSeeds.put( hash, new StoneSeeds(false));
                     }
                 } else {
                     // This chunk has already been checked, check to see if a boulder exists here
                     if( validStoneSeeds.get(hash).mExists ) {
                         // Add to generation list
-                        stones.add( new ValidSeeds(x,z) );
+                        stones.add(new ValidSeeds(x, z));
                     }
                 }
             }
@@ -128,7 +128,7 @@ public class GT_Worldgen_Stone
                     );
                     long hash = (((aWorld.provider.dimensionId & 0xffL) << 56) | (((long) x & 0x000000000fffffffL) << 28) | ((long) z & 0x000000000fffffffL));
                     validStoneSeeds.remove(hash);
-                    validStoneSeeds.put( hash, new StoneSeeds(false) );
+                    validStoneSeeds.put( hash, new StoneSeeds(false));
                 }
 
                 //Chop the boundaries by the parts that intersect with the current chunk
@@ -175,7 +175,6 @@ public class GT_Worldgen_Stone
                             zCalc = zCalc * zCalc;
                             leftHandSize = zCalc + xCalc + yCalc;
                             if (leftHandSize > rightHandSide) {
-                                continue;
                             } else {
                                 // Yay! We can actually place a block now. (this part copied from original code)
                                 Block tTargetedBlock = aWorld.getBlock(iX, iY, iZ);
@@ -199,7 +198,7 @@ public class GT_Worldgen_Stone
         return result;
     }
 
-    class StoneSeeds {
+    static class StoneSeeds {
         public boolean mExists;
 
         StoneSeeds(boolean exists) {
@@ -207,7 +206,7 @@ public class GT_Worldgen_Stone
         }
     }
 
-    class ValidSeeds {
+    static class ValidSeeds {
         public int mX;
         public int mZ;
 

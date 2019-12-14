@@ -48,7 +48,7 @@ public class GT_MetaTileEntity_Pump extends GT_MetaTileEntity_Hatch {
         return (16 * ((long) Math.pow(4, aTier)));
     }
 
-    public ArrayDeque<ChunkPosition> mPumpList = new ArrayDeque<ChunkPosition>();
+    public ArrayDeque<ChunkPosition> mPumpList = new ArrayDeque<>();
     public boolean wasPumping = false;
     public int mPumpTimer = 0;
     public int mPumpCountBelow = 0;
@@ -372,9 +372,9 @@ public class GT_MetaTileEntity_Pump extends GT_MetaTileEntity_Hatch {
     private void rebuildPumpQueue(int aX, int yStart, int aZ, int yEnd) {
         int mDist = this.radiusConfig;
         doTickProfilingInThisTick = false;
-        ArrayDeque<ChunkPosition> fluidsToSearch = new ArrayDeque<ChunkPosition>();
-        ArrayDeque<ChunkPosition> fluidsFound = new ArrayDeque<ChunkPosition>();
-        Set<ChunkPosition> checked = new HashSet<ChunkPosition>();
+        ArrayDeque<ChunkPosition> fluidsToSearch = new ArrayDeque<>();
+        ArrayDeque<ChunkPosition> fluidsFound = new ArrayDeque<>();
+        Set<ChunkPosition> checked = new HashSet<>();
         this.clearQueue(false);
 
         for (int aY = yStart ; this.mPumpList.isEmpty() && aY >= yEnd ; aY--) {
@@ -383,22 +383,23 @@ public class GT_MetaTileEntity_Pump extends GT_MetaTileEntity_Hatch {
             fluidsToSearch.add(new ChunkPosition(aX, aY, aZ));
 
             while (!fluidsToSearch.isEmpty()) {
-                Iterator<ChunkPosition> i$ = fluidsToSearch.iterator();
-                while(i$.hasNext()) {
-                    ChunkPosition tPos = i$.next();
-
+                for (ChunkPosition tPos : fluidsToSearch) {
                     // Look all around
-                    if (tPos.chunkPosX < aX + mDist) queueFluid(tPos.chunkPosX + 1, tPos.chunkPosY, tPos.chunkPosZ,     fluidsFound, checked);
-                    if (tPos.chunkPosX > aX - mDist) queueFluid(tPos.chunkPosX - 1, tPos.chunkPosY, tPos.chunkPosZ,     fluidsFound, checked);
-                    if (tPos.chunkPosZ < aZ + mDist) queueFluid(tPos.chunkPosX,     tPos.chunkPosY, tPos.chunkPosZ + 1, fluidsFound, checked);
-                    if (tPos.chunkPosZ > aZ - mDist) queueFluid(tPos.chunkPosX,     tPos.chunkPosY, tPos.chunkPosZ - 1, fluidsFound, checked);
+                    if (tPos.chunkPosX < aX + mDist)
+                        queueFluid(tPos.chunkPosX + 1, tPos.chunkPosY, tPos.chunkPosZ, fluidsFound, checked);
+                    if (tPos.chunkPosX > aX - mDist)
+                        queueFluid(tPos.chunkPosX - 1, tPos.chunkPosY, tPos.chunkPosZ, fluidsFound, checked);
+                    if (tPos.chunkPosZ < aZ + mDist)
+                        queueFluid(tPos.chunkPosX, tPos.chunkPosY, tPos.chunkPosZ + 1, fluidsFound, checked);
+                    if (tPos.chunkPosZ > aZ - mDist)
+                        queueFluid(tPos.chunkPosX, tPos.chunkPosY, tPos.chunkPosZ - 1, fluidsFound, checked);
 
                     // And then look up
                     queueFluid(tPos.chunkPosX, tPos.chunkPosY + 1, tPos.chunkPosZ, this.mPumpList, checked);
                 }
                 this.mPumpList.addAll(fluidsFound);
                 fluidsToSearch = fluidsFound;
-                fluidsFound = new ArrayDeque<ChunkPosition>();
+                fluidsFound = new ArrayDeque<>();
             }
 
             // Make sure we don't have the pipe location in the queue

@@ -86,7 +86,7 @@ public class GT_MetaTileEntity_Disassembler
             //Long EUt calculation
             long xEUt=aEUt;
             //Isnt too low EUt check?
-            long tempEUt = xEUt<GT_Values.V[1] ? GT_Values.V[1] : xEUt;
+            long tempEUt = Math.max(xEUt, GT_Values.V[1]);
 
             while (tempEUt <= GT_Values.V[mTier -1] * (long)mAmperage) {
                 tempEUt<<=2;//this actually controls overclocking

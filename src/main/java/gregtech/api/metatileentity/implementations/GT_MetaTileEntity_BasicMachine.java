@@ -449,7 +449,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends GT_MetaTileEntity_B
                             if (getDrainableStack() == null) setDrainableStack(mOutputFluid.copy());
                             else if (mOutputFluid.isFluidEqual(getDrainableStack()))
                                 getDrainableStack().amount += mOutputFluid.amount;
-                        for (int i = 0; i < mOutputItems.length; i++) mOutputItems[i] = null;
+                        Arrays.fill(mOutputItems, null);
                         mOutputFluid = null;
                         mEUt = 0;
                         mProgresstime = 0;
@@ -518,7 +518,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends GT_MetaTileEntity_B
                         startProcess();
                     } else {
                         mMaxProgresstime = 0;
-                        for (int i = 0; i < mOutputItems.length; i++) mOutputItems[i] = null;
+                        Arrays.fill(mOutputItems, null);
                         mOutputFluid = null;
                     }
                 }
@@ -584,7 +584,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends GT_MetaTileEntity_B
             //Long EUt calculation
             long xEUt=aEUt;
             //Isnt too low EUt check?
-            long tempEUt = xEUt<V[1] ? V[1] : xEUt;
+            long tempEUt = Math.max(xEUt, V[1]);
 
             mMaxProgresstime = aDuration;
 
@@ -652,7 +652,11 @@ public abstract class GT_MetaTileEntity_BasicMachine extends GT_MetaTileEntity_B
 
     protected boolean isOutputEmpty() {
         boolean rIsEmpty = true;
-        for (ItemStack tOutputSlotContent : getAllOutputs()) if (tOutputSlotContent != null) rIsEmpty = false;
+        for (ItemStack tOutputSlotContent : getAllOutputs())
+            if (tOutputSlotContent != null) {
+                rIsEmpty = false;
+                break;
+            }
         return rIsEmpty;
     }
 

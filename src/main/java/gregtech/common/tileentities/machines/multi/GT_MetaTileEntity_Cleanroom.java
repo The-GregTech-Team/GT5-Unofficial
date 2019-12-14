@@ -147,7 +147,7 @@ public class GT_MetaTileEntity_Cleanroom extends GT_MetaTileEntity_MultiBlockBas
 							if ((!this.addMaintenanceToMachineList(tTileEntity, 82)) && (!this.addEnergyInputToMachineList(tTileEntity, 82))) {
 								if (tBlock instanceof ic2.core.block.BlockIC2Door) {
 									if ((tMeta & 8) == 0) {
-										doorState = (Math.abs(dX) > Math.abs(dZ) == ((tMeta & 1) != 0)) != ((tMeta & 4) != 0);
+										doorState = (Math.abs(dX) > Math.abs(dZ) == ((tMeta & 1) != 0)) == ((tMeta & 4) == 0);
 									}
 									mDoorCount++;
 								} else {
@@ -194,7 +194,7 @@ public class GT_MetaTileEntity_Cleanroom extends GT_MetaTileEntity_MultiBlockBas
 					IGregTechTileEntity tTileEntity = aBaseMetaTileEntity.getIGregTechTileEntityOffset(dX, dY, dZ);
 					if (tTileEntity != null) {
 						IMetaTileEntity aMetaTileEntity = tTileEntity.getMetaTileEntity();
-						if (aMetaTileEntity != null && aMetaTileEntity instanceof GT_MetaTileEntity_BasicMachine_GT_Recipe) {
+						if (aMetaTileEntity instanceof GT_MetaTileEntity_BasicMachine_GT_Recipe) {
 							if (debugCleanroom) {
 								GT_Log.out.println(
 									"Cleanroom: Machine detected, adding pointer back to cleanroom"

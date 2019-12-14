@@ -32,7 +32,7 @@ public class GT_Worldgenerator
     //private static int gcMaxSize = 400;
     private static boolean endAsteroids = true;
     public static List<Runnable> mList = new ArrayList();
-    public static HashSet<Long> ProcChunks = new HashSet<Long>();
+    public static HashSet<Long> ProcChunks = new HashSet<>();
     // This is probably not going to work.  Trying to create a fake orevein to put into hashtable when there will be no ores in a vein.
     public static GT_Worldgen_GT_Ore_Layer noOresInVein = new GT_Worldgen_GT_Ore_Layer( "NoOresInVein", false, 0, 255, 0, 255, 16,  false, false, false, Materials.Aluminium, Materials.Aluminium, Materials.Aluminium, Materials.Aluminium);
     public static Hashtable<Long, GT_Worldgen_GT_Ore_Layer> validOreveins = new Hashtable(1024);
@@ -348,7 +348,7 @@ public class GT_Worldgenerator
                             "Adding seed x="+x+
                             " z="+z
                         );
-                        seedList.add( new GT_Worldgenerator.WorldGenContainer.NearbySeeds(x,z) );
+                        seedList.add(new NearbySeeds(x, z));
                     }
                 }
             }
@@ -488,7 +488,7 @@ public class GT_Worldgenerator
         }
 
         // Local class to track which orevein seeds must be checked when doing chunkified worldgen
-        class NearbySeeds {
+        static class NearbySeeds {
             public int mX;
             public int mZ;
 

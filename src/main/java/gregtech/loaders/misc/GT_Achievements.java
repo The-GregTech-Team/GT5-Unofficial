@@ -222,7 +222,7 @@ public class GT_Achievements {
 //        }
         if (GT_Mod.gregtechproxy.mAchievements) {
             AchievementPage.registerAchievementPage(new AchievementPage("GregTech 5", this.achievementList.values().toArray(
-                    new Achievement[this.achievementList.size()])));
+                    new Achievement[0])));
             MinecraftForge.EVENT_BUS.register(this);
             FMLCommonHandler.instance().bus().register(this);
         }
@@ -350,18 +350,25 @@ public class GT_Achievements {
         if (player == null || fluid == null) {
             return;
         }
-        if (fluid.getFluid().getUnlocalizedName().equals("fluid.plasma.helium")) {
-            issueAchievement(player, "fusion");
-        } else if (fluid.getFluid().getUnlocalizedName().equals("fluid.molten.europium")) {
-            issueAchievement(player, "advancing");
-        } else if (fluid.getFluid().getUnlocalizedName().equals("fluid.molten.naquadah")) {
-            issueAchievement(player, "stargateliquid");
-        } else if (fluid.getFluid().getUnlocalizedName().equals("fluid.molten.americium")) {
-            issueAchievement(player, "tothelimit");
-        } else if (fluid.getFluid().getUnlocalizedName().equals("fluid.molten.neutronium")) {
-            issueAchievement(player, "denseaspossible");
-        } else if (fluid.getFluid().getUnlocalizedName().equals("fluid.plasma.nitrogen")) {
-            issueAchievement(player, "higherefficency");
+        switch (fluid.getFluid().getUnlocalizedName()) {
+            case "fluid.plasma.helium":
+                issueAchievement(player, "fusion");
+                break;
+            case "fluid.molten.europium":
+                issueAchievement(player, "advancing");
+                break;
+            case "fluid.molten.naquadah":
+                issueAchievement(player, "stargateliquid");
+                break;
+            case "fluid.molten.americium":
+                issueAchievement(player, "tothelimit");
+                break;
+            case "fluid.molten.neutronium":
+                issueAchievement(player, "denseaspossible");
+                break;
+            case "fluid.plasma.nitrogen":
+                issueAchievement(player, "higherefficency");
+                break;
         }
     }
 

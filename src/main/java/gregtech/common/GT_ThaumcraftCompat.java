@@ -93,7 +93,7 @@ public class GT_ThaumcraftCompat
         GT_LanguageManager.addStringLocalization("tc.aspect.radio", "Radiation");
     }
 
-    private static final AspectList getAspectList(List<TC_Aspects.TC_AspectStack> aAspects) {
+    private static AspectList getAspectList(List<TC_Aspects.TC_AspectStack> aAspects) {
         AspectList rAspects = new AspectList();
         TC_Aspects.TC_AspectStack tAspect;
         for (Iterator i$ = aAspects.iterator(); i$.hasNext(); rAspects.add((Aspect) tAspect.mAspect.mAspect, (int) tAspect.mAmount)) {
@@ -110,8 +110,7 @@ public class GT_ThaumcraftCompat
         if (tCategory == null) {
             return null;
         }
-        for (Iterator i$ = tCategory.research.values().iterator(); i$.hasNext(); ) {
-            ResearchItem tResearch = (ResearchItem) i$.next();
+        for (ResearchItem tResearch : tCategory.research.values()) {
             if ((tResearch.displayColumn == aX) && (tResearch.displayRow == aY)) {
                 aX += (aX > 0 ? 5 : -5);
                 aY += (aY > 0 ? 5 : -5);
@@ -165,7 +164,7 @@ public class GT_ThaumcraftCompat
                 }
             }
             if (tParentResearches.size() > 0) {
-                rResearch.setParents(tParentResearches.toArray(new String[tParentResearches.size()]));
+                rResearch.setParents(tParentResearches.toArray(new String[0]));
                 rResearch.setConcealed();
             }
         }
@@ -173,7 +172,7 @@ public class GT_ThaumcraftCompat
             rResearch.setItemTriggers(aResearchTriggers);
             rResearch.setHidden();
         }
-        rResearch.setPages(tPages.toArray(new ResearchPage[tPages.size()]));
+        rResearch.setPages(tPages.toArray(new ResearchPage[0]));
         return rResearch.registerResearchItem();
     }
 

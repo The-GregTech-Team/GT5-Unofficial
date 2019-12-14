@@ -53,9 +53,8 @@ public class GT_Container_Boiler
         this.mWaterAmount = Math.min(54, Math.max(0, this.mWaterAmount * 54 / 15900));
         this.mProcessingEnergy = Math.min(14, Math.max(this.mProcessingEnergy > 0 ? 1 : 0, this.mProcessingEnergy * 14 / 1000));
 
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting) var2.next();
+        for (Object crafter : this.crafters) {
+            ICrafting var1 = (ICrafting) crafter;
             var1.sendProgressBarUpdate(this, 100, this.mTemperature);
             var1.sendProgressBarUpdate(this, 101, this.mProcessingEnergy);
             var1.sendProgressBarUpdate(this, 102, this.mSteamAmount);

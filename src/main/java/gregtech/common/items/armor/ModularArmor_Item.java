@@ -94,7 +94,7 @@ public class ModularArmor_Item extends ItemArmor implements ISpecialArmor, IGogg
 				tmp = data.mStat.get(StatType.ELECTRICALDEFENCE);
 			} else if (source == DamageSource.wither) {
 				tmp = data.mStat.get(StatType.WITHERDEFENCE);
-			} else if (source.isFireDamage() || source == GT_DamageSources.getHeatDamage()) {
+			} else if (source.isFireDamage() || source.equals(GT_DamageSources.getHeatDamage())) {
 				tmp = data.mStat.get(StatType.FIREDEFENCE);
 			} else if (source.isExplosion()) {
 				tmp = data.mStat.get(StatType.EXPLOSIONDEFENCE);
@@ -137,9 +137,8 @@ public class ModularArmor_Item extends ItemArmor implements ISpecialArmor, IGogg
 		if (data == null) {
 			data = fillArmorData(player, armor);
 		}
-		int tmp = (int) -Math.floor(-(data.getBaseAbsorptionRatio() * 20 * data.mStat.get(StatType.PHYSICALDEFENCE)));
 
-		return tmp;
+		return (int) -Math.floor(-(data.getBaseAbsorptionRatio() * 20 * data.mStat.get(StatType.PHYSICALDEFENCE)));
 	}
 
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List info, boolean b) {

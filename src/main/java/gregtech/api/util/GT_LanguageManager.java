@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 import static gregtech.api.enums.GT_Values.E;
 
 public class GT_LanguageManager {
-    public static final HashMap<String, String> TEMPMAP = new HashMap<String, String>(), BUFFERMAP = new HashMap<String, String>(), LANGMAP = new HashMap<String, String>();
+    public static final HashMap<String, String> TEMPMAP = new HashMap<>(), BUFFERMAP = new HashMap<>(), LANGMAP = new HashMap<>();
     public static Configuration sEnglishFile;
     public static boolean sUseEnglishFile = false;
     public static boolean i18nPlaceholder = true;

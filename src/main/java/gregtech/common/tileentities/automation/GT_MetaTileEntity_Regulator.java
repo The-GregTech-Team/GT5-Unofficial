@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class GT_MetaTileEntity_Regulator
         extends GT_MetaTileEntity_Buffer {
@@ -92,7 +93,7 @@ public class GT_MetaTileEntity_Regulator
         int i = 0;
         for (int tCosts = 0; i < 9; i++) {
             if (this.mInventory[(i + 9)] != null) {
-                tCosts = GT_Utility.moveOneItemStackIntoSlot(getBaseMetaTileEntity(), getBaseMetaTileEntity().getTileEntityAtSide(getBaseMetaTileEntity().getBackFacing()), getBaseMetaTileEntity().getBackFacing(), this.mTargetSlots[i], Arrays.asList(this.mInventory[(i + 9)]), false, (byte) this.mInventory[(i + 9)].stackSize, (byte) this.mInventory[(i + 9)].stackSize, (byte) 64, (byte) 1) * 3;
+                tCosts = GT_Utility.moveOneItemStackIntoSlot(getBaseMetaTileEntity(), getBaseMetaTileEntity().getTileEntityAtSide(getBaseMetaTileEntity().getBackFacing()), getBaseMetaTileEntity().getBackFacing(), this.mTargetSlots[i], Collections.singletonList(this.mInventory[(i + 9)]), false, (byte) this.mInventory[(i + 9)].stackSize, (byte) this.mInventory[(i + 9)].stackSize, (byte) 64, (byte) 1) * 3;
                 if (tCosts > 0) {
                     this.mSuccess = 50;
                     getBaseMetaTileEntity().decreaseStoredEnergyUnits(tCosts, true);

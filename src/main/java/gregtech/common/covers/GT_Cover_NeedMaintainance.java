@@ -38,7 +38,7 @@ public class GT_Cover_NeedMaintainance extends GT_CoverBehavior {
                         if (coverVar == 5) {
                             needsRepair = (tCur >= tMax * 8 / 10);
                         } else {
-                            long mExpectedDamage = Math.round(Math.min(multi.mEUt / multi.damageFactorLow, Math.pow(multi.mEUt, multi.damageFactorHigh)));
+                            long mExpectedDamage = Math.round(Math.min((float) multi.mEUt / (float)  multi.damageFactorLow, Math.pow(multi.mEUt, multi.damageFactorHigh)));
                             needsRepair = tCur + mExpectedDamage * 2 >= tMax;
                         }
                     } else {

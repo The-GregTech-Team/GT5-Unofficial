@@ -111,8 +111,8 @@ public class GT_Entity_Arrow
             Entity tHitEntity = null;
             List tAllPotentiallyHitEntities = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
             double tLargestDistance = 1.7976931348623157E+308D;
-            for (int i = 0; i < tAllPotentiallyHitEntities.size(); i++) {
-                Entity entity1 = (Entity) tAllPotentiallyHitEntities.get(i);
+            for (Object tAllPotentiallyHitEntity : tAllPotentiallyHitEntities) {
+                Entity entity1 = (Entity) tAllPotentiallyHitEntity;
                 if ((entity1.canBeCollidedWith()) && ((entity1 != tShootingEntity) || (this.ticksInAir >= 5))) {
                     AxisAlignedBB axisalignedbb1 = entity1.boundingBox.expand(0.3D, 0.3D, 0.3D);
                     MovingObjectPosition movingobjectposition1 = axisalignedbb1.calculateIntercept(vec31, vec3);
@@ -191,7 +191,7 @@ public class GT_Entity_Arrow
                                 }
                                 GT_Utility.GT_EnchantmentHelper.applyBullshitA(tHitLivingEntity, tShootingEntity == null ? this : tShootingEntity, this.mArrow);
                                 GT_Utility.GT_EnchantmentHelper.applyBullshitB((tShootingEntity instanceof EntityLivingBase) ? (EntityLivingBase) tShootingEntity : null, tHitLivingEntity, this.mArrow);
-                                if ((tShootingEntity != null) && (tHitLivingEntity != tShootingEntity) && ((tHitLivingEntity instanceof EntityPlayer)) && ((tShootingEntity instanceof EntityPlayerMP))) {
+                                if ((tHitLivingEntity != tShootingEntity) && ((tHitLivingEntity instanceof EntityPlayer)) && ((tShootingEntity instanceof EntityPlayerMP))) {
                                     ((EntityPlayerMP) tShootingEntity).playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
                                 }
                             }

@@ -75,59 +75,55 @@ public class GT_MetaTileEntity_ChestBuffer
 // Implementation using Java built in sort algorithm
 // Uses terribad string comparison to sort against.  Would be better if we did something else?
     protected void sortStacks() {
-        Arrays.sort(this.mInventory, new Comparator<ItemStack>() {
-                @Override
-                // Taken from https://gist.github.com/Choonster/876acc3217229e172e46
-                public int compare(ItemStack o1, ItemStack o2) {
-                    if( o2 == null )
-                        return -1;
-                    if( o1 == null )
-                        return 1;
-                    Item item1 = o1.getItem();
-                    Item item2 = o2.getItem();
-                
-                    // If item1 is a block and item2 isn't, sort item1 before item2
-                    if (((item1 instanceof ItemBlock)) && (!(item2 instanceof ItemBlock))) {
-                        return -1;
-                    }
-                
-                    // If item2 is a block and item1 isn't, sort item1 after item2
-                    if (((item2 instanceof ItemBlock)) && (!(item1 instanceof ItemBlock))) {
-                        return 1;
-                    }
+        // Taken from https://gist.github.com/Choonster/876acc3217229e172e46
+        Arrays.sort(this.mInventory, (o1, o2) -> {
+            if( o2 == null )
+                return -1;
+            if( o1 == null )
+                return 1;
+            Item item1 = o1.getItem();
+            Item item2 = o2.getItem();
 
-                    // If the items are blocks, use the string comparison
-                    if ((item1 instanceof ItemBlock)) { // only need to check one since we did the check above
-                        String displayName1 = o1.getDisplayName();
-                        String displayName2 = o2.getDisplayName();
-                        int result = displayName1.compareToIgnoreCase(displayName2);
-                        //GT_FML_LOGGER.info("sorter: " + displayName1 + " " + displayName2 + " " + result);
-                        return result;
-                    } else
-                    {
-                        // Not a block.  Use the ID and damage to compare them.
-                        int id1 = Item.getIdFromItem( item1 );
-                        int id2 = Item.getIdFromItem( item2 );
-                        if ( id1 < id2 ) {
-                            return -1;
-                        }
-                        if ( id1 > id2 ) {
-                            return 1;
-                        }
-                        // id1 must equal id2, get their damage and compare
-                        id1 = o1.getItemDamage();
-                        id2 = o2.getItemDamage();
-                        
-                        if ( id1 < id2 ) {
-                        	return -1;
-                        }
-                        if ( id1 > id2 ) {
-                        	return 1;
-                        }
-                        return 0;
-                    }
+            // If item1 is a block and item2 isn't, sort item1 before item2
+            if (((item1 instanceof ItemBlock)) && (!(item2 instanceof ItemBlock))) {
+                return -1;
+            }
+
+            // If item2 is a block and item1 isn't, sort item1 after item2
+            if (((item2 instanceof ItemBlock)) && (!(item1 instanceof ItemBlock))) {
+                return 1;
+            }
+
+            // If the items are blocks, use the string comparison
+            if ((item1 instanceof ItemBlock)) { // only need to check one since we did the check above
+                String displayName1 = o1.getDisplayName();
+                String displayName2 = o2.getDisplayName();
+                //GT_FML_LOGGER.info("sorter: " + displayName1 + " " + displayName2 + " " + result);
+                return displayName1.compareToIgnoreCase(displayName2);
+            } else
+            {
+                // Not a block.  Use the ID and damage to compare them.
+                int id1 = Item.getIdFromItem( item1 );
+                int id2 = Item.getIdFromItem( item2 );
+                if ( id1 < id2 ) {
+                    return -1;
                 }
-            });
+                if ( id1 > id2 ) {
+                    return 1;
+                }
+                // id1 must equal id2, get their damage and compare
+                id1 = o1.getItemDamage();
+                id2 = o2.getItemDamage();
+
+                if ( id1 < id2 ) {
+                    return -1;
+                }
+                if ( id1 > id2 ) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
     }
 
     protected void fillStacksIntoFirstSlots() {

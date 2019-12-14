@@ -15,7 +15,7 @@ import java.util.Map;
  * Because Forge fucked this one up royally.
  */
 public class GT_FluidStack extends FluidStack {
-    private static final Collection<GT_FluidStack> sAllFluidStacks = new ArrayList<GT_FluidStack>(5000);
+    private static final Collection<GT_FluidStack> sAllFluidStacks = new ArrayList<>(5000);
     private static volatile boolean lock = false;
     private Fluid mFluid;
 
@@ -29,12 +29,12 @@ public class GT_FluidStack extends FluidStack {
         this(aFluid.getFluid(), aFluid.amount);
     }
 
-    public static final synchronized void fixAllThoseFuckingFluidIDs() {
+    public static synchronized void fixAllThoseFuckingFluidIDs() {
         if (ForgeVersion.getBuildVersion() < 1355 && ForgeVersion.getRevisionVersion() < 4) {
             try {
                 while (lock) {
                     Thread.sleep(1);
-                }} catch (InterruptedException e) {}
+                }} catch (InterruptedException ignored) {}
             lock = true;
             for (GT_FluidStack tFluid : sAllFluidStacks) tFluid.fixFluidIDForFucksSake();
             try {

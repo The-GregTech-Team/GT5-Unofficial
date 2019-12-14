@@ -21,6 +21,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import java.util.Arrays;
+
 import static gregtech.api.enums.GT_Values.GT;
 import static gregtech.api.enums.GT_Values.NW;
 
@@ -56,7 +58,7 @@ public abstract class BaseTileEntity extends TileEntity implements IHasWorldObje
      * Called automatically when the Coordinates of this TileEntity have been changed
      */
     protected final void clearTileEntityBuffer() {
-        for (int i = 0; i < mBufferedTileEntities.length; i++) mBufferedTileEntities[i] = null;
+        Arrays.fill(mBufferedTileEntities, null);
     }
 
     @Override

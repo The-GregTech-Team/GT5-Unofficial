@@ -23,7 +23,7 @@ public abstract class GT_MetaTileEntity_OilDrillBase extends GT_MetaTileEntity_D
 
     private boolean completedCycle = false;
 
-    private ArrayList<Chunk> mOilFieldChunks = new ArrayList<Chunk>();
+    private ArrayList<Chunk> mOilFieldChunks = new ArrayList<>();
     private int mOilId = 0;
 
     private int chunkRangeConfig = getRangeInChunks();
@@ -202,7 +202,7 @@ public abstract class GT_MetaTileEntity_OilDrillBase extends GT_MetaTileEntity_D
              );
         }
 
-        ArrayList<Chunk> emptyChunks = new ArrayList<Chunk>();
+        ArrayList<Chunk> emptyChunks = new ArrayList<>();
         
         for (Chunk tChunk : mOilFieldChunks) {
             tFluid = undergroundOil(tChunk,speed);

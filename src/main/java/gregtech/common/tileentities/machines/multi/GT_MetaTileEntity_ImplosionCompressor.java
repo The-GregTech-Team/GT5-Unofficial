@@ -85,7 +85,7 @@ public class GT_MetaTileEntity_ImplosionCompressor
                 }
             }
         }
-        ItemStack[] tInputs = tInputList.toArray(new ItemStack[tInputList.size()]);
+        ItemStack[] tInputs = tInputList.toArray(new ItemStack[0]);
         if (tInputList.size() > 0) {
             GT_Recipe tRecipe = GT_Recipe.GT_Recipe_Map.sImplosionRecipes.findRecipe(getBaseMetaTileEntity(), false, 9223372036854775807L, null, tInputs);
             if ((tRecipe != null) && (tRecipe.isRecipeInputEqual(true, null, tInputs))) {

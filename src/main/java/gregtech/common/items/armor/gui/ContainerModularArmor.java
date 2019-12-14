@@ -111,7 +111,7 @@ public abstract class ContainerModularArmor extends Container {
 			for (int slotIndex = start; stackToShift.stackSize > 0 && slotIndex < end; slotIndex++) {
 				Slot slot = (Slot) inventorySlots.get(slotIndex);
 				ItemStack stackInSlot = slot.getStack();
-				if (stackInSlot != null && isIdenticalItem(stackInSlot, stackToShift)) {
+				if (isIdenticalItem(stackInSlot, stackToShift)) {
 					int resultingStackSize = stackInSlot.stackSize + stackToShift.stackSize;
 					int max = Math.min(stackToShift.getMaxStackSize(), slot.getSlotStackLimit());
 					if (resultingStackSize <= max) {

@@ -287,7 +287,7 @@ public class GT_MetaTileEntity_Teleporter extends GT_MetaTileEntity_BasicTank {
                                 tTile = tWorld.getTileEntity(this.mTargetX, this.mTargetY, this.mTargetZ);
                             }
                         }
-                        if (tTile != null && tTile instanceof IInventory) {
+                        if (tTile instanceof IInventory) {
                             int tStacksize = mInventory[0].stackSize;
                             GT_Utility.moveOneItemStack(this, tTile, (byte) 0, (byte) 0, null, false, (byte) 64, (byte) 1, (byte) 64, (byte) 1);
                             if (mInventory[0] == null || mInventory[0].stackSize < tStacksize) {

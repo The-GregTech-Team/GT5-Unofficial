@@ -43,7 +43,7 @@ public class GT_MinableOreGenerator
         int var15 = var4s + var15r;
         float mh_n_0 = -2*mh_s_0;float mh_n_1 = -2*mh_c_0;
         for (int var19 = 0; var19 <= this.numberOfBlocks; var19++) {
-            float mh_n_2 = var19 / this.numberOfBlocks;
+            float mh_n_2 = (float) var19 / (float) this.numberOfBlocks;
             float var20 = var7 + mh_n_0 * mh_n_2;
             float var22 = var15 + mh_n_4 * mh_n_2;
             float var24 = var11 + mh_n_1 * mh_n_2;

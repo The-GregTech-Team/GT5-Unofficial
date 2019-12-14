@@ -29,8 +29,8 @@ public class MaterialBuilder {
 	private int densityDivider = 1;
 	private Dyes color = Dyes._NULL;
 	private int extraData = 0;
-	private List<MaterialStack> materialList = new ArrayList<MaterialStack>();
-	private List<TC_Aspects.TC_AspectStack> aspects = new ArrayList<TC_Aspects.TC_AspectStack>();
+	private List<MaterialStack> materialList = new ArrayList<>();
+	private List<TC_Aspects.TC_AspectStack> aspects = new ArrayList<>();
 	private boolean hasCorrespondingFluid = false;
 	private boolean hasCorrespondingGas = false;
 	private boolean canBeCracked = false;

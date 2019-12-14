@@ -93,27 +93,27 @@ public class GT_MetaTileEntity_DistillationTower
 
         long tVoltage = getMaxInputVoltage();
         byte tTier = (byte) Math.max(0, GT_Utility.getTier(tVoltage));
-        FluidStack[] tFluids = tFluidList.toArray(new FluidStack[tFluidList.size()]);
+        FluidStack[] tFluids = tFluidList.toArray(new FluidStack[0]);
         if (tFluids.length > 0) {
-        	for(int i = 0;i<tFluids.length;i++){
-                GT_Recipe tRecipe = GT_Recipe.GT_Recipe_Map.sDistillationRecipes.findRecipe(getBaseMetaTileEntity(), false, gregtech.api.enums.GT_Values.V[tTier], new FluidStack[]{tFluids[i]});
-            if (tRecipe != null) {
-                if (tRecipe.isRecipeInputEqual(true, tFluids)) {
-                    this.mEfficiency = (10000 - (getIdealStatus() - getRepairStatus()) * 1000);
-                    this.mEfficiencyIncrease = 10000;
-                    calculateOverclockedNessMulti(tRecipe.mEUt, tRecipe.mDuration, 1, tVoltage);
-                    //In case recipe is too OP for that machine
-                    if (mMaxProgresstime == Integer.MAX_VALUE - 1 && mEUt == Integer.MAX_VALUE - 1)
-                        return false;
-                    if (this.mEUt > 0) {
-                        this.mEUt = (-this.mEUt);
+            for (FluidStack tFluid : tFluids) {
+                GT_Recipe tRecipe = GT_Recipe.GT_Recipe_Map.sDistillationRecipes.findRecipe(getBaseMetaTileEntity(), false, gregtech.api.enums.GT_Values.V[tTier], new FluidStack[]{tFluid});
+                if (tRecipe != null) {
+                    if (tRecipe.isRecipeInputEqual(true, tFluids)) {
+                        this.mEfficiency = (10000 - (getIdealStatus() - getRepairStatus()) * 1000);
+                        this.mEfficiencyIncrease = 10000;
+                        calculateOverclockedNessMulti(tRecipe.mEUt, tRecipe.mDuration, 1, tVoltage);
+                        //In case recipe is too OP for that machine
+                        if (mMaxProgresstime == Integer.MAX_VALUE - 1 && mEUt == Integer.MAX_VALUE - 1)
+                            return false;
+                        if (this.mEUt > 0) {
+                            this.mEUt = (-this.mEUt);
+                        }
+                        this.mMaxProgresstime = Math.max(1, this.mMaxProgresstime);
+                        this.mOutputItems = new ItemStack[]{tRecipe.getOutput(0)};
+                        this.mOutputFluids = tRecipe.mFluidOutputs.clone();
+                        updateSlots();
+                        return true;
                     }
-                    this.mMaxProgresstime = Math.max(1, this.mMaxProgresstime);
-                    this.mOutputItems = new ItemStack[]{tRecipe.getOutput(0)};
-                    this.mOutputFluids = tRecipe.mFluidOutputs.clone();
-                    updateSlots();
-                    return true;
-                	}
                 }
             }
         }

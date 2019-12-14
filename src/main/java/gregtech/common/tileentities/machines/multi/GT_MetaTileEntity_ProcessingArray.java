@@ -248,11 +248,11 @@ public class GT_MetaTileEntity_ProcessingArray extends GT_MetaTileEntity_MultiBl
 
         if (!mMachine.equals(mInventory[1].getUnlocalizedName())) mLastRecipe = null;
         mMachine = mInventory[1].getUnlocalizedName();
-        ItemStack[] tInputs = tInputList.toArray(new ItemStack[tInputList.size()]);
+        ItemStack[] tInputs = tInputList.toArray(new ItemStack[0]);
 
         ArrayList<FluidStack> tFluidList = getStoredFluids();
 
-        FluidStack[] tFluids = tFluidList.toArray(new FluidStack[tFluidList.size()]);
+        FluidStack[] tFluids = tFluidList.toArray(new FluidStack[0]);
         if (tInputList.size() > 0 || tFluids.length > 0) {
             GT_Recipe tRecipe = map.findRecipe(getBaseMetaTileEntity(), mLastRecipe, false, gregtech.api.enums.GT_Values.V[tTier], tFluids, tInputs);
             if (tRecipe != null) {
@@ -311,13 +311,13 @@ public class GT_MetaTileEntity_ProcessingArray extends GT_MetaTileEntity_MultiBl
                 }
                 tOut = clean(tOut);
                 this.mMaxProgresstime = Math.max(1, this.mMaxProgresstime);
-                List<ItemStack> overStacks = new ArrayList<ItemStack>();
-                for (int f = 0; f < tOut.length; f++) {
-                    while (tOut[f].getMaxStackSize() < tOut[f].stackSize) {
-                        if (tOut[f] != null) {
-                            ItemStack tmp = tOut[f].copy();
+                List<ItemStack> overStacks = new ArrayList<>();
+                for (ItemStack itemStack : tOut) {
+                    while (itemStack.getMaxStackSize() < itemStack.stackSize) {
+                        if (itemStack != null) {
+                            ItemStack tmp = itemStack.copy();
                             tmp.stackSize = tmp.getMaxStackSize();
-                            tOut[f].stackSize = tOut[f].stackSize - tOut[f].getMaxStackSize();
+                            itemStack.stackSize = itemStack.stackSize - itemStack.getMaxStackSize();
                             overStacks.add(tmp);
                         }
                     }
@@ -327,11 +327,11 @@ public class GT_MetaTileEntity_ProcessingArray extends GT_MetaTileEntity_MultiBl
                     tmp = overStacks.toArray(tmp);
                     tOut = ArrayUtils.addAll(tOut, tmp);
                 }
-                List<ItemStack> tSList = new ArrayList<ItemStack>();
+                List<ItemStack> tSList = new ArrayList<>();
                 for (ItemStack tS : tOut) {
                     if (tS.stackSize > 0) tSList.add(tS);
                 }
-                tOut = tSList.toArray(new ItemStack[tSList.size()]);
+                tOut = tSList.toArray(new ItemStack[0]);
                 this.mOutputItems = tOut;
                 this.mOutputFluids = new FluidStack[]{tFOut};
                 updateSlots();
@@ -344,9 +344,9 @@ public class GT_MetaTileEntity_ProcessingArray extends GT_MetaTileEntity_MultiBl
     }
     
     public static ItemStack[] clean(final ItemStack[] v) {
-        List<ItemStack> list = new ArrayList<ItemStack>(Arrays.asList(v));
+        List<ItemStack> list = new ArrayList<>(Arrays.asList(v));
         list.removeAll(Collections.singleton(null));
-        return list.toArray(new ItemStack[list.size()]);
+        return list.toArray(new ItemStack[0]);
     }
 
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {

@@ -14,10 +14,10 @@ public abstract class ArmorComponent implements IArmorComponent {
 	public ItemStack mStack;
 	public String mOreDict;
 	public String mConfigName;
-	public static Map<String, ArmorComponent> mOreDicts = new HashMap<String, ArmorComponent>();
-	public static Map<String, ArmorComponent> mStacks = new HashMap<String, ArmorComponent>();
-	public Map<StatType,Float> mStat = new HashMap<StatType,Float>();
-	public Map<StatType,Boolean> mBStat = new HashMap<StatType,Boolean>();
+	public static Map<String, ArmorComponent> mOreDicts = new HashMap<>();
+	public static Map<String, ArmorComponent> mStacks = new HashMap<>();
+	public Map<StatType,Float> mStat = new HashMap<>();
+	public Map<StatType,Boolean> mBStat = new HashMap<>();
 	
 	public ArmorComponent(String aName, String aOreDict, boolean aElectric, float aWeight){
 		mConfigName = aName;
@@ -43,7 +43,7 @@ public abstract class ArmorComponent implements IArmorComponent {
 
 	@Override
 	public boolean isArmorComponent(ItemStack aStack) {
-		if(mStack!=null && GT_Utility.areStacksEqual(mStack, aStack, true)){return true;}
+		if(GT_Utility.areStacksEqual(mStack, aStack, true)){return true;}
 		if(mOreDict!=null){
 			for(ItemStack tStack : OreDictionary.getOres(mOreDict))
 				if(GT_Utility.areStacksEqual(tStack, aStack, true))return true;}

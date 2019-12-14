@@ -58,7 +58,7 @@ public abstract class GT_MetaGenerated_Item extends GT_MetaBase_Item implements 
      * <p/>
      * You can also use the unlocalized Name gotten from getUnlocalizedName() as Key if you want to get a specific Item.
      */
-    public static final ConcurrentHashMap<String, GT_MetaGenerated_Item> sInstances = new ConcurrentHashMap<String, GT_MetaGenerated_Item>();
+    public static final ConcurrentHashMap<String, GT_MetaGenerated_Item> sInstances = new ConcurrentHashMap<>();
 
 	/* ---------- CONSTRUCTOR AND MEMBER VARIABLES ---------- */
 
@@ -67,10 +67,10 @@ public abstract class GT_MetaGenerated_Item extends GT_MetaBase_Item implements 
     public final BitSet mVisibleItems;
     public final IIcon[][] mIconList;
 
-    public final ConcurrentHashMap<Short, IFoodStat> mFoodStats = new ConcurrentHashMap<Short, IFoodStat>();
-    public final ConcurrentHashMap<Short, Long[]> mElectricStats = new ConcurrentHashMap<Short, Long[]>();
-    public final ConcurrentHashMap<Short, Long[]> mFluidContainerStats = new ConcurrentHashMap<Short, Long[]>();
-    public final ConcurrentHashMap<Short, Short> mBurnValues = new ConcurrentHashMap<Short, Short>();
+    public final ConcurrentHashMap<Short, IFoodStat> mFoodStats = new ConcurrentHashMap<>();
+    public final ConcurrentHashMap<Short, Long[]> mElectricStats = new ConcurrentHashMap<>();
+    public final ConcurrentHashMap<Short, Long[]> mFluidContainerStats = new ConcurrentHashMap<>();
+    public final ConcurrentHashMap<Short, Short> mBurnValues = new ConcurrentHashMap<>();
 
     /**
      * Creates the Item using these Parameters.
@@ -110,7 +110,7 @@ public abstract class GT_MetaGenerated_Item extends GT_MetaBase_Item implements 
             mVisibleItems.set(aID);
             GT_LanguageManager.addStringLocalization(getUnlocalizedName(rStack) + ".name", aEnglish);
             GT_LanguageManager.addStringLocalization(getUnlocalizedName(rStack) + ".tooltip", aToolTip);
-            List<TC_AspectStack> tAspects = new ArrayList<TC_AspectStack>();
+            List<TC_AspectStack> tAspects = new ArrayList<>();
             // Important Stuff to do first
             for (Object tRandomData : aRandomData)
                 if (tRandomData instanceof SubTag) {
@@ -120,7 +120,6 @@ public abstract class GT_MetaGenerated_Item extends GT_MetaBase_Item implements 
                     }
                     if (tRandomData == SubTag.NO_UNIFICATION) {
                         GT_OreDictUnificator.addToBlacklist(rStack);
-                        continue;
                     }
                 }
             // now check for the rest
@@ -159,7 +158,6 @@ public abstract class GT_MetaGenerated_Item extends GT_MetaBase_Item implements 
                     }
                     if (tUseOreDict) {
                         GT_OreDictUnificator.registerOre(tRandomData, rStack);
-                        continue;
                     }
                 }
             if (GregTech_API.sThaumcraftCompat != null)

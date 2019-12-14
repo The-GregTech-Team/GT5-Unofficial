@@ -194,7 +194,7 @@ public abstract class GT_MetaTileEntity_Boiler
             }
             if (aTick % 10L == 0L) {
                 if (this.mTemperature > 100) {
-                    if ((this.mFluid == null) || (!GT_ModHandler.isWater(this.mFluid)) || (this.mFluid.amount <= 0)) {
+                    if ((!GT_ModHandler.isWater(this.mFluid)) || (this.mFluid.amount <= 0)) {
                         this.mHadNoWater = true;
                     } else {
                         if (this.mHadNoWater) {

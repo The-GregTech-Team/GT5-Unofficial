@@ -9,7 +9,7 @@ import java.util.*;
 public class ItemData {
     private static final MaterialStack[] EMPTY_MATERIALSTACK_ARRAY = new MaterialStack[0];
 
-    public final List<Object> mExtraData = new GT_ArrayList<Object>(false, 1);
+    public final List<Object> mExtraData = new GT_ArrayList<>(false, 1);
     public final OrePrefixes mPrefix;
     public final MaterialStack mMaterial;
     public final MaterialStack[] mByProducts;
@@ -36,11 +36,11 @@ public class ItemData {
         } else {
             MaterialStack[] tByProducts = aByProducts.length < 1 ? EMPTY_MATERIALSTACK_ARRAY : new MaterialStack[aByProducts.length];
             int j = 0;
-            for (int i = 0; i < aByProducts.length; i++)
-                if (aByProducts[i] != null && aByProducts[i].mMaterial != null)
-                    tByProducts[j++] = aByProducts[i].clone();
+            for (MaterialStack aByProduct : aByProducts)
+                if (aByProduct != null && aByProduct.mMaterial != null)
+                    tByProducts[j++] = aByProduct.clone();
             mByProducts = j > 0 ? new MaterialStack[j] : EMPTY_MATERIALSTACK_ARRAY;
-            for (int i = 0; i < mByProducts.length; i++) mByProducts[i] = tByProducts[i];
+            System.arraycopy(tByProducts, 0, mByProducts, 0, mByProducts.length);
         }
     }
 
@@ -56,7 +56,7 @@ public class ItemData {
         mPrefix = null;
         mBlackListed = true;
 
-        ArrayList<MaterialStack> aList = new ArrayList<MaterialStack>(), rList = new ArrayList<MaterialStack>();
+        ArrayList<MaterialStack> aList = new ArrayList<>(), rList = new ArrayList<>();
 
         for (ItemData tData : aData)
             if (tData != null) {
@@ -76,12 +76,7 @@ public class ItemData {
             if (temp) rList.add(aMaterial.clone());
         }
 
-        Collections.sort(rList, new Comparator<MaterialStack>() {
-            @Override
-            public int compare(MaterialStack a, MaterialStack b) {
-                return a.mAmount == b.mAmount ? 0 : a.mAmount > b.mAmount ? -1 : +1;
-            }
-        });
+        rList.sort((a, b) -> a.mAmount == b.mAmount ? 0 : a.mAmount > b.mAmount ? -1 : +1);
 
         if (rList.isEmpty()) {
             mMaterial = null;
@@ -90,7 +85,7 @@ public class ItemData {
             rList.remove(0);
         }
 
-        mByProducts = rList.toArray(new MaterialStack[rList.size()]);
+        mByProducts = rList.toArray(new MaterialStack[0]);
     }
 
     public final boolean hasValidPrefixMaterialData() {
@@ -119,6 +114,6 @@ public class ItemData {
     @Override
     public String toString() {
         if (mPrefix == null || mMaterial == null || mMaterial.mMaterial == null) return "";
-        return String.valueOf(new StringBuilder().append(mPrefix.name()).append(mMaterial.mMaterial.mName));
+        return mPrefix.name() + mMaterial.mMaterial.mName;
     }
 }

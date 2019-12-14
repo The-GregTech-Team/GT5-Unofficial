@@ -145,7 +145,7 @@ public abstract class GT_MetaTileEntity_DrillerBase extends GT_MetaTileEntity_Mu
             if (pipes.stackSize == maxPipes) break;
 
             int needPipes = maxPipes - pipes.stackSize;
-            int transferPipes = storedItem.stackSize < needPipes ? storedItem.stackSize : needPipes;
+            int transferPipes = Math.min(storedItem.stackSize, needPipes);
 
             pipes.stackSize += transferPipes;
             storedItem.stackSize -= transferPipes;
@@ -210,10 +210,12 @@ public abstract class GT_MetaTileEntity_DrillerBase extends GT_MetaTileEntity_Mu
     }
 
     protected boolean workingAtBottom(ItemStack aStack, int xDrill, int yDrill, int zDrill, int xPipe, int zPipe, int yHead, int oldYHead) {
-        switch (tryLowerPipeState(true)) {
-            case 0: workState = STATE_DOWNWARD; return true;
-            default: workState = STATE_UPWARD; return true;
+        if (tryLowerPipeState(true) == 0) {
+            workState = STATE_DOWNWARD;
+            return true;
         }
+        workState = STATE_UPWARD;
+        return true;
     }
 
     protected boolean workingUpward(ItemStack aStack, int xDrill, int yDrill, int zDrill, int xPipe, int zPipe, int yHead, int oldYHead) {
@@ -371,7 +373,7 @@ public abstract class GT_MetaTileEntity_DrillerBase extends GT_MetaTileEntity_Mu
         return config;
     }
 
-    public ArrayList<GT_MetaTileEntity_Hatch_DataAccess> mDataAccessHatches = new ArrayList<GT_MetaTileEntity_Hatch_DataAccess>();
+    public ArrayList<GT_MetaTileEntity_Hatch_DataAccess> mDataAccessHatches = new ArrayList<>();
 
     /**
      * @param state using bitmask, 1 for IntegratedCircuit, 2 for DataStick, 4 for DataOrb
@@ -386,7 +388,7 @@ public abstract class GT_MetaTileEntity_DrillerBase extends GT_MetaTileEntity_Mu
      * @param state using bitmask, 1 for IntegratedCircuit, 2 for DataStick, 4 for DataOrb
      */
     public ArrayList<ItemStack> getDataItems(int state) {
-        ArrayList<ItemStack> rList = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> rList = new ArrayList<>();
         if (GT_Utility.isStackValid(mInventory[1]) && isCorrectDataItem(mInventory[1], state)) {
             rList.add(mInventory[1]);
         }

@@ -37,7 +37,7 @@ public class GT_Runnable_MachineBlockUpdate implements Runnable {
     @Override
     public void run() {
         try {
-            stepToUpdateMachine(mWorld, mX, mY, mZ, new ArrayList<ChunkPosition>());
+            stepToUpdateMachine(mWorld, mX, mY, mZ, new ArrayList<>());
         } catch (Throwable e) {/**/}
     }
 }

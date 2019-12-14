@@ -55,10 +55,10 @@ public class GT_ItemIterator
         GT_Log.out.println("GT_Mod: Scanning ItemList.");
 
         try {
-            Iterator tIterator = Item.itemRegistry.iterator();
-            while (tIterator.hasNext()) {
+            /**(tName.equals("tile.sedimentaryStone")) ||**/
+            for (Object o : Item.itemRegistry) {
                 Object tObject;
-                if (((tObject = tIterator.next()) instanceof Item) && (!(tObject instanceof GT_Generic_Item))) {
+                if (((tObject = o) instanceof Item) && (!(tObject instanceof GT_Generic_Item))) {
                     Item tItem = (Item) tObject;
                     String tName;
                     if ((tName = tItem.getUnlocalizedName()) != null) {
@@ -103,10 +103,10 @@ public class GT_ItemIterator
                         if ((tItem instanceof IFluidContainerItem)) {
                             GT_OreDictUnificator.addToBlacklist(new ItemStack(tItem, 1, 32767));
                         }
-                        if ((tName.equals("item.ItemSensorLocationCard")) || (tName.equals("item.ItemEnergySensorLocationCard")) || (tName.equals("item.ItemEnergyArrayLocationCard")) || (tName.equals("item.ItemTextCard")) || (tName.equals("item.ItemTextCard")) || (tName.equals("item.ItemVanillaMachineCard")) || (tName.equals("item.RFSensorCard")) || (tName.equals("item.Item55ReactorCard"))) {
+                        if ((tName.equals("item.ItemSensorLocationCard")) || (tName.equals("item.ItemEnergySensorLocationCard")) || (tName.equals("item.ItemEnergyArrayLocationCard")) || (tName.equals("item.ItemTextCard")) || (tName.equals("item.ItemVanillaMachineCard")) || (tName.equals("item.RFSensorCard")) || (tName.equals("item.Item55ReactorCard"))) {
                             GT_Values.RA.addAssemblerRecipe(new ItemStack(tItem, 1, 32767), null, GT_ModHandler.getIC2Item("electronicCircuit", 2L), 200, 30);
                         }
-                            if ((tName.equals("item.ItemTimeCard")) || (tName.equals("item.itemCounterSensorLocationCard")) || (tName.equals("item.ItemLiquidSensorLocationCard")) || (tName.equals("item.ItemGeneratorSensorLocationCard")) || (tName.equals("item.ItemLiquidArrayLocationCard")) || (tName.equals("item.ItemInventoryScannerCard")) || (tName.equals("item.AppengCard")) || (tName.equals("item.RFenergyCard")) || (tName.equals("item.ItemVanillaMachineCard"))) {
+                        if ((tName.equals("item.ItemTimeCard")) || (tName.equals("item.itemCounterSensorLocationCard")) || (tName.equals("item.ItemLiquidSensorLocationCard")) || (tName.equals("item.ItemGeneratorSensorLocationCard")) || (tName.equals("item.ItemLiquidArrayLocationCard")) || (tName.equals("item.ItemInventoryScannerCard")) || (tName.equals("item.AppengCard")) || (tName.equals("item.RFenergyCard")) || (tName.equals("item.ItemVanillaMachineCard"))) {
                             GT_Values.RA.addAssemblerRecipe(new ItemStack(tItem, 1, 32767), null, GT_ModHandler.getIC2Item("electronicCircuit", 1L), 100, 30);
                         }
                         if (tName.equals("tile.ArsMagica:ore_vinteum")) {
@@ -187,7 +187,7 @@ public class GT_ItemIterator
                             GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt, new ItemStack(tItem, 1, 5));
                             GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt, new ItemStack(tItem, 1, 6));
                         }
-                        if (/**(tName.equals("tile.sedimentaryStone")) ||**/ ((tName.equals("tile.igneousStone")) || (tName.equals("tile.igneousStoneBrick")) || (tName.equals("tile.igneousCobblestone")))) {
+                        if (/**(tName.equals("tile.sedimentaryStone")) ||**/((tName.equals("tile.igneousStone")) || (tName.equals("tile.igneousStoneBrick")) || (tName.equals("tile.igneousCobblestone")))) {
                             GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.GraniteRed, new ItemStack(tItem, 1, 0));
                             GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.GraniteBlack, new ItemStack(tItem, 1, 1));
                             GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Rhyolite, new ItemStack(tItem, 1, 2));

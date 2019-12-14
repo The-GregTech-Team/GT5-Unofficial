@@ -142,7 +142,7 @@ public abstract class GT_MetaTileEntity_LargeTurbine extends GT_MetaTileEntity_M
                 baseEff = GT_Utility.safeInt((long)((5F + ((GT_MetaGenerated_Tool) aStack.getItem()).getToolCombatDamage(aStack)) * 1000F));
                 optFlow = GT_Utility.safeInt((long)Math.max(Float.MIN_NORMAL,
                         ((GT_MetaGenerated_Tool) aStack.getItem()).getToolStats(aStack).getSpeedMultiplier()
-                                * ((GT_MetaGenerated_Tool) aStack.getItem()).getPrimaryMaterial(aStack).mToolSpeed
+                                * GT_MetaGenerated_Tool.getPrimaryMaterial(aStack).mToolSpeed
                                 * 50));
                 if(optFlow<=0 || baseEff<=0){
                     stopMachine();//in case the turbine got removed

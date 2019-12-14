@@ -66,11 +66,11 @@ public abstract class GT_MetaGenerated_Tool extends GT_MetaBase_Item implements 
      * <p/>
      * You can also use the unlocalized Name gotten from getUnlocalizedName() as Key if you want to get a specific Item.
      */
-    public static final ConcurrentHashMap<String, GT_MetaGenerated_Tool> sInstances = new ConcurrentHashMap<String, GT_MetaGenerated_Tool>();
+    public static final ConcurrentHashMap<String, GT_MetaGenerated_Tool> sInstances = new ConcurrentHashMap<>();
 
 	/* ---------- CONSTRUCTOR AND MEMBER VARIABLES ---------- */
 
-    public final ConcurrentHashMap<Short, IToolStats> mToolStats = new ConcurrentHashMap<Short, IToolStats>();
+    public final ConcurrentHashMap<Short, IToolStats> mToolStats = new ConcurrentHashMap<>();
 
     /**
      * Creates the Item using these Parameters.
@@ -87,7 +87,7 @@ public abstract class GT_MetaGenerated_Tool extends GT_MetaBase_Item implements 
 	
 	/* ---------- FOR ADDING CUSTOM ITEMS INTO THE REMAINING 766 RANGE ---------- */
 
-    public static final Materials getPrimaryMaterial(ItemStack aStack) {
+    public static Materials getPrimaryMaterial(ItemStack aStack) {
         NBTTagCompound aNBT = aStack.getTagCompound();
         if (aNBT != null) {
             aNBT = aNBT.getCompoundTag("GT.ToolStats");
@@ -96,7 +96,7 @@ public abstract class GT_MetaGenerated_Tool extends GT_MetaBase_Item implements 
         return Materials._NULL;
     }
 
-    public static final Materials getSecondaryMaterial(ItemStack aStack) {
+    public static Materials getSecondaryMaterial(ItemStack aStack) {
         NBTTagCompound aNBT = aStack.getTagCompound();
         if (aNBT != null) {
             aNBT = aNBT.getCompoundTag("GT.ToolStats");
@@ -107,7 +107,7 @@ public abstract class GT_MetaGenerated_Tool extends GT_MetaBase_Item implements 
 	
 	/* ---------- INTERNAL OVERRIDES ---------- */
 
-    public static final long getToolMaxDamage(ItemStack aStack) {
+    public static long getToolMaxDamage(ItemStack aStack) {
         NBTTagCompound aNBT = aStack.getTagCompound();
         if (aNBT != null) {
             aNBT = aNBT.getCompoundTag("GT.ToolStats");
@@ -116,7 +116,7 @@ public abstract class GT_MetaGenerated_Tool extends GT_MetaBase_Item implements 
         return 0;
     }
 
-    public static final long getToolDamage(ItemStack aStack) {
+    public static long getToolDamage(ItemStack aStack) {
         NBTTagCompound aNBT = aStack.getTagCompound();
         if (aNBT != null) {
             aNBT = aNBT.getCompoundTag("GT.ToolStats");
@@ -125,7 +125,7 @@ public abstract class GT_MetaGenerated_Tool extends GT_MetaBase_Item implements 
         return 0;
     }
 
-    public static final boolean setToolDamage(ItemStack aStack, long aDamage) {
+    public static boolean setToolDamage(ItemStack aStack, long aDamage) {
         NBTTagCompound aNBT = aStack.getTagCompound();
         if (aNBT != null) {
             aNBT = aNBT.getCompoundTag("GT.ToolStats");
@@ -158,7 +158,7 @@ public abstract class GT_MetaGenerated_Tool extends GT_MetaBase_Item implements 
             mToolStats.put((short) (aID + 1), aToolStats);
             aToolStats.onStatsAddedToTool(this, aID);
             ItemStack rStack = new ItemStack(this, 1, aID);
-            List<TC_AspectStack> tAspects = new ArrayList<TC_AspectStack>();
+            List<TC_AspectStack> tAspects = new ArrayList<>();
             for (Object tOreDictNameOrAspect : aOreDictNamesAndAspects) {
                 if (tOreDictNameOrAspect instanceof TC_AspectStack)
                     ((TC_AspectStack) tOreDictNameOrAspect).addToAspectList(tAspects);
@@ -349,19 +349,20 @@ public abstract class GT_MetaGenerated_Tool extends GT_MetaBase_Item implements 
         int tOffset = getElectricStats(aStack) != null ? 2 : 1;
         if (tStats != null) {
             if (tStats instanceof GT_Tool_Turbine) {
-                int aOptFlow=GT_Utility.safeInt((long)Math.max(Float.MIN_NORMAL, ((GT_MetaGenerated_Tool) aStack.getItem()).getToolStats(aStack).getSpeedMultiplier() * ((GT_MetaGenerated_Tool) aStack.getItem()).getPrimaryMaterial(aStack).mToolSpeed * 50));
-                aList.add(tOffset + 0, EnumChatFormatting.WHITE + String.format(trans("001", "Durability: %s/%s"), "" + EnumChatFormatting.GREEN + (tMaxDamage - getToolDamage(aStack)) + " ", " " + tMaxDamage) + EnumChatFormatting.GRAY);
+                int aOptFlow=GT_Utility.safeInt((long)Math.max(Float.MIN_NORMAL, ((GT_MetaGenerated_Tool) aStack.getItem()).getToolStats(aStack).getSpeedMultiplier() * getPrimaryMaterial(aStack).mToolSpeed * 50));
+                aList.add(tOffset, EnumChatFormatting.WHITE + String.format(trans("001", "Durability: %s/%s"), "" + EnumChatFormatting.GREEN + (tMaxDamage - getToolDamage(aStack)) + " ", " " + tMaxDamage) + EnumChatFormatting.GRAY);
                 aList.add(tOffset + 1, EnumChatFormatting.WHITE + String.format(trans("002", "%s lvl %s"), tMaterial.mLocalizedName + EnumChatFormatting.YELLOW, "" + getHarvestLevel(aStack, "")) + EnumChatFormatting.GRAY);
                 aList.add(tOffset + 2, EnumChatFormatting.WHITE + String.format(trans("005", "Turbine Efficiency: %s"), "" + EnumChatFormatting.BLUE + (50.0F + (10.0F * getToolCombatDamage(aStack)))) + EnumChatFormatting.GRAY);
                 aList.add(tOffset + 3, EnumChatFormatting.WHITE + String.format(trans("006", "Optimal Steam flow: %sL/sec"), "" + EnumChatFormatting.GOLD + Math.max(Float.MIN_NORMAL, tStats.getSpeedMultiplier() * getPrimaryMaterial(aStack).mToolSpeed * 1000) + EnumChatFormatting.GRAY));
                 {
                     int aBaseEff=(int)(5+getToolCombatDamage(aStack))*1000;
                     int aOptFlowLoose=aOptFlow*4;
+                    final double aOptFlowLoose1 = Math.pow(1.1f, ((aBaseEff - 7500) / 10000F) * 20f);
                     if(aBaseEff>10000){
-                        aOptFlowLoose*=Math.pow(1.1f,((aBaseEff-7500)/10000F)*20f);
+                        aOptFlowLoose*= aOptFlowLoose1;
                         aBaseEff=7500;
                     }else if(aBaseEff>7500){
-                        aOptFlowLoose*=Math.pow(1.1f,((aBaseEff-7500)/10000F)*20f);
+                        aOptFlowLoose*= aOptFlowLoose1;
                         aBaseEff*=0.75f;
                     }else{
                         aBaseEff*=0.75f;
@@ -645,7 +646,7 @@ public abstract class GT_MetaGenerated_Tool extends GT_MetaBase_Item implements 
             return false;
         }
         Materials aMaterial = getPrimaryMaterial(aStack);
-        ConcurrentHashMap<Integer, Integer> tMap = new ConcurrentHashMap<Integer, Integer>(), tResult = new ConcurrentHashMap<Integer, Integer>();
+        ConcurrentHashMap<Integer, Integer> tMap = new ConcurrentHashMap<>(), tResult = new ConcurrentHashMap<>();
         if (aMaterial.mEnchantmentTools != null) {
             tMap.put(aMaterial.mEnchantmentTools.effectId, (int) aMaterial.mEnchantmentToolsLevel);
             if (aMaterial.mEnchantmentTools == Enchantment.fortune)

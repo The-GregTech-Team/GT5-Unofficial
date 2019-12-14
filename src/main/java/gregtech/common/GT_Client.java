@@ -47,31 +47,27 @@ import java.util.*;
 public class GT_Client extends GT_Proxy
         implements Runnable {
 
-    private static List ROTATABLE_VANILLA_BLOCKS;
+    private static List<Block> ROTATABLE_VANILLA_BLOCKS= Arrays.asList(Blocks.piston, Blocks.sticky_piston, Blocks.furnace, Blocks.lit_furnace, Blocks.dropper, Blocks.dispenser, Blocks.chest, Blocks.trapped_chest, Blocks.ender_chest, Blocks.hopper,
+            Blocks.pumpkin, Blocks.lit_pumpkin);
 
-    static {
-        ROTATABLE_VANILLA_BLOCKS = Arrays.asList(Blocks.piston, Blocks.sticky_piston, Blocks.furnace, Blocks.lit_furnace, Blocks.dropper, Blocks.dispenser, Blocks.chest, Blocks.trapped_chest, Blocks.ender_chest, Blocks.hopper,
-                Blocks.pumpkin, Blocks.lit_pumpkin);
-    }
-
-    private final HashSet mCapeList = new HashSet();
+    private final HashSet<String> mCapeList = new HashSet<>();
     private final GT_CapeRenderer mCapeRenderer;
-    private final List mPosR;
-    private final List mPosG;
-    private final List mPosB;
-    private final List mPosA = Arrays.asList();
-    private final List mNegR;
-    private final List mNegG;
-    private final List mNegB;
-    private final List mNegA = Arrays.asList();
-    private final List mMoltenPosR;
-    private final List mMoltenPosG;
-    private final List mMoltenPosB;
-    private final List mMoltenPosA = Arrays.asList();
-    private final List mMoltenNegR;
-    private final List mMoltenNegG;
-    private final List mMoltenNegB;
-    private final List mMoltenNegA = Arrays.asList();
+    private final List<Materials> mPosR;
+    private final List<Materials> mPosG;
+    private final List<Materials> mPosB;
+    private final List mPosA = Collections.emptyList();
+    private final List<Materials> mNegR;
+    private final List<Materials> mNegG;
+    private final List<Materials> mNegB;
+    private final List mNegA = Collections.emptyList();
+    private final List<Materials> mMoltenPosR;
+    private final List<Materials> mMoltenPosG;
+    private final List<Materials> mMoltenPosB;
+    private final List mMoltenPosA = Collections.emptyList();
+    private final List<Materials> mMoltenNegR;
+    private final List<Materials> mMoltenNegG;
+    private final List<Materials> mMoltenNegB;
+    private final List mMoltenNegA = Collections.emptyList();
     private long mAnimationTick;
     /**This is the place to def the value used below**/
     private long afterSomeTime;
@@ -99,9 +95,9 @@ public class GT_Client extends GT_Proxy
                 Materials.Pyrotheum, Materials.Sunnarium, Materials.Glowstone, Materials.InfusedAir, Materials.InfusedEarth);
         mMoltenPosB = Arrays.asList(Materials.Enderium, Materials.NetherStar, Materials.Vinteum, Materials.Uranium235, Materials.InfusedGold, Materials.Plutonium241, Materials.NaquadahEnriched, Materials.Naquadria, Materials.InfusedOrder, Materials.InfusedVis,
                 Materials.InfusedWater, Materials.Thaumium);
-        mMoltenNegR = Arrays.asList(Materials.InfusedEntropy);
-        mMoltenNegG = Arrays.asList(Materials.InfusedEntropy);
-        mMoltenNegB = Arrays.asList(Materials.InfusedEntropy);
+        mMoltenNegR = Collections.singletonList(Materials.InfusedEntropy);
+        mMoltenNegG = Collections.singletonList(Materials.InfusedEntropy);
+        mMoltenNegB = Collections.singletonList(Materials.InfusedEntropy);
     }
 
     private static void drawGrid(DrawBlockHighlightEvent aEvent) {
@@ -267,9 +263,8 @@ public class GT_Client extends GT_Proxy
                 "25FiveDetail", "AntiCivilBoy", "michaelbrady", "xXxIceFirexXx", "Speedynutty68", "GarretSidzaka", "HallowCharm977", "mastermind1919", "The_Hypersonic", "diamondguy2798",
                 "zF4ll3nPr3d4t0r", "CrafterOfMines57", "XxELIT3xSNIP3RxX", "SuterusuKusanagi", "xavier0014", "adamros", "alexbegt"
         };
-        int len$ = arr$.length;
-        for (int i$ = 0; i$ < len$; i$++) {
-            String tName = arr$[i$];
+
+        for (String tName : arr$) {
             mCapeList.add(tName.toLowerCase());
         }
         (new Thread(this)).start();
@@ -320,7 +315,7 @@ public class GT_Client extends GT_Proxy
                 String tName = tScanner.nextLine();
                 this.mCapeList.add(tName.toLowerCase());
             }
-        } catch (Throwable e) {
+        } catch (Throwable ignored) {
         }
         try {
             GT_Log.out.println("GT New Horizons: Downloading Cape List.");
@@ -338,7 +333,7 @@ public class GT_Client extends GT_Proxy
                          this.mCapeList.add(tName.toLowerCase());
                  }
               }
-                 } catch (Throwable e) {
+                 } catch (Throwable ignored) {
             }
         /**try {
             GT_Log.out.println("GT_Mod: Downloading News.");
@@ -367,21 +362,21 @@ public class GT_Client extends GT_Proxy
                     for(GT_Recipe recipe:GT_Recipe.GT_Recipe_Map.sAssemblylineVisualRecipes.mRecipeList){
                         recipe.mHidden=!sfw.hasAchievementUnlocked(GT_Mod.achievements.getAchievement(recipe.getOutput(0).getUnlocalizedName()));
                     }
-                }catch (Exception e){}
+                }catch (Exception ignored){}
             }
-            ArrayList<GT_PlayedSound> tList = new ArrayList();
+            ArrayList<GT_PlayedSound> tList = new ArrayList<>();
             for (Map.Entry<GT_PlayedSound, Integer> tEntry : GT_Utility.sPlayedSoundMap.entrySet()) {
-                if (tEntry.getValue().intValue() < 0) {//Integer -> Integer -> int? >_<, fix
+                if (tEntry.getValue() < 0) {//Integer -> Integer -> int? >_<, fix
                     tList.add(tEntry.getKey());
                 } else {
-                    tEntry.setValue(Integer.valueOf(tEntry.getValue().intValue() - 1));
+                    tEntry.setValue(tEntry.getValue() - 1);
                 }
             }
             GT_PlayedSound tKey;
-            for (Iterator i$ = tList.iterator(); i$.hasNext(); GT_Utility.sPlayedSoundMap.remove(tKey)) {
-                tKey = (GT_PlayedSound) i$.next();
+            for (Iterator<GT_PlayedSound> i$ = tList.iterator(); i$.hasNext(); GT_Utility.sPlayedSoundMap.remove(tKey)) {
+                tKey = i$.next();
             }
-            if(GregTech_API.mServerStarted == false)GregTech_API.mServerStarted = true;
+            if(!GregTech_API.mServerStarted)GregTech_API.mServerStarted = true;
             /*if ((this.isFirstClientPlayerTick) && (aEvent.player == GT_Values.GT.getThePlayer())) {
                 this.isFirstClientPlayerTick = false;
                 GT_FluidStack.fixAllThoseFuckingFluidIDs();
@@ -425,7 +420,6 @@ public class GT_Client extends GT_Proxy
                 }
                 if (aTileEntity instanceof BaseTileEntity && (GT_Utility.isStackInList(aEvent.currentItem, GregTech_API.sWireCutterList) || GT_Utility.isStackInList(aEvent.currentItem, GregTech_API.sSolderingToolList))) {
                 	drawGrid(aEvent);
-                    return;
                 }
             } catch (Throwable e) {
                 if (GT_Values.D1) {
@@ -439,9 +433,6 @@ public class GT_Client extends GT_Proxy
     public void receiveRenderEvent(net.minecraftforge.client.event.RenderPlayerEvent.Pre aEvent) {
         if (GT_Utility.getFullInvisibility(aEvent.entityPlayer)) {
             aEvent.setCanceled(true);
-            return;
-        } else {
-            return;
         }
     }
 
@@ -458,83 +449,71 @@ public class GT_Client extends GT_Proxy
             if (mAnimationTick % 50L == 0L)
                 {mAnimationDirection = !mAnimationDirection;}
             int tDirection = mAnimationDirection ? 1 : -1;
-            for (Iterator i$ = mPosR.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Materials tMaterial : mPosR) {
                 tMaterial.mRGBa[0] += tDirection;
             }
 
-            for (Iterator i$ = mPosG.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Materials tMaterial : mPosG) {
                 tMaterial.mRGBa[1] += tDirection;
             }
 
-            for (Iterator i$ = mPosB.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Materials tMaterial : mPosB) {
                 tMaterial.mRGBa[2] += tDirection;
             }
 
-            for (Iterator i$ = mPosA.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Object element : mPosA) {
+                Materials tMaterial = (Materials) element;
                 tMaterial.mRGBa[3] += tDirection;
             }
 
-            for (Iterator i$ = mNegR.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Materials tMaterial : mNegR) {
                 tMaterial.mRGBa[0] -= tDirection;
             }
 
-            for (Iterator i$ = mNegG.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Materials tMaterial : mNegG) {
                 tMaterial.mRGBa[1] -= tDirection;
             }
 
-            for (Iterator i$ = mNegB.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Materials tMaterial : mNegB) {
                 tMaterial.mRGBa[2] -= tDirection;
             }
 
-            for (Iterator i$ = mNegA.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Object item : mNegA) {
+                Materials tMaterial = (Materials) item;
                 tMaterial.mRGBa[3] -= tDirection;
             }
 
-            for (Iterator i$ = mMoltenPosR.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Materials tMaterial : mMoltenPosR) {
                 tMaterial.mMoltenRGBa[0] += tDirection;
             }
 
-            for (Iterator i$ = mMoltenPosG.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Materials tMaterial : mMoltenPosG) {
                 tMaterial.mMoltenRGBa[1] += tDirection;
             }
 
-            for (Iterator i$ = mMoltenPosB.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Materials tMaterial : mMoltenPosB) {
                 tMaterial.mMoltenRGBa[2] += tDirection;
             }
 
-            for (Iterator i$ = mMoltenPosA.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Object value : mMoltenPosA) {
+                Materials tMaterial = (Materials) value;
                 tMaterial.mMoltenRGBa[3] += tDirection;
             }
 
-            for (Iterator i$ = mMoltenNegR.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Materials tMaterial : mMoltenNegR) {
                 tMaterial.mMoltenRGBa[0] -= tDirection;
             }
 
-            for (Iterator i$ = mMoltenNegG.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Materials tMaterial : mMoltenNegG) {
                 tMaterial.mMoltenRGBa[1] -= tDirection;
             }
 
-            for (Iterator i$ = mMoltenNegB.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Materials tMaterial : mMoltenNegB) {
                 tMaterial.mMoltenRGBa[2] -= tDirection;
             }
 
-            for (Iterator i$ = mMoltenNegA.iterator(); i$.hasNext(); ) {
-                Materials tMaterial = (Materials) i$.next();
+            for (Object o : mMoltenNegA) {
+                Materials tMaterial = (Materials) o;
                 tMaterial.mMoltenRGBa[3] -= tDirection;
             }
 
@@ -564,55 +543,55 @@ public class GT_Client extends GT_Proxy
         if (tString.startsWith("streaming."))
             switch (aStack.stackSize) {
                 case 1: // '\001'
-                    tString = (new StringBuilder()).append(tString).append("13").toString();
+                    tString = tString + "13";
                     break;
 
                 case 2: // '\002'
-                    tString = (new StringBuilder()).append(tString).append("cat").toString();
+                    tString = tString + "cat";
                     break;
 
                 case 3: // '\003'
-                    tString = (new StringBuilder()).append(tString).append("blocks").toString();
+                    tString = tString + "blocks";
                     break;
 
                 case 4: // '\004'
-                    tString = (new StringBuilder()).append(tString).append("chirp").toString();
+                    tString = tString + "chirp";
                     break;
 
                 case 5: // '\005'
-                    tString = (new StringBuilder()).append(tString).append("far").toString();
+                    tString = tString + "far";
                     break;
 
                 case 6: // '\006'
-                    tString = (new StringBuilder()).append(tString).append("mall").toString();
+                    tString = tString + "mall";
                     break;
 
                 case 7: // '\007'
-                    tString = (new StringBuilder()).append(tString).append("mellohi").toString();
+                    tString = tString + "mellohi";
                     break;
 
                 case 8: // '\b'
-                    tString = (new StringBuilder()).append(tString).append("stal").toString();
+                    tString = tString + "stal";
                     break;
 
                 case 9: // '\t'
-                    tString = (new StringBuilder()).append(tString).append("strad").toString();
+                    tString = tString + "strad";
                     break;
 
                 case 10: // '\n'
-                    tString = (new StringBuilder()).append(tString).append("ward").toString();
+                    tString = tString + "ward";
                     break;
 
                 case 11: // '\013'
-                    tString = (new StringBuilder()).append(tString).append("11").toString();
+                    tString = tString + "11";
                     break;
 
                 case 12: // '\f'
-                    tString = (new StringBuilder()).append(tString).append("wait").toString();
+                    tString = tString + "wait";
                     break;
 
                 default:
-                    tString = (new StringBuilder()).append(tString).append("wherearewenow").toString();
+                    tString = tString + "wherearewenow";
                     break;
             }
         if (tString.startsWith("streaming."))

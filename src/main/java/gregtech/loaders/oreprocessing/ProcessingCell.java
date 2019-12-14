@@ -57,8 +57,7 @@ public class ProcessingCell
                                 if (tItemAmount + tMat.mAmount * 3628800L <= aStack.getMaxStackSize() * aMaterial.getDensity()) {
                                     tItemAmount += tMat.mAmount * 3628800L;
                                     if (tStack != null) {
-                                        ItemStack tmp397_395 = tStack;
-                                        tmp397_395.stackSize = ((int) (tmp397_395.stackSize * tDensityMultiplier));
+                                        tStack.stackSize = ((int) (tStack.stackSize * tDensityMultiplier));
                                         while ((tStack.stackSize > 64) && (tCapsuleCount + GT_ModHandler.getCapsuleCellContainerCount(tStack) * 64 < 0L ? tList.size() < 5 : tList.size() < 6) && (tCapsuleCount + GT_ModHandler.getCapsuleCellContainerCount(tStack) * 64 <= 64L)) {
                                             tCapsuleCount += GT_ModHandler.getCapsuleCellContainerCount(tStack) * 64;
                                             tList.add(GT_Utility.copyAmount(64L, tStack));

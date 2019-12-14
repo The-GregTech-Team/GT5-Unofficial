@@ -33,7 +33,7 @@ public class GuiModularArmor extends GuiContainer {
 	}
 
 	protected void drawTooltip(int x, int y) {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		if (x >= 10 && x <= 17) {
 			if (y >= 20 && y <= 27) {
 				list.add(GT_LanguageManager.getTranslation("Weight") + ": " + cont.mInvArmor.data.mStat.get(StatType.WEIGHT));

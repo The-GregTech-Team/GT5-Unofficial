@@ -92,11 +92,11 @@ public class GuiElectricArmor1 extends GuiContainer {
 		default:
 			break;
 		}
-		float tankCap = cont.mInvArmor.data.mStat.containsKey(StatType.TANKCAP) ? cont.mInvArmor.data.mStat.get(StatType.TANKCAP) : 0.0f;
+		float tankCap = cont.mInvArmor.data.mStat.getOrDefault(StatType.TANKCAP, 0.0f);
 		if (tankCap > 0) {
 			drawTexturedModalRect(xStart + 94, yStart + 32, 231, 69, 16, 34);
 		}
-		float weight = cont.mInvArmor.data.mStat.containsKey(StatType.WEIGHT) ? cont.mInvArmor.data.mStat.get(StatType.WEIGHT) : 0.0f;
+		float weight = cont.mInvArmor.data.mStat.getOrDefault(StatType.WEIGHT, 0.0f);
 		int bar = (int) Math.floor(18 * (weight) / (float) 1000);
 		drawTexturedModalRect(xStart + 15, yStart + 7, 217, 26, bar, 5);
 		drawTexturedModalRect(xStart + bar + 15, yStart + 7, 197 + bar, 26, 18 - bar, 5);
@@ -227,7 +227,7 @@ public class GuiElectricArmor1 extends GuiContainer {
 	}
 	
 	protected void drawTooltip(int x, int y) {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		//General tooltips
 		if(x>=7&&y>=11&&x<=33&&y<=17){
 				list.add(GT_LanguageManager.getTranslation("Weight") + ": " + cont.mInvArmor.data.mStat.get(StatType.WEIGHT));

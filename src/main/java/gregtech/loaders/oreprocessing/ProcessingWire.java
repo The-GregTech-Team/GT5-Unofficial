@@ -96,7 +96,7 @@ public class ProcessingWire implements gregtech.api.interfaces.IOreRecipeRegistr
 
         switch (aMaterial.mName){
             case "RedAlloy":case "Cobalt": case "Lead": case "Tin": case "Zinc":case "SolderingAlloy":
-                ArrayList<Object> craftingListRubber = new ArrayList<Object>();
+                ArrayList<Object> craftingListRubber = new ArrayList<>();
                 craftingListRubber.add(aOreDictName);
                 for (int i = 0; i < costMultiplier; i++) {
                     craftingListRubber.add(OrePrefixes.plate.get(Materials.Rubber));

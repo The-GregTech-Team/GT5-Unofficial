@@ -72,8 +72,7 @@ public class ProcessingDust implements gregtech.api.interfaces.IOreRecipeRegistr
                             if (tItemAmount + tMat.mAmount * 3628800L <= aStack.getMaxStackSize() * aMaterial.getDensity()) {
                                 tItemAmount += tMat.mAmount * 3628800L;
                                 if (tDustStack != null) {
-                                    ItemStack tmp793_791 = tDustStack;
-                                    tmp793_791.stackSize = ((int) (tmp793_791.stackSize * tDensityMultiplier));
+                                    tDustStack.stackSize = ((int) (tDustStack.stackSize * tDensityMultiplier));
                                     while ((tDustStack.stackSize > 64) && (tList.size() < 6) && (tCapsuleCount + GT_ModHandler.getCapsuleCellContainerCount(tDustStack) * 64 <= 64L)) {
                                         tCapsuleCount += GT_ModHandler.getCapsuleCellContainerCount(tDustStack) * 64;
                                         tList.add(GT_Utility.copyAmount(64L, tDustStack));

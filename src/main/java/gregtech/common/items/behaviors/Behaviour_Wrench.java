@@ -67,7 +67,7 @@ public class Behaviour_Wrench
                 }
                 return true;
             }
-        } catch (Throwable e) {
+        } catch (Throwable ignored) {
         }
         if ((aBlock == Blocks.log) || (aBlock == Blocks.log2) || (aBlock == Blocks.hay_block)) {
             if ((aPlayer.capabilities.isCreativeMode) || (((GT_MetaGenerated_Tool) aItem).doDamage(aStack, this.mCosts))) {
@@ -76,16 +76,17 @@ public class Behaviour_Wrench
             }
             return true;
         }
+        final int metadata = aMeta / 4 * 4 + (aMeta % 4 + 1) % 4;
         if ((aBlock == Blocks.powered_repeater) || (aBlock == Blocks.unpowered_repeater)) {
             if ((aPlayer.capabilities.isCreativeMode) || (((GT_MetaGenerated_Tool) aItem).doDamage(aStack, this.mCosts))) {
-                aWorld.setBlockMetadataWithNotify(aX, aY, aZ, aMeta / 4 * 4 + (aMeta % 4 + 1) % 4, 3);
+                aWorld.setBlockMetadataWithNotify(aX, aY, aZ, metadata, 3);
                 GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(Integer.valueOf(100)), 1.0F, -1.0F, aX, aY, aZ);
             }
             return true;
         }
         if ((aBlock == Blocks.powered_comparator) || (aBlock == Blocks.unpowered_comparator)) {
             if ((aPlayer.capabilities.isCreativeMode) || (((GT_MetaGenerated_Tool) aItem).doDamage(aStack, this.mCosts))) {
-                aWorld.setBlockMetadataWithNotify(aX, aY, aZ, aMeta / 4 * 4 + (aMeta % 4 + 1) % 4, 3);
+                aWorld.setBlockMetadataWithNotify(aX, aY, aZ, metadata, 3);
                 GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(Integer.valueOf(100)), 1.0F, -1.0F, aX, aY, aZ);
             }
             return true;

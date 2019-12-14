@@ -115,9 +115,8 @@ public class GT_Container_Regulator
         for (int i = 0; i < 9; i++) {
             this.mTargetSlots[i] = ((GT_MetaTileEntity_Regulator) this.mTileEntity.getMetaTileEntity()).mTargetSlots[i];
         }
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting) var2.next();
+        for (Object crafter : this.crafters) {
+            ICrafting var1 = (ICrafting) crafter;
             for (int i = 0; i < 9; i++) {
                 var1.sendProgressBarUpdate(this, 100 + i, this.mTargetSlots[i]);
             }

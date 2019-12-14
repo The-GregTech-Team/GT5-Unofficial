@@ -101,11 +101,11 @@ public class GT_MetaTileEntity_LargeTurbine_Plasma extends GT_MetaTileEntity_Lar
 
             storedFluid=0;
             int aFluids_sS=aFluids.size();
-            for (int i = 0; i < aFluids_sS; i++) {
-                if (aFluids.get(i).isFluidEqual(firstFuelType)) {
-                    flow = Math.min(aFluids.get(i).amount, remainingFlow); // try to use up w/o exceeding remainingFlow
-                    depleteInput(new FluidStack(aFluids.get(i), flow)); // deplete that amount
-                    this.storedFluid += aFluids.get(i).amount;
+            for (FluidStack aFluid : aFluids) {
+                if (aFluid.isFluidEqual(firstFuelType)) {
+                    flow = Math.min(aFluid.amount, remainingFlow); // try to use up w/o exceeding remainingFlow
+                    depleteInput(new FluidStack(aFluid, flow)); // deplete that amount
+                    this.storedFluid += aFluid.amount;
                     remainingFlow -= flow; // track amount we're allowed to continue depleting from hatches
                     totalFlow += flow; // track total input used
                 }
@@ -133,10 +133,8 @@ public class GT_MetaTileEntity_LargeTurbine_Plasma extends GT_MetaTileEntity_Lar
                 //if (efficiency < 0)
                 //    efficiency = 0; // Can happen with really ludicrously poor inefficiency.
                 tEU = (int)(tEU * efficiency);
-                tEU = GT_Utility.safeInt((long)(aBaseEff/10000D*tEU));
-            } else {
-                tEU = GT_Utility.safeInt((long)(aBaseEff/10000D*tEU));
             }
+            tEU = GT_Utility.safeInt((long)(aBaseEff/10000D*tEU));
 
             return tEU;
 
@@ -158,7 +156,7 @@ public class GT_MetaTileEntity_LargeTurbine_Plasma extends GT_MetaTileEntity_Lar
                 baseEff = GT_Utility.safeInt((long)((5F + ((GT_MetaGenerated_Tool) aStack.getItem()).getToolCombatDamage(aStack)) * 1000F));
                 optFlow = GT_Utility.safeInt((long)Math.max(Float.MIN_NORMAL,
                         ((GT_MetaGenerated_Tool) aStack.getItem()).getToolStats(aStack).getSpeedMultiplier()
-                                * ((GT_MetaGenerated_Tool) aStack.getItem()).getPrimaryMaterial(aStack).mToolSpeed
+                                * GT_MetaGenerated_Tool.getPrimaryMaterial(aStack).mToolSpeed
                                 * 50));
             } else {
                 counter++;

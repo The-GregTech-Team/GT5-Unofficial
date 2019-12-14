@@ -237,16 +237,8 @@ public class GT_Pollution {
 
 	public static void addPollution(Chunk ch, int aPollution){
 		if(!GT_Mod.gregtechproxy.mPollution)return;
-		HashMap<ChunkCoordIntPair,int[]> dataMap=dimensionWiseChunkData.get(ch.worldObj.provider.dimensionId);
-		if(dataMap==null){
-			dataMap=new HashMap<>(1024);
-			dimensionWiseChunkData.put(ch.worldObj.provider.dimensionId,dataMap);
-		}
-		int[] dataArr=dataMap.get(ch.getChunkCoordIntPair());
-		if(dataArr==null){
-			dataArr=getDefaultChunkDataOnCreation();
-			dataMap.put(ch.getChunkCoordIntPair(),dataArr);
-		}
+		HashMap<ChunkCoordIntPair, int[]> dataMap = dimensionWiseChunkData.computeIfAbsent(ch.worldObj.provider.dimensionId, k -> new HashMap<>(1024));
+		int[] dataArr = dataMap.computeIfAbsent(ch.getChunkCoordIntPair(), k -> getDefaultChunkDataOnCreation());
 		dataArr[GTPOLLUTION]+=aPollution;
 		if(dataArr[GTPOLLUTION]<0)dataArr[GTPOLLUTION]=0;
 	}

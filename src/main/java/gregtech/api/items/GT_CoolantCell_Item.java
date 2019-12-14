@@ -66,10 +66,9 @@ public class GT_CoolantCell_Item
         default: color = EnumChatFormatting.DARK_RED; break;
         }
         aList.add(EnumChatFormatting.WHITE + String.format(trans("000", "Stored Heat: %s"), "" + color + getHeatOfStack(aStack)));
-        switch (getControlTagOfStack(aStack)) {
-            case 1:
-                aList.add(StatCollector.translateToLocal("ic2.reactoritem.heatwarning.line1"));
-                aList.add(StatCollector.translateToLocal("ic2.reactoritem.heatwarning.line2"));
+        if (getControlTagOfStack(aStack) == 1) {
+            aList.add(StatCollector.translateToLocal("ic2.reactoritem.heatwarning.line1"));
+            aList.add(StatCollector.translateToLocal("ic2.reactoritem.heatwarning.line2"));
         }
     }
 

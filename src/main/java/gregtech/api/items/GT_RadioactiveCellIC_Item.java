@@ -152,7 +152,7 @@ public class GT_RadioactiveCellIC_Item extends GT_RadioactiveCell_Item implement
         }
     }
 
-    private class ItemStackCoord {
+    private static class ItemStackCoord {
         public ItemStack stack;
         public int x;
         public int y;

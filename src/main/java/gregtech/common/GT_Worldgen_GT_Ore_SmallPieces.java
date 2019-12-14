@@ -25,7 +25,7 @@ public class GT_Worldgen_GT_Ore_SmallPieces
     public final boolean mMoon = false, mMars = false, mAsteroid = false;
     public final String mBiome;
     public final String aTextWorldgen = "worldgen.";
-    public static ArrayList<GT_Worldgen_GT_Ore_SmallPieces> sList = new ArrayList<GT_Worldgen_GT_Ore_SmallPieces>();
+    public static ArrayList<GT_Worldgen_GT_Ore_SmallPieces> sList = new ArrayList<>();
     
     //TODO CHECk IF INSTANTIATION IS CORRECT
     public GT_Worldgen_GT_Ore_SmallPieces(String aName, boolean aDefault, int aMinY, int aMaxY, int aAmount, boolean aOverworld, boolean aNether, boolean aEnd, Materials aPrimary) {
@@ -59,7 +59,7 @@ public class GT_Worldgen_GT_Ore_SmallPieces
         if (!this.mBiome.equals("None") && !(this.mBiome.equals(aBiome))) {
             return false; //Not the correct biome for ore mix
         }
-        if (!isGenerationAllowed(aWorld, aDimensionType, ((aDimensionType == -1) && (this.mNether)) || ((aDimensionType == 0) && (this.mOverworld)) || ((aDimensionType == 1) && (this.mEnd)) ? aDimensionType : aDimensionType ^ 0xFFFFFFFF)) {
+        if (!isGenerationAllowed(aWorld, aDimensionType, ((aDimensionType == -1) && (this.mNether)) || ((aDimensionType == 0) && (this.mOverworld)) || ((aDimensionType == 1) && (this.mEnd)) ? aDimensionType : ~aDimensionType)) {
             return false;
         }
         int count=0;

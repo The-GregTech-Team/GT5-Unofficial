@@ -55,17 +55,15 @@ public class InventoryArmor implements IInventory {
 			product = parts[i];
 			parts[i] = null;
 //			def = ArmorCalculation.calculateArmor(parts);
-			data.calculateArmor(parts);
-			return product;
 		} else {
 			product = parts[i].splitStack(j);
 			if (parts[i].stackSize == 0) {
 				parts[i] = null;
 			}
 //			def = ArmorCalculation.calculateArmor(parts);
-			data.calculateArmor(parts);
-			return product;
 		}
+		data.calculateArmor(parts);
+		return product;
 	}
 
 	@Override

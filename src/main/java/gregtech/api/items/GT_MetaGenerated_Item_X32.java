@@ -85,7 +85,7 @@ public abstract class GT_MetaGenerated_Item_X32 extends GT_MetaGenerated_Item {
     public boolean doesMaterialAllowGeneration(OrePrefixes aPrefix, Materials aMaterial) {
         // You have to check for at least these Conditions in every Case! So add a super Call like the following for this before executing your Code:
         // if (!super.doesMaterialAllowGeneration(aPrefix, aMaterial)) return false;
-        return aPrefix != null && aMaterial != null && aPrefix.doGenerateItem(aMaterial);
+        return aPrefix != null && aPrefix.doGenerateItem(aMaterial);
     }
 	
 	/* ---------- OVERRIDEABLE FUNCTIONS ---------- */

@@ -94,7 +94,7 @@ public class GT_MetaTileEntity_LargeChemicalReactor extends GT_MetaTileEntity_Mu
 			}
 		}
 		tInputList.add(mInventory[1]);
-		ItemStack[] inputs = tInputList.toArray(new ItemStack[tInputList.size()]);
+		ItemStack[] inputs = tInputList.toArray(new ItemStack[0]);
 
 		ArrayList<FluidStack> tFluidList = getStoredFluids();
 		int tFluidList_sS = tFluidList.size();
@@ -112,7 +112,7 @@ public class GT_MetaTileEntity_LargeChemicalReactor extends GT_MetaTileEntity_Mu
 				}
 			}
 		}
-		FluidStack[] fluids = tFluidList.toArray(new FluidStack[tFluidList.size()]);
+		FluidStack[] fluids = tFluidList.toArray(new FluidStack[0]);
 
 		if (inputs.length > 0 || fluids.length > 0) {
 			long voltage = getMaxInputVoltage();

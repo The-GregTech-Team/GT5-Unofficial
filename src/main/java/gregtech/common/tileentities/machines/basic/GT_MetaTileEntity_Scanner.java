@@ -15,6 +15,7 @@ import gregtech.api.objects.ItemData;
 import gregtech.api.util.*;
 import gregtech.common.items.behaviors.Behaviour_DataOrb;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -48,14 +49,14 @@ public class GT_MetaTileEntity_Scanner
         } else if ((GT_Utility.isStackValid(aStack)) && (aStack.stackSize > 0)) {
             if ((getFillableStack() != null) && (getFillableStack().containsFluid(Materials.Honey.getFluid(100L)))) {
                 try {
-                    Object tIndividual = AlleleManager.alleleRegistry.getIndividual(aStack);
+                    IIndividual tIndividual = AlleleManager.alleleRegistry.getIndividual(aStack);
                     if (tIndividual != null) {
-                        if (((IIndividual) tIndividual).analyze()) {
+                        if (tIndividual.analyze()) {
                             getFillableStack().amount -= 100;
                             this.mOutputItems[0] = GT_Utility.copy(aStack);
                             aStack.stackSize = 0;
                             NBTTagCompound tNBT = new NBTTagCompound();
-                            ((IIndividual) tIndividual).writeToNBT(tNBT);
+                            tIndividual.writeToNBT(tNBT);
                             this.mOutputItems[0].setTagCompound(tNBT);
                             calculateOverclockedNess(2, 500);
                             //In case recipe is too OP for that machine
@@ -158,12 +159,12 @@ public class GT_MetaTileEntity_Scanner
                 if ((aStack.getItem().getUnlocalizedName().contains("Schematic") || aStack.getItem().getUnlocalizedName().contains("schematic")) && !aStack.getItem().getUnlocalizedName().contains("Schematics")) {
                     String sTier = "";
 
-                    if (aStack.getItem().getIdFromItem(aStack.getItem()) == GT_ModHandler.getModItem("GalacticraftCore", "item.schematic", 1L, 0).getItem().getIdFromItem(GT_ModHandler.getModItem("GalacticraftCore", "item.schematic", 1L, 0).getItem())) {
+                    if (Item.getIdFromItem(aStack.getItem()) == Item.getIdFromItem(GT_ModHandler.getModItem("GalacticraftCore", "item.schematic", 1L, 0).getItem())) {
                         if (aStack.getItemDamage() == 0 && aStack.toString().equals(GT_ModHandler.getModItem("GalacticraftCore", "item.schematic", 1L, 0).copy().toString()))
                             sTier = "100";
                         else if (aStack.getItemDamage() == 1 && aStack.toString().equals(GT_ModHandler.getModItem("GalacticraftCore", "item.schematic", 1L, 1).copy().toString()))
                             sTier = "2";
-                    } else if (aStack.getItem().getIdFromItem(aStack.getItem()) == GT_ModHandler.getModItem("GalacticraftMars", "item.schematic", 1L, 0).getItem().getIdFromItem(GT_ModHandler.getModItem("GalacticraftMars", "item.schematic", 1L, 0).getItem())) {
+                    } else if (Item.getIdFromItem(aStack.getItem()) == Item.getIdFromItem(GT_ModHandler.getModItem("GalacticraftMars", "item.schematic", 1L, 0).getItem())) {
                         if (aStack.getItemDamage() == 0 && aStack.toString().equals(GT_ModHandler.getModItem("GalacticraftMars", "item.schematic", 1L, 0).copy().toString()))
                             sTier = "3";
                         else if (aStack.getItemDamage() == 1 && aStack.toString().equals(GT_ModHandler.getModItem("GalacticraftMars", "item.schematic", 1L, 1).copy().toString()))
@@ -274,7 +275,7 @@ public class GT_MetaTileEntity_Scanner
                                         }
 
 
-                                        tBuilder.append((count == 0 ? "" : "\nOr ") + tStack.stackSize + " " + s);
+                                        tBuilder.append(count == 0 ? "" : "\nOr ").append(tStack.stackSize).append(" ").append(s);
                                         count++;
                                     }
                                 }

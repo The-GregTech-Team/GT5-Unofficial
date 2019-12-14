@@ -106,18 +106,18 @@ public abstract class GT_MetaTileEntity_FusionComputer extends GT_MetaTileEntity
                 && (addIfInjector(xCenter - 6, yCenter - 1, zCenter - 1, aBaseMetaTileEntity)) && (addIfInjector(xCenter + 6, yCenter - 1, zCenter - 1, aBaseMetaTileEntity))
                 && (this.mEnergyHatches.size() >= 1) && (this.mOutputHatches.size() >= 1) && (this.mInputHatches.size() >= 2)) {
             int mEnergyHatches_sS = this.mEnergyHatches.size();
-            for (int i = 0; i < mEnergyHatches_sS; i++) {
-                if (this.mEnergyHatches.get(i).mTier < tier())
+            for (GT_MetaTileEntity_Hatch_Energy mEnergyHatch : this.mEnergyHatches) {
+                if (mEnergyHatch.mTier < tier())
                     return false;
             }
             int mOutputHatches_sS = this.mOutputHatches.size();
-            for (int i = 0; i < mOutputHatches_sS; i++) {
-                if (this.mOutputHatches.get(i).mTier < tier())
+            for (GT_MetaTileEntity_Hatch_Output mOutputHatch : this.mOutputHatches) {
+                if (mOutputHatch.mTier < tier())
                     return false;
             }
             int mInputHatches_sS = this.mInputHatches.size();
-            for (int i = 0; i < mInputHatches_sS; i++) {
-                if (this.mInputHatches.get(i).mTier < tier())
+            for (GT_MetaTileEntity_Hatch_Input mInputHatch : this.mInputHatches) {
+                if (mInputHatch.mTier < tier())
                     return false;
             }
             mWrench = true;
@@ -134,8 +134,8 @@ public abstract class GT_MetaTileEntity_FusionComputer extends GT_MetaTileEntity
     private boolean checkTier(byte tier, ArrayList<GT_MetaTileEntity_Hatch> list) {
         if (list != null) {
             int list_sS=list.size();
-            for (int i = 0; i < list_sS; i++) {
-                if (list.get(i).mTier < tier) {
+            for (GT_MetaTileEntity_Hatch gt_metaTileEntity_hatch : list) {
+                if (gt_metaTileEntity_hatch.mTier < tier) {
                     return false;
                 }
             }
@@ -269,7 +269,7 @@ public abstract class GT_MetaTileEntity_FusionComputer extends GT_MetaTileEntity
             }
         }
         if (tFluidList.size() > 1) {
-            FluidStack[] tFluids = tFluidList.toArray(new FluidStack[tFluidList.size()]);
+            FluidStack[] tFluids = tFluidList.toArray(new FluidStack[0]);
             GT_Recipe tRecipe = GT_Recipe.GT_Recipe_Map.sFusionRecipes.findRecipe(this.getBaseMetaTileEntity(), this.mLastRecipe, false, GT_Values.V[8], tFluids);
             if ((tRecipe == null && !mRunningOnLoad) || (maxEUStore() < tRecipe.mSpecialValue)) {
                 turnCasingActive(false);

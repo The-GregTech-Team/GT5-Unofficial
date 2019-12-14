@@ -18,6 +18,7 @@ import java.util.*;
 
 import static gregtech.GT_Mod.GT_FML_LOGGER;
 
+@SuppressWarnings("unchecked")
 public class ArmorData {
 
 	public int type; // 0 = helmet; 1 = chestplate; 2 = leggings; 3 = boots;
@@ -32,8 +33,8 @@ public class ArmorData {
 	public ArmorData leggings;
 	public ArmorData boots;	
 
-	public Map<StatType,Float> mStat = new HashMap<StatType,Float>();
-	public Map<StatType,Boolean> mBStat = new HashMap<StatType,Boolean>();
+	public Map<StatType,Float> mStat = new HashMap<>();
+	public Map<StatType,Boolean> mBStat = new HashMap<>();
 	static ArrayList<StatType> updateArmorStatTypeList;
 //	public boolean fullArmor;
 //	public boolean fullRadiationDef;
@@ -86,7 +87,7 @@ public class ArmorData {
 
 	public ArmorData(EntityPlayer player, ItemStack stack, int type, int tier) {
 		if (updateArmorStatTypeList == null) {
-			updateArmorStatTypeList = new ArrayList<StatType>();
+			updateArmorStatTypeList = new ArrayList<>();
 			updateArmorStatTypeList.add(StatType.MAGNET);
 			updateArmorStatTypeList.add(StatType.THORNS);
 			updateArmorStatTypeList.add(StatType.PROCESSINGPOWER);
@@ -139,7 +140,7 @@ public class ArmorData {
 	}
 
 	public void updateTooltip() {
-		List<String> tagList = new ArrayList<String>();
+		List<String> tagList = new ArrayList<>();
 		String tmp2 = "";
 		if (maxWeight > 4000) {
 			tmp2 = " " + GT_LanguageManager.getTranslation("Too Heavy");
@@ -386,8 +387,10 @@ public class ArmorData {
 
 	public void change(Map aMap, StatType aType, float aChange) {
 		float tChange = 0;
-		if (aMap == null)
+		if (aMap == null) {
 			GT_FML_LOGGER.info("changeMapnull");
+			return;
+		}
 		if (aMap.containsKey(aType)) {
 			Object value = aMap.get(aType);
 			tChange = value != null ? (float) aMap.get(aType) : 0.0f;

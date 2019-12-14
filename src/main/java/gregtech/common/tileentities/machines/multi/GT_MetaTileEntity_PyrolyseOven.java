@@ -88,7 +88,7 @@ public class GT_MetaTileEntity_PyrolyseOven extends GT_MetaTileEntity_MultiBlock
                 }
             }
         }
-        ItemStack[] tInputs = Arrays.copyOfRange(tInputList.toArray(new ItemStack[tInputList.size()]), 0, 2);
+        ItemStack[] tInputs = Arrays.copyOfRange(tInputList.toArray(new ItemStack[0]), 0, 2);
 
         ArrayList<FluidStack> tFluidList = getStoredFluids();
         int tFluidList_sS=tFluidList.size();

@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static gregtech.api.enums.GT_Values.*;
@@ -25,7 +26,7 @@ public class GT_RecipeRegistrator {
     /**
      * List of Materials, which are used in the Creation of Sticks. All Rod Materials are automatically added to this List.
      */
-    public static final List<Materials> sRodMaterialList = new ArrayList<Materials>();
+    public static final List<Materials> sRodMaterialList = new ArrayList<>();
     private static final ItemStack sMt1 = new ItemStack(Blocks.dirt, 1, 0), sMt2 = new ItemStack(Blocks.dirt, 1, 0);
     private static final String s_H = "h", s_F = "f", s_I = "I", s_P = "P", s_R = "R";
     private static final ItemStack[][]
@@ -271,7 +272,7 @@ public class GT_RecipeRegistrator {
         ItemStack tDust = GT_OreDictUnificator.getDust(aData.mMaterial);
         if (tDust != null && GT_ModHandler.addPulverisationRecipe(GT_Utility.copyAmount(1, aStack), tDust, GT_OreDictUnificator.getDust(aData.getByProduct(0)), 100, GT_OreDictUnificator.getDust(aData.getByProduct(1)), 100, true)) {
             if (GregTech_API.sThaumcraftCompat != null)
-                GregTech_API.sThaumcraftCompat.addCrucibleRecipe(IThaumcraftCompat.ADVANCEDENTROPICPROCESSING, aStack, tDust, Arrays.asList(new TC_AspectStack(TC_Aspects.PERDITIO, Math.max(1, (aData.mMaterial.mAmount * 2) / M))));
+                GregTech_API.sThaumcraftCompat.addCrucibleRecipe(IThaumcraftCompat.ADVANCEDENTROPICPROCESSING, aStack, tDust, Collections.singletonList(new TC_AspectStack(TC_Aspects.PERDITIO, Math.max(1, (aData.mMaterial.mAmount * 2) / M))));
         }
     }
 

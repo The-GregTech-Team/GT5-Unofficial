@@ -65,7 +65,7 @@ public interface IExperimentalEnergyTileEntity extends IColoredTileEntity, IHasW
          *
          * @return the amount of used secondary value.
          */
-        public static final long emitEnergyToNetwork(SubTag aEnergyType, long aPrimary, long aSecondary, IExperimentalEnergyTileEntity aEmitter) {
+        public static long emitEnergyToNetwork(SubTag aEnergyType, long aPrimary, long aSecondary, IExperimentalEnergyTileEntity aEmitter) {
             long rUsedSecondary = 0;
             checkAvailabilities();
             for (byte i = 0, j = 0; i < 6 && aSecondary > rUsedSecondary; i++)

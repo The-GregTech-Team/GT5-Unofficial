@@ -88,7 +88,7 @@ public class GT_MetaTileEntity_PotionBrewer
                 }
                 if (GT_Utility.areStacksEqual(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 1L), getInputAt(0))) {
                     if (!tModifier.startsWith("strong")) {
-                        return setOutput("potion." + tInputName + ".strong" + (tModifier.isEmpty() ? "" : new StringBuilder().append(".").append(tModifier).toString()));
+                        return setOutput("potion." + tInputName + ".strong" + (tModifier.isEmpty() ? "" : "." + tModifier));
                     }
                     if (tModifier.startsWith("long")) {
                         return setOutput("potion." + tInputName + tModifier.replaceFirst("long", ""));
@@ -97,7 +97,7 @@ public class GT_MetaTileEntity_PotionBrewer
                 }
                 if (GT_Utility.areStacksEqual(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 1L), getInputAt(0))) {
                     if (!tModifier.startsWith("long")) {
-                        return setOutput("potion." + tInputName + ".long" + (tModifier.isEmpty() ? "" : new StringBuilder().append(".").append(tModifier).toString()));
+                        return setOutput("potion." + tInputName + ".long" + (tModifier.isEmpty() ? "" : "." + tModifier));
                     }
                     if (tModifier.startsWith("strong")) {
                         return setOutput("potion." + tInputName + tModifier.replaceFirst("strong", ""));
