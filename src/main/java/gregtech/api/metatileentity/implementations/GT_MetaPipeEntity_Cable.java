@@ -1,5 +1,6 @@
 package gregtech.api.metatileentity.implementations;
 
+import appeng.api.parts.IPartHost;
 import cofh.api.energy.IEnergyReceiver;
 import com.google.common.collect.Sets;
 import cpw.mods.fml.common.Loader;
@@ -18,8 +19,8 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.BaseMetaPipeEntity;
 import gregtech.api.metatileentity.MetaPipeEntity;
 import gregtech.api.objects.GT_RenderedTexture;
-import gregtech.api.util.GT_GC_Compat;
 import gregtech.api.util.GT_CoverBehavior;
+import gregtech.api.util.GT_GC_Compat;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.GT_Client;
@@ -31,7 +32,6 @@ import ic2.api.energy.tile.IEnergySink;
 import ic2.api.energy.tile.IEnergySource;
 import ic2.api.energy.tile.IEnergyTile;
 import ic2.api.reactor.IReactorChamber;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,8 +46,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
-import appeng.api.parts.IPartHost;
 
 import static gregtech.api.enums.GT_Values.VN;
 
@@ -148,7 +146,7 @@ public class GT_MetaPipeEntity_Cable extends MetaPipeEntity implements IMetaTile
 
     @Override
     public int getProgresstime() {
-        return (int) mTransferredAmperage * 64;
+        return mTransferredAmperage * 64;
     }
 
     @Override
@@ -267,7 +265,7 @@ public class GT_MetaPipeEntity_Cable extends MetaPipeEntity implements IMetaTile
             }
             else if (rfReceiver.receiveEnergy(tDirection, rfOut, true) > 0) {
                 if (mRestRF == 0) {
-                    int RFtrans = rfReceiver.receiveEnergy(tDirection, (int) rfOut, false);
+                    int RFtrans = rfReceiver.receiveEnergy(tDirection, rfOut, false);
                     rUsedAmperes++;
                     mRestRF = rfOut - RFtrans;
                 } else {
@@ -455,11 +453,7 @@ public class GT_MetaPipeEntity_Cable extends MetaPipeEntity implements IMetaTile
             return true;
 
         // RF Input Compat
-        if (GregTech_API.mInputRF && (tTileEntity instanceof IEnergyEmitter && ((IEnergyEmitter) tTileEntity).emitsEnergyTo((TileEntity)baseMetaTile, tDir)))
-            return true;
-
-
-        return false;
+        return GregTech_API.mInputRF && (tTileEntity instanceof IEnergyEmitter && ((IEnergyEmitter) tTileEntity).emitsEnergyTo((TileEntity) baseMetaTile, tDir));
     }
 
     @Override
@@ -516,18 +510,18 @@ public class GT_MetaPipeEntity_Cable extends MetaPipeEntity implements IMetaTile
     public String[] getInfoData() {
         return new String[]{
                 //EnumChatFormatting.BLUE + mName + EnumChatFormatting.RESET,
-                "Heat: "+
-                        EnumChatFormatting.RED+ mOverheat +EnumChatFormatting.RESET+" / "+EnumChatFormatting.YELLOW+ mMaxOverheat + EnumChatFormatting.RESET,
+                "Heat: " +
+                        EnumChatFormatting.RED + mOverheat + EnumChatFormatting.RESET + " / " + EnumChatFormatting.YELLOW + mMaxOverheat + EnumChatFormatting.RESET,
                 "Max Load (1t):",
-                EnumChatFormatting.GREEN + Integer.toString(mTransferredAmperageOK) + EnumChatFormatting.RESET +" A / "+
-                        EnumChatFormatting.YELLOW + Long.toString(mAmperage) + EnumChatFormatting.RESET +" A",
+                EnumChatFormatting.GREEN + Integer.toString(mTransferredAmperageOK) + EnumChatFormatting.RESET + " A / " +
+                        EnumChatFormatting.YELLOW + mAmperage + EnumChatFormatting.RESET + " A",
                 "Max EU/p (1t):",
-                EnumChatFormatting.GREEN + Long.toString(mTransferredVoltageOK) + EnumChatFormatting.RESET +" EU / "+
-                        EnumChatFormatting.YELLOW + Long.toString(mVoltage) + EnumChatFormatting.RESET +" EU",
-                "Max Load (20t): "+
-                    EnumChatFormatting.GREEN + Integer.toString(mTransferredAmperageLast20OK) + EnumChatFormatting.RESET +" A",
-                "Max EU/p (20t): "+
-                    EnumChatFormatting.GREEN + Long.toString(mTransferredVoltageLast20OK) + EnumChatFormatting.RESET +" EU"
+                EnumChatFormatting.GREEN + Long.toString(mTransferredVoltageOK) + EnumChatFormatting.RESET + " EU / " +
+                        EnumChatFormatting.YELLOW + mVoltage + EnumChatFormatting.RESET + " EU",
+                "Max Load (20t): " +
+                        EnumChatFormatting.GREEN + mTransferredAmperageLast20OK + EnumChatFormatting.RESET + " A",
+                "Max EU/p (20t): " +
+                        EnumChatFormatting.GREEN + mTransferredVoltageLast20OK + EnumChatFormatting.RESET + " EU"
         };
     }
 

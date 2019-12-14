@@ -14,7 +14,7 @@ public enum PollenType {
     public Materials material;
     public int chance;
     private String name;
-    private PollenType(String pName, boolean show) {
+    PollenType(String pName, boolean show) {
         this.name = pName;
         this.showInList = show;
     }

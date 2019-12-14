@@ -79,8 +79,8 @@ public class GT_Recipe implements Comparable<GT_Recipe> {
     private String[] neiDesc = null;
     
     private GT_Recipe(GT_Recipe aRecipe) {
-        mInputs = GT_Utility.copyStackArray((Object[]) aRecipe.mInputs);
-        mOutputs = GT_Utility.copyStackArray((Object[]) aRecipe.mOutputs);
+        mInputs = GT_Utility.copyStackArray(aRecipe.mInputs);
+        mOutputs = GT_Utility.copyStackArray(aRecipe.mOutputs);
         mSpecialItems = aRecipe.mSpecialItems;
         mChances = aRecipe.mChances;
         mFluidInputs = GT_Utility.copyFluidArray(aRecipe.mFluidInputs);
@@ -728,8 +728,7 @@ public class GT_Recipe implements Comparable<GT_Recipe> {
                     Collection<GT_Recipe> tList = mRecipeFluidMap.get(aFluid.getFluid());
                     if (tList == null) mRecipeFluidMap.put(aFluid.getFluid(), tList = new HashSet<GT_Recipe>(1));
                     tList.add(aRecipe);
-                    if(!mRecipeFluidNameMap.contains(aFluid.getFluid().getName()))
-                    	mRecipeFluidNameMap.add(aFluid.getFluid().getName());
+                    mRecipeFluidNameMap.add(aFluid.getFluid().getName());
                 }
             return addToItemMap(aRecipe);
         }
@@ -819,7 +818,7 @@ public class GT_Recipe implements Comparable<GT_Recipe> {
             }
 
             // Unification happens here in case the Input isn't already unificated.
-            if (aNotUnificated) aInputs = GT_OreDictUnificator.getStackArray(true, (Object[]) aInputs);
+            if (aNotUnificated) aInputs = GT_OreDictUnificator.getStackArray(true, aInputs);
 
             // Check the Recipe which has been used last time in order to not have to search for it again, if possible.
             if (aRecipe != null)

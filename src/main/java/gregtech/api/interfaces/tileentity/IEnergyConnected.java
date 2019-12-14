@@ -3,7 +3,6 @@ package gregtech.api.interfaces.tileentity;
 import cofh.api.energy.IEnergyReceiver;
 import gregtech.GT_Mod;
 import gregtech.api.GregTech_API;
-import gregtech.api.util.GT_Log;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.GT_Pollution;
 import ic2.api.energy.tile.IEnergySink;
@@ -30,28 +29,30 @@ public interface IEnergyConnected extends IColoredTileEntity, IHasWorldObjectAnd
      * @param aSide 0 - 5 = Vanilla Directions of YOUR Block the Energy gets inserted to. 6 = No specific Side (don't do Side checks for this Side)
      * @return amount of used Amperes. 0 if not accepted anything.
      */
-    public long injectEnergyUnits(byte aSide, long aVoltage, long aAmperage);
+    long injectEnergyUnits(byte aSide, long aVoltage, long aAmperage);
 
     /**
      * Sided Energy Input
      */
-    public boolean inputEnergyFrom(byte aSide);
-    default public boolean inputEnergyFrom(byte aSide, boolean waitForActive) {
+    boolean inputEnergyFrom(byte aSide);
+
+    default boolean inputEnergyFrom(byte aSide, boolean waitForActive) {
         return inputEnergyFrom(aSide);
     }
 
     /**
      * Sided Energy Output
      */
-    public boolean outputsEnergyTo(byte aSide);
-    default public boolean outputsEnergyTo(byte aSide, boolean waitForActive) {
+    boolean outputsEnergyTo(byte aSide);
+
+    default boolean outputsEnergyTo(byte aSide, boolean waitForActive) {
         return outputsEnergyTo(aSide);
     }
 
     /**
      * Utility for the Network
      */
-    public static class Util {
+    class Util {
         /**
          * Emits Energy to the E-net. Also compatible with adjacent IC2 TileEntities.
          *

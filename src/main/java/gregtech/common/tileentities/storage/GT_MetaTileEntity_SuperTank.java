@@ -106,19 +106,19 @@ public class GT_MetaTileEntity_SuperTank
 
         if (mFluid == null) {
             return new String[]{
-                    EnumChatFormatting.BLUE + "Super Tank"+ EnumChatFormatting.RESET,
+                    EnumChatFormatting.BLUE + "Super Tank" + EnumChatFormatting.RESET,
                     "Stored Fluid:",
-                    EnumChatFormatting.GOLD + "No Fluid"+ EnumChatFormatting.RESET,
-                    EnumChatFormatting.GREEN + Integer.toString(0) + " L"+ EnumChatFormatting.RESET+" "+
-                    EnumChatFormatting.YELLOW + Integer.toString(getCapacity()) + " L"+ EnumChatFormatting.RESET
+                    EnumChatFormatting.GOLD + "No Fluid" + EnumChatFormatting.RESET,
+                    EnumChatFormatting.GREEN + Integer.toString(0) + " L" + EnumChatFormatting.RESET + " " +
+                            EnumChatFormatting.YELLOW + getCapacity() + " L" + EnumChatFormatting.RESET
             };
         }
         return new String[]{
-                EnumChatFormatting.BLUE + "Super Tank"+ EnumChatFormatting.RESET,
+                EnumChatFormatting.BLUE + "Super Tank" + EnumChatFormatting.RESET,
                 "Stored Fluid:",
-                EnumChatFormatting.GOLD + mFluid.getLocalizedName()+ EnumChatFormatting.RESET,
-                EnumChatFormatting.GREEN + Integer.toString(mFluid.amount) + " L"+ EnumChatFormatting.RESET+" "+
-                EnumChatFormatting.YELLOW+ Integer.toString(getCapacity()) + " L"+ EnumChatFormatting.RESET
+                EnumChatFormatting.GOLD + mFluid.getLocalizedName() + EnumChatFormatting.RESET,
+                EnumChatFormatting.GREEN + Integer.toString(mFluid.amount) + " L" + EnumChatFormatting.RESET + " " +
+                        EnumChatFormatting.YELLOW + getCapacity() + " L" + EnumChatFormatting.RESET
         };
     }
 

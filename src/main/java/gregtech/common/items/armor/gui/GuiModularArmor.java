@@ -53,27 +53,30 @@ public class GuiModularArmor extends GuiContainer {
 			}
 		} else if (x >= 59 && x <= 66) {
 			if (y >= 20 && y <= 27) {
-				list.add(GT_LanguageManager.getTranslation("Thorns") + ": " + (int) Math.round(cont.mInvArmor.data.mStat.get(StatType.THORNSSINGLE)) + " Dmg");
-				list.add(GT_LanguageManager.getTranslation("Total Thorns") + ": " + (int) Math.round(cont.mInvArmor.data.mStat.get(StatType.THORNS)) + " Dmg");
+				list.add(GT_LanguageManager.getTranslation("Thorns") + ": " + Math.round(cont.mInvArmor.data.mStat.get(StatType.THORNSSINGLE)) + " Dmg");
+				list.add(GT_LanguageManager.getTranslation("Total Thorns") + ": " + Math.round(cont.mInvArmor.data.mStat.get(StatType.THORNS)) + " Dmg");
 			} else if (y >= 29 && y <= 36) {
 				list.add(GT_LanguageManager.getTranslation("Magnet") + ": " + cont.mInvArmor.data.mStat.get(StatType.MAGNETSINGLE) + " m");
 				list.add(GT_LanguageManager.getTranslation("Total Magnet") + ": " + cont.mInvArmor.data.mStat.get(StatType.MAGNET) + " m");
 			} else if (y >= 38 && y <= 45) {
 				list.add(GT_LanguageManager.getTranslation("Radiation Defence") + ": " + (Math.round(cont.mInvArmor.data.mStat.get(StatType.RADIATIONDEFENCE) * 1000) / 10.0) + "%");
-				if(cont.mInvArmor.data.mBStat.get(StatType.FULLRADIATIONARMOR)){
-				list.add(GT_LanguageManager.getTranslation("Radiation Immunity"));}
+				if (cont.mInvArmor.data.mBStat.get(StatType.FULLRADIATIONARMOR)) {
+					list.add(GT_LanguageManager.getTranslation("Radiation Immunity"));
+				}
 			} else if (y >= 47 && y <= 54) {
 				list.add(GT_LanguageManager.getTranslation("Electrical Defence") + ": " + (Math.round(cont.mInvArmor.data.mStat.get(StatType.ELECTRICALDEFENCE) * 1000) / 10.0) + "%");
-				if(cont.mInvArmor.data.mBStat.get(StatType.FULLELECTRICARMOR)){
-					list.add("Electric Immunity");}
+				if (cont.mInvArmor.data.mBStat.get(StatType.FULLELECTRICARMOR)) {
+					list.add("Electric Immunity");
+				}
 			} else if (y >= 56 && y <= 63) {
 				list.add(GT_LanguageManager.getTranslation("Wither Defence") + ": " + (Math.round(cont.mInvArmor.data.mStat.get(StatType.WITHERDEFENCE) * 1000) / 10.0) + "%");
 			} else if (y >= 65 && y <= 72) {
-				if(cont.mInvArmor.data.type!=3){
+				if (cont.mInvArmor.data.type != 3) {
 					list.add(GT_LanguageManager.getTranslation("Fall Damage absorbtion"));
 					list.add(GT_LanguageManager.getTranslation("Only for Boots"));
-				}else{
-				list.add(GT_LanguageManager.getTranslation("Absorbs") + " " + (int) Math.round(cont.mInvArmor.data.mStat.get(StatType.FALLDEFENCE)) + GT_LanguageManager.getTranslation("m of Fall Damage"));}
+				} else {
+					list.add(GT_LanguageManager.getTranslation("Absorbs") + " " + Math.round(cont.mInvArmor.data.mStat.get(StatType.FALLDEFENCE)) + GT_LanguageManager.getTranslation("m of Fall Damage"));
+				}
 			}
 		}
 		if (!list.isEmpty())

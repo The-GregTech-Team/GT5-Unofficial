@@ -1,9 +1,5 @@
 package gregtech.common.tileentities.machines.multi;
 
-import static gregtech.api.objects.XSTR.XSTR_INSTANCE;
-
-import java.util.ArrayList;
-
 import gregtech.GT_Mod;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.Textures;
@@ -19,10 +15,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
 
+import java.util.ArrayList;
+
+import static gregtech.api.objects.XSTR.XSTR_INSTANCE;
+
 public class GT_MetaTileEntity_LargeTurbine_HPSteam extends GT_MetaTileEntity_LargeTurbine {
 
     public boolean achievement = false;
-    private boolean looseFit=false;
+    private boolean looseFit = false;
 
     public GT_MetaTileEntity_LargeTurbine_HPSteam(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -107,7 +107,7 @@ public class GT_MetaTileEntity_LargeTurbine_HPSteam extends GT_MetaTileEntity_La
                 totalFlow += flow; // track total input used
                 if (!achievement) {
                     try {
-                        GT_Mod.instance.achievements.issueAchievement(this.getBaseMetaTileEntity().getWorld().getPlayerEntityByName(this.getBaseMetaTileEntity().getOwnerName()), "efficientsteam");
+                        GT_Mod.achievements.issueAchievement(this.getBaseMetaTileEntity().getWorld().getPlayerEntityByName(this.getBaseMetaTileEntity().getOwnerName()), "efficientsteam");
                     } catch (Exception e) {
                     }
                     achievement = true;

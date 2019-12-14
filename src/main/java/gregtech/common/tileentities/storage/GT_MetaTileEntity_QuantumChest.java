@@ -162,19 +162,19 @@ public class GT_MetaTileEntity_QuantumChest extends GT_MetaTileEntity_TieredMach
 
         if (mItemStack == null) {
             return new String[]{
-                    EnumChatFormatting.BLUE + "Quantum Chest"+ EnumChatFormatting.RESET,
+                    EnumChatFormatting.BLUE + "Quantum Chest" + EnumChatFormatting.RESET,
                     "Stored Items:",
-                    EnumChatFormatting.GOLD+ "No Items"+ EnumChatFormatting.RESET,
-                    EnumChatFormatting.GREEN + "0" + EnumChatFormatting.RESET+" "+
-                    EnumChatFormatting.YELLOW + Integer.toString(getMaxItemCount())+ EnumChatFormatting.RESET
+                    EnumChatFormatting.GOLD + "No Items" + EnumChatFormatting.RESET,
+                    EnumChatFormatting.GREEN + "0" + EnumChatFormatting.RESET + " " +
+                            EnumChatFormatting.YELLOW + getMaxItemCount() + EnumChatFormatting.RESET
             };
         }
         return new String[]{
-                EnumChatFormatting.BLUE + "Quantum Chest"+ EnumChatFormatting.RESET,
+                EnumChatFormatting.BLUE + "Quantum Chest" + EnumChatFormatting.RESET,
                 "Stored Items:",
                 EnumChatFormatting.GOLD + mItemStack.getDisplayName() + EnumChatFormatting.RESET,
-                EnumChatFormatting.GREEN + Integer.toString(mItemCount) + EnumChatFormatting.RESET+" "+
-                EnumChatFormatting.YELLOW + Integer.toString(getMaxItemCount())+ EnumChatFormatting.RESET
+                EnumChatFormatting.GREEN + Integer.toString(mItemCount) + EnumChatFormatting.RESET + " " +
+                        EnumChatFormatting.YELLOW + getMaxItemCount() + EnumChatFormatting.RESET
         };
     }
 

@@ -28,7 +28,7 @@ public enum DropType {
     public Materials material;
     public int chance;
     private String name;
-    private DropType(String pName, boolean show) {
+    DropType(String pName, boolean show) {
         this.name = pName;
         this.showInList = show;
     }

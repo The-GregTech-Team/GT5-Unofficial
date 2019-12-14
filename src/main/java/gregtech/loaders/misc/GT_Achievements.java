@@ -20,15 +20,12 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
-import net.minecraft.stats.StatBase;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fluids.FluidStack;
 import thaumcraft.api.ThaumcraftApiHelper;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class GT_Achievements {
@@ -224,7 +221,7 @@ public class GT_Achievements {
 //            }
 //        }
         if (GT_Mod.gregtechproxy.mAchievements) {
-            AchievementPage.registerAchievementPage(new AchievementPage("GregTech 5", (Achievement[]) this.achievementList.values().toArray(
+            AchievementPage.registerAchievementPage(new AchievementPage("GregTech 5", this.achievementList.values().toArray(
                     new Achievement[this.achievementList.size()])));
             MinecraftForge.EVENT_BUS.register(this);
             FMLCommonHandler.instance().bus().register(this);
@@ -260,7 +257,6 @@ public class GT_Achievements {
         if (!GT_Mod.gregtechproxy.mAchievements) {
             return null;
         }
-        ;
         Achievement achievement = new Achievement(textId, textId, this.adjX + x, this.adjY + y, icon, getAchievement(requirement));
         if (special) {
             achievement.setSpecial();
@@ -302,14 +298,14 @@ public class GT_Achievements {
 //			return;
 //			}else{
 //			this.issuedAchievements.put((entityplayer.getDisplayName()+textId), true);
-        entityplayer.triggerAchievement((StatBase) this.achievementList.get(textId));
+        entityplayer.triggerAchievement(this.achievementList.get(textId));
 //			}
 //		}
     }
 
     public Achievement getAchievement(String textId) {
         if (this.achievementList.containsKey(textId)) {
-            return (Achievement) this.achievementList.get(textId);
+            return this.achievementList.get(textId);
         }
         return null;
     }

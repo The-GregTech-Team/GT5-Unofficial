@@ -205,7 +205,7 @@ public abstract class GT_MetaBase_Item extends GT_Generic_Item implements ISpeci
                 if (tStats[3] == -2 && tCharge <= 0) {
                 	aList.add(EnumChatFormatting.AQUA + trans("010", "Empty. You should recycle it properly.") + EnumChatFormatting.GRAY);
                 } else {
-                	aList.add(String.valueOf(EnumChatFormatting.AQUA) + String.format(trans("011", "%s / %s EU - Voltage: %s"), GT_Utility.formatNumbers(tCharge), GT_Utility.formatNumbers(Math.abs(tStats[0])), "" + V[(int) (tStats[2] >= 0 ? tStats[2] < V.length ? tStats[2] : V.length - 1 : 1)]) + EnumChatFormatting.GRAY);
+                    aList.add(EnumChatFormatting.AQUA + String.format(trans("011", "%s / %s EU - Voltage: %s"), GT_Utility.formatNumbers(tCharge), GT_Utility.formatNumbers(Math.abs(tStats[0])), "" + V[(int) (tStats[2] >= 0 ? tStats[2] < V.length ? tStats[2] : V.length - 1 : 1)]) + EnumChatFormatting.GRAY);
                 }
             }
         }

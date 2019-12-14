@@ -1599,7 +1599,7 @@ public class Materials implements IColorModulationContainer, ISubTagContainer {
                 aMaterial.mTransparent = GregTech_API.sMaterialProperties.get(aConfigPath, "Transparent", aMaterial.mTransparent);
                 String aColor = GregTech_API.sMaterialProperties.get(aConfigPath, "DyeColor", aMaterial.mColor == Dyes._NULL ? "None" : aMaterial.mColor.toString());
                 aMaterial.mColor = aColor.equals("None") ? Dyes._NULL : Dyes.get(aColor);
-                String[] aRGBA = GregTech_API.sMaterialProperties.get(aConfigPath, "MatRGBA", String.valueOf(aMaterial.mRGBa[0] + "," + aMaterial.mRGBa[1] + "," + aMaterial.mRGBa[2] + "," + aMaterial.mRGBa[3] + ",")).split(",");
+                String[] aRGBA = GregTech_API.sMaterialProperties.get(aConfigPath, "MatRGBA", aMaterial.mRGBa[0] + "," + aMaterial.mRGBa[1] + "," + aMaterial.mRGBa[2] + "," + aMaterial.mRGBa[3] + ",").split(",");
                 aMaterial.mRGBa[0] = Short.parseShort(aRGBA[0]);
                 aMaterial.mRGBa[1] = Short.parseShort(aRGBA[1]);
                 aMaterial.mRGBa[2] = Short.parseShort(aRGBA[2]);

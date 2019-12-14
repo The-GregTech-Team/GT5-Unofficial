@@ -1,13 +1,5 @@
 package gregtech.api.util;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import com.google.common.collect.ImmutableMap;
-
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.Materials;
@@ -15,16 +7,21 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class GT_Assemblyline_Server {
 
 
-	public static LinkedHashMap<String, String> lServerNames = new LinkedHashMap<String, String>();
-	private static LinkedHashMap<String, String> internal2 = new LinkedHashMap<String, String>(), internal3 = new LinkedHashMap<String, String>(), internal4 = new LinkedHashMap<String, String>();
-	private static HashMap<String, Property> internal = new HashMap<String, Property>();
+	public static LinkedHashMap<String, String> lServerNames = new LinkedHashMap<>();
+	private static LinkedHashMap<String, String> internal2 = new LinkedHashMap<>(), internal3 = new LinkedHashMap<>(), internal4 = new LinkedHashMap<>();
+	private static HashMap<String, Property> internal = new HashMap<>();
 
 	public static void fillMap(FMLPreInitializationEvent aEvent) {
 
-		String s = new String(aEvent.getModConfigurationDirectory().getAbsolutePath());
+		String s = aEvent.getModConfigurationDirectory().getAbsolutePath();
 		s = s.substring(0, aEvent.getModConfigurationDirectory().getAbsolutePath().length() - 6);
 		s = s + "GregTech.lang";
 		File f = new File(s);

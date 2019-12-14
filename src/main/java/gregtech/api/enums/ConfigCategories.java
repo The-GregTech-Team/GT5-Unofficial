@@ -8,7 +8,7 @@ public enum ConfigCategories {
 
     public enum IDs {
         crops,
-        enchantments;
+        enchantments
     }
 
     public enum Materials {
@@ -25,8 +25,8 @@ public enum ConfigCategories {
         disabledrecipes,
         recipereplacements,
         storageblockcrafting,
-        storageblockdecrafting, 
-        crops;
+        storageblockdecrafting,
+        crops
     }
 
     public enum Machines {
@@ -46,11 +46,11 @@ public enum ConfigCategories {
         massfabamplifier,
         maceration,
         rockcrushing,
-        pulverization;
+        pulverization
     }
 
     public enum Fuels {
-        boilerfuels;
+        boilerfuels
     }
 
     public enum Tools {
@@ -61,6 +61,6 @@ public enum ConfigCategories {
         hammertripleplate,
         hammerquadrupleplate,
         hammerquintupleplate,
-		scoop;
+        scoop
     }
 }

@@ -46,14 +46,14 @@ public class GT_MetaTileEntity_AdvSeismicProspector extends GT_MetaTileEntity_Ba
                 1, // output slot count
                 "Default.png", // GUI name
                 "", // NEI name
-                new ITexture[] { new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_SIDE_ROCK_BREAKER_ACTIVE),
-                        new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_SIDE_ROCK_BREAKER),
-                        new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_TOP_ROCK_BREAKER_ACTIVE),
-                        new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_TOP_ROCK_BREAKER),
-                        new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_FRONT_ROCK_BREAKER_ACTIVE),
-                        new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_FRONT_ROCK_BREAKER),
-                        new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_BOTTOM_ROCK_BREAKER_ACTIVE),
-                        new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_BOTTOM_ROCK_BREAKER) });
+                new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_SIDE_ROCK_BREAKER_ACTIVE),
+                new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_SIDE_ROCK_BREAKER),
+                new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_TOP_ROCK_BREAKER_ACTIVE),
+                new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_TOP_ROCK_BREAKER),
+                new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_FRONT_ROCK_BREAKER_ACTIVE),
+                new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_FRONT_ROCK_BREAKER),
+                new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_BOTTOM_ROCK_BREAKER_ACTIVE),
+                new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_BOTTOM_ROCK_BREAKER));
         radius = aRadius;
         near = radius / 3;
         near = near + near % 2; // making near value even;
@@ -113,26 +113,26 @@ public class GT_MetaTileEntity_AdvSeismicProspector extends GT_MetaTileEntity_Ba
                 this.ready = false;
 
                 // prospecting ores
-                HashMap<String, Integer> tNearOres = new HashMap<String, Integer>();
-                HashMap<String, Integer> tMiddleOres = new HashMap<String, Integer>();
-                HashMap<String, Integer> tFarOres = new HashMap<String, Integer>();
+                HashMap<String, Integer> tNearOres = new HashMap<>();
+                HashMap<String, Integer> tMiddleOres = new HashMap<>();
+                HashMap<String, Integer> tFarOres = new HashMap<>();
                 prospectOres(tNearOres, tMiddleOres, tFarOres);
 
                 // prospecting oils
-                ArrayList<String> tOils = new ArrayList<String>();
+                ArrayList<String> tOils = new ArrayList<>();
                 prospectOils(tOils);
 
                 GT_Utility.ItemNBT.setAdvancedProspectionData(mTier,
-                    aStack,
-                    this.getBaseMetaTileEntity().getXCoord(),
-                    this.getBaseMetaTileEntity().getYCoord(),
-                    this.getBaseMetaTileEntity().getZCoord(),
-                    this.getBaseMetaTileEntity().getWorld().provider.dimensionId,
-                    tOils,
-                    GT_Utility.sortByValueToList(tNearOres),
-                    GT_Utility.sortByValueToList(tMiddleOres),
-                    GT_Utility.sortByValueToList(tFarOres),
-                    near, middle, radius);
+                        aStack,
+                        this.getBaseMetaTileEntity().getXCoord(),
+                        this.getBaseMetaTileEntity().getYCoord(),
+                        this.getBaseMetaTileEntity().getZCoord(),
+                        this.getBaseMetaTileEntity().getWorld().provider.dimensionId,
+                        tOils,
+                        GT_Utility.sortByValueToList(tNearOres),
+                        GT_Utility.sortByValueToList(tMiddleOres),
+                        GT_Utility.sortByValueToList(tFarOres),
+                        near, middle, radius);
             }
         }
 

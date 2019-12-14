@@ -26,9 +26,17 @@ import static gregtech.api.enums.GT_Values.E;
 
 public class GT_BaseCrop extends CropCard implements ICropCardInfo {
     public static ArrayList<GT_BaseCrop> sCropList = new ArrayList<GT_BaseCrop>();
-    private String mName = E, mDiscoveredBy = "Gregorius Techneticies", mAttributes[];
-    private int mTier = 0, mMaxSize = 0, mAfterHarvestSize = 0, mHarvestSize = 0, mStats[] = new int[5], mGrowthSpeed = 0;
-    private ItemStack mDrop = null, mSpecialDrops[] = null;
+    private String mName = E;
+    private String mDiscoveredBy = "Gregorius Techneticies";
+    private String[] mAttributes;
+    private int mTier = 0;
+    private int mMaxSize = 0;
+    private int mAfterHarvestSize = 0;
+    private int mHarvestSize = 0;
+    private int[] mStats = new int[5];
+    private int mGrowthSpeed = 0;
+    private ItemStack mDrop = null;
+    private ItemStack[] mSpecialDrops = null;
     private Materials mBlock = null;
     private static boolean bIc2NeiLoaded = Loader.isModLoaded("Ic2Nei");
 
@@ -184,7 +192,7 @@ public class GT_BaseCrop extends CropCard implements ICropCardInfo {
     @Override
     public boolean rightclick(ICropTile aCrop, EntityPlayer aPlayer) {
         if (!canBeHarvested(aCrop)) return false;
-        return aCrop.harvest(aPlayer == null ? false : aPlayer instanceof EntityPlayerMP);
+        return aCrop.harvest(aPlayer != null && aPlayer instanceof EntityPlayerMP);
     }
 
     @Override
@@ -203,11 +211,7 @@ public class GT_BaseCrop extends CropCard implements ICropCardInfo {
                 if ((tTileEntity instanceof GT_TileEntity_Ores)) {
                     Materials tMaterial = GregTech_API.sGeneratedMaterials[(((GT_TileEntity_Ores) tTileEntity).mMetaData % 1000)];
                     if ((tMaterial != null) && (tMaterial != Materials._NULL)) {
-                        if (tMaterial == mBlock) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+                        return tMaterial == mBlock;
                     }
                 }
             } else {

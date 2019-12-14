@@ -40,7 +40,7 @@ public class GT_SensorCard_Item
             	aList.add(trans("014", "Missing Coodinates!"));
             } else {
             	aList.add(trans("015", "Device at:"));
-                aList.add(String.format("x: %d, y: %d, z: %d", new Object[]{Integer.valueOf(tNBT.getInteger("x")), Integer.valueOf(tNBT.getInteger("y")), Integer.valueOf(tNBT.getInteger("z"))}));
+                aList.add(String.format("x: %d, y: %d, z: %d", Integer.valueOf(tNBT.getInteger("x")), Integer.valueOf(tNBT.getInteger("y")), Integer.valueOf(tNBT.getInteger("z"))));
             }
         }
     }

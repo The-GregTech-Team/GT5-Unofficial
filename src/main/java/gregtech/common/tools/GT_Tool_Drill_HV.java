@@ -43,8 +43,8 @@ public class GT_Tool_Drill_HV
     public void onToolCrafted(ItemStack aStack, EntityPlayer aPlayer) {
         super.onToolCrafted(aStack, aPlayer);
         try {
-            GT_Mod.instance.achievements.issueAchievement(aPlayer, "highpowerdrill");
-            GT_Mod.instance.achievements.issueAchievement(aPlayer, "buildDDrill");
+            GT_Mod.achievements.issueAchievement(aPlayer, "highpowerdrill");
+            GT_Mod.achievements.issueAchievement(aPlayer, "buildDDrill");
         } catch (Exception e) {
         }
     }

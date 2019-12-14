@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 public class GT_MetaTileEntity_Boxinator
         extends GT_MetaTileEntity_BasicMachine {
     public GT_MetaTileEntity_Boxinator(int aID, String aName, String aNameRegional, int aTier) {
-        super(aID, aName, aNameRegional, aTier, 1, "Puts things into Boxes", 2, 1, "Packager.png", "", new ITexture[]{new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_SIDE_BOXINATOR_ACTIVE), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_SIDE_BOXINATOR), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_FRONT_BOXINATOR_ACTIVE), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_FRONT_BOXINATOR), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_TOP_BOXINATOR_ACTIVE), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_TOP_BOXINATOR), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_BOTTOM_BOXINATOR_ACTIVE), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_BOTTOM_BOXINATOR)});
+        super(aID, aName, aNameRegional, aTier, 1, "Puts things into Boxes", 2, 1, "Packager.png", "", new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_SIDE_BOXINATOR_ACTIVE), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_SIDE_BOXINATOR), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_FRONT_BOXINATOR_ACTIVE), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_FRONT_BOXINATOR), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_TOP_BOXINATOR_ACTIVE), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_TOP_BOXINATOR), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_BOTTOM_BOXINATOR_ACTIVE), new GT_RenderedTexture(Textures.BlockIcons.OVERLAY_BOTTOM_BOXINATOR));
     }
 
     public GT_MetaTileEntity_Boxinator(String aName, int aTier, String aDescription, ITexture[][][] aTextures, String aGUIName, String aNEIName) {
@@ -41,11 +41,11 @@ public class GT_MetaTileEntity_Boxinator
         }
         if ((GT_Utility.isStackValid(getInputAt(0))) && (GT_Utility.isStackValid(getInputAt(1))) && (GT_Utility.getContainerItem(getInputAt(0), true) == null)) {
             if ((ItemList.Schematic_1by1.isStackEqual(getInputAt(1))) && (getInputAt(0).stackSize >= 1)) {
-                this.mOutputItems[0] = GT_ModHandler.getRecipeOutput(new ItemStack[]{getInputAt(0)});
+                this.mOutputItems[0] = GT_ModHandler.getRecipeOutput(getInputAt(0));
                 if (this.mOutputItems[0] != null) {
-                    if (canOutput(new ItemStack[]{this.mOutputItems[0]})) {
+                    if (canOutput(this.mOutputItems[0])) {
                         getInputAt(0).stackSize -= 1;
-                        calculateOverclockedNess(32,16);
+                        calculateOverclockedNess(32, 16);
                         //In case recipe is too OP for that machine
                         if (mMaxProgresstime == Integer.MAX_VALUE - 1 && mEUt == Integer.MAX_VALUE - 1)
                             return FOUND_RECIPE_BUT_DID_NOT_MEET_REQUIREMENTS;
@@ -55,11 +55,11 @@ public class GT_MetaTileEntity_Boxinator
                 return DID_NOT_FIND_RECIPE;
             }
             if ((ItemList.Schematic_2by2.isStackEqual(getInputAt(1))) && (getInputAt(0).stackSize >= 4)) {
-                this.mOutputItems[0] = GT_ModHandler.getRecipeOutput(new ItemStack[]{getInputAt(0), getInputAt(0), null, getInputAt(0), getInputAt(0)});
+                this.mOutputItems[0] = GT_ModHandler.getRecipeOutput(getInputAt(0), getInputAt(0), null, getInputAt(0), getInputAt(0));
                 if (this.mOutputItems[0] != null) {
-                    if (canOutput(new ItemStack[]{this.mOutputItems[0]})) {
+                    if (canOutput(this.mOutputItems[0])) {
                         getInputAt(0).stackSize -= 4;
-                        calculateOverclockedNess(32,32);
+                        calculateOverclockedNess(32, 32);
                         //In case recipe is too OP for that machine
                         if (mMaxProgresstime == Integer.MAX_VALUE - 1 && mEUt == Integer.MAX_VALUE - 1)
                             return FOUND_RECIPE_BUT_DID_NOT_MEET_REQUIREMENTS;
@@ -69,11 +69,11 @@ public class GT_MetaTileEntity_Boxinator
                 return DID_NOT_FIND_RECIPE;
             }
             if ((ItemList.Schematic_3by3.isStackEqual(getInputAt(1))) && (getInputAt(0).stackSize >= 9)) {
-                this.mOutputItems[0] = GT_ModHandler.getRecipeOutput(new ItemStack[]{getInputAt(0), getInputAt(0), getInputAt(0), getInputAt(0), getInputAt(0), getInputAt(0), getInputAt(0), getInputAt(0), getInputAt(0)});
+                this.mOutputItems[0] = GT_ModHandler.getRecipeOutput(getInputAt(0), getInputAt(0), getInputAt(0), getInputAt(0), getInputAt(0), getInputAt(0), getInputAt(0), getInputAt(0), getInputAt(0));
                 if (this.mOutputItems[0] != null) {
-                    if (canOutput(new ItemStack[]{this.mOutputItems[0]})) {
+                    if (canOutput(this.mOutputItems[0])) {
                         getInputAt(0).stackSize -= 9;
-                        calculateOverclockedNess(32,64);
+                        calculateOverclockedNess(32, 64);
                         //In case recipe is too OP for that machine
                         if (mMaxProgresstime == Integer.MAX_VALUE - 1 && mEUt == Integer.MAX_VALUE - 1)
                             return FOUND_RECIPE_BUT_DID_NOT_MEET_REQUIREMENTS;
@@ -88,17 +88,15 @@ public class GT_MetaTileEntity_Boxinator
     public boolean allowPutStack(IGregTechTileEntity aBaseMetaTileEntity, int aIndex, byte aSide, ItemStack aStack) {
         if (super.allowPutStack(aBaseMetaTileEntity, aIndex, aSide, aStack)) {
             if ((ItemList.Schematic_1by1.isStackEqual(getInputAt(1))) || (ItemList.Schematic_2by2.isStackEqual(getInputAt(1))) || (ItemList.Schematic_3by3.isStackEqual(getInputAt(1)))) {
-                if (GT_Recipe.GT_Recipe_Map.sBoxinatorRecipes.findRecipe(getBaseMetaTileEntity(), true, gregtech.api.enums.GT_Values.V[mTier], null, new ItemStack[]{GT_Utility.copyAmount(64L, new Object[]{aStack}), getInputAt(1)}) != null) {
+                if (GT_Recipe.GT_Recipe_Map.sBoxinatorRecipes.findRecipe(getBaseMetaTileEntity(), true, gregtech.api.enums.GT_Values.V[mTier], null, GT_Utility.copyAmount(64L, aStack), getInputAt(1)) != null) {
                     return true;
                 }
-                if (ItemList.Schematic_1by1.isStackEqual(getInputAt(1)) && GT_ModHandler.getRecipeOutput(new ItemStack[]{aStack}) != null)
+                if (ItemList.Schematic_1by1.isStackEqual(getInputAt(1)) && GT_ModHandler.getRecipeOutput(aStack) != null)
                     return true;
-                if (ItemList.Schematic_2by2.isStackEqual(getInputAt(1)) && GT_ModHandler.getRecipeOutput(new ItemStack[]{aStack, aStack, null, aStack, aStack}) != null) {
-                    return true;
-                }
-                if (ItemList.Schematic_3by3.isStackEqual(getInputAt(1)) && (GT_ModHandler.getRecipeOutput(new ItemStack[]{aStack, aStack, aStack, aStack, aStack, aStack, aStack, aStack, aStack}) != null)) {
+                if (ItemList.Schematic_2by2.isStackEqual(getInputAt(1)) && GT_ModHandler.getRecipeOutput(aStack, aStack, null, aStack, aStack) != null) {
                     return true;
                 }
+                return ItemList.Schematic_3by3.isStackEqual(getInputAt(1)) && (GT_ModHandler.getRecipeOutput(aStack, aStack, aStack, aStack, aStack, aStack, aStack, aStack, aStack) != null);
             } else {
                 return GT_Recipe.GT_Recipe_Map.sBoxinatorRecipes.containsInput(aStack);
             }

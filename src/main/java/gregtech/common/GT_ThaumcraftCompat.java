@@ -165,7 +165,7 @@ public class GT_ThaumcraftCompat
                 }
             }
             if (tParentResearches.size() > 0) {
-                rResearch.setParents((String[]) tParentResearches.toArray(new String[tParentResearches.size()]));
+                rResearch.setParents(tParentResearches.toArray(new String[tParentResearches.size()]));
                 rResearch.setConcealed();
             }
         }
@@ -173,7 +173,7 @@ public class GT_ThaumcraftCompat
             rResearch.setItemTriggers(aResearchTriggers);
             rResearch.setHidden();
         }
-        rResearch.setPages((ResearchPage[]) tPages.toArray(new ResearchPage[tPages.size()]));
+        rResearch.setPages(tPages.toArray(new ResearchPage[tPages.size()]));
         return rResearch.registerResearchItem();
     }
 
@@ -181,32 +181,32 @@ public class GT_ThaumcraftCompat
         if ((GT_Utility.isStringInvalid(aResearch)) || (aInput == null) || (aOutput == null) || (aAspects == null) || (aAspects.isEmpty())) {
             return null;
         }
-        return ThaumcraftApi.addCrucibleRecipe(aResearch, GT_Utility.copy(new Object[]{aOutput}), ((aInput instanceof ItemStack)) || ((aInput instanceof ArrayList)) ? aInput : aInput.toString(), getAspectList(aAspects));
+        return ThaumcraftApi.addCrucibleRecipe(aResearch, GT_Utility.copy(aOutput), ((aInput instanceof ItemStack)) || ((aInput instanceof ArrayList)) ? aInput : aInput.toString(), getAspectList(aAspects));
     }
 
     public Object addInfusionRecipe(String aResearch, ItemStack aMainInput, ItemStack[] aSideInputs, ItemStack aOutput, int aInstability, List<TC_Aspects.TC_AspectStack> aAspects) {
         if ((GT_Utility.isStringInvalid(aResearch)) || (aMainInput == null) || (aSideInputs == null) || (aOutput == null) || (aAspects == null) || (aAspects.isEmpty())) {
             return null;
         }
-        return ThaumcraftApi.addInfusionCraftingRecipe(aResearch, GT_Utility.copy(new Object[]{aOutput}), aInstability, getAspectList(aAspects), aMainInput, aSideInputs);
+        return ThaumcraftApi.addInfusionCraftingRecipe(aResearch, GT_Utility.copy(aOutput), aInstability, getAspectList(aAspects), aMainInput, aSideInputs);
     }
     
 	public boolean registerThaumcraftAspectsToItem(ItemStack aExampleStack, List<TC_Aspects.TC_AspectStack> aAspects, String aOreDict) {
-		if (aAspects.isEmpty()) return false;
-		ThaumcraftApi.registerObjectTag(aOreDict, (AspectList)getAspectList(aAspects));
-		return true;
-	}
+        if (aAspects.isEmpty()) return false;
+        ThaumcraftApi.registerObjectTag(aOreDict, getAspectList(aAspects));
+        return true;
+    }
 
 	public boolean registerThaumcraftAspectsToItem(ItemStack aStack, List<TC_Aspects.TC_AspectStack> aAspects, boolean aAdditive) {
 		if (aAspects.isEmpty()) return false;
 		if (aAdditive) {
-			ThaumcraftApi.registerComplexObjectTag(aStack, (AspectList)getAspectList(aAspects));
-			return true;
-		}
+            ThaumcraftApi.registerComplexObjectTag(aStack, getAspectList(aAspects));
+            return true;
+        }
 		AspectList tAlreadyRegisteredAspects = ThaumcraftApiHelper.getObjectAspects(aStack);
 		if (tAlreadyRegisteredAspects == null || tAlreadyRegisteredAspects.size() <= 0) {
-			ThaumcraftApi.registerObjectTag(aStack, (AspectList)getAspectList(aAspects));
-		}
+            ThaumcraftApi.registerObjectTag(aStack, getAspectList(aAspects));
+        }
 		return true;
 	}
 

@@ -366,9 +366,7 @@ public class GT_Utility {
         if (TE_CHECK && aTileEntity instanceof IItemDuct) return true;
         if (BC_CHECK && aTileEntity instanceof buildcraft.api.transport.IPipeTile)
             return ((buildcraft.api.transport.IPipeTile) aTileEntity).isPipeConnected(ForgeDirection.getOrientation(aSide));
-        if (GregTech_API.mTranslocator && aTileEntity instanceof codechicken.translocator.TileItemTranslocator) return true;
-
-        return false;
+        return GregTech_API.mTranslocator && aTileEntity instanceof codechicken.translocator.TileItemTranslocator;
     }
     /**
      * Moves Stack from Inv-Slot to Inv-Slot, without checking if its even allowed.
@@ -795,7 +793,7 @@ public class GT_Utility {
         if (aCheckIFluidContainerItems && aStack.getItem() instanceof IFluidContainerItem && ((IFluidContainerItem) aStack.getItem()).getCapacity(aStack) > 0)
             return aFluid.isFluidEqual(((IFluidContainerItem) aStack.getItem()).getFluid(aStack = copyAmount(1, aStack)));
         FluidContainerData tData = sFilledContainerToData.get(new GT_ItemStack(aStack));
-        return tData == null ? false : tData.fluid.isFluidEqual(aFluid);
+        return tData != null && tData.fluid.isFluidEqual(aFluid);
     }
 
     public static FluidStack getFluidForFilledItem(ItemStack aStack, boolean aCheckIFluidContainerItems) {
@@ -1960,12 +1958,12 @@ public class GT_Utility {
     public static String joinListToString(List<String> list) {
         StringBuilder result = new StringBuilder(32);
         for (String s : list)
-            result.append(result.length()==0?s:'|'+s);
+            result.append(result.length() == 0 ? s : '|' + s);
         return result.toString();
     }
 
-    public static ItemStack getIntegratedCircuit(int config){
-    	return ItemList.Circuit_Integrated.getWithDamage(0, config, new Object[0]);
+    public static ItemStack getIntegratedCircuit(int config) {
+        return ItemList.Circuit_Integrated.getWithDamage(0, config);
     }
 
     public static float getBlockHardnessAt(World aWorld, int aX, int aY, int aZ) {
@@ -2000,6 +1998,99 @@ public class GT_Utility {
             return true;
         }
         return false;
+    }
+
+    public static boolean isPartOfMaterials(ItemStack aStack, Materials aMaterials) {
+        return GT_OreDictUnificator.getAssociation(aStack) != null && GT_OreDictUnificator.getAssociation(aStack).mMaterial.mMaterial.equals(aMaterials);
+    }
+
+    public static String toSubscript(long no) {
+        char[] chars = Long.toString(no).toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            chars[i] += 8272;
+        }
+        return new String(chars);
+    }
+
+    public static boolean isPartOfOrePrefix(ItemStack aStack, OrePrefixes aPrefix) {
+        return GT_OreDictUnificator.getAssociation(aStack) != null && GT_OreDictUnificator.getAssociation(aStack).mPrefix.equals(aPrefix);
+    }
+
+    /**
+     * THIS IS BULLSHIT!!! WHY DO I HAVE TO DO THIS SHIT JUST TO HAVE ENCHANTS PROPERLY!?!
+     */
+    public static class GT_EnchantmentHelper {
+        private static final BullshitIteratorA mBullshitIteratorA = new BullshitIteratorA();
+        private static final BullshitIteratorB mBullshitIteratorB = new BullshitIteratorB();
+
+        private static void applyBullshit(IBullshit aBullshitModifier, ItemStack aStack) {
+            if (aStack != null) {
+                NBTTagList nbttaglist = aStack.getEnchantmentTagList();
+                if (nbttaglist != null) {
+                    try {
+                        for (int i = 0; i < nbttaglist.tagCount(); ++i) {
+                            short short1 = nbttaglist.getCompoundTagAt(i).getShort("id");
+                            short short2 = nbttaglist.getCompoundTagAt(i).getShort("lvl");
+                            if (Enchantment.enchantmentsList[short1] != null)
+                                aBullshitModifier.calculateModifier(Enchantment.enchantmentsList[short1], short2);
+                        }
+                    } catch (Throwable e) {/**/}
+                }
+            }
+        }
+
+        private static void applyArrayOfBullshit(IBullshit aBullshitModifier, ItemStack[] aStacks) {
+            ItemStack[] aitemstack1 = aStacks;
+            int i = aStacks.length;
+            for (int j = 0; j < i; ++j) {
+                ItemStack itemstack = aitemstack1[j];
+                applyBullshit(aBullshitModifier, itemstack);
+            }
+        }
+
+        public static void applyBullshitA(EntityLivingBase aPlayer, Entity aEntity, ItemStack aStack) {
+            mBullshitIteratorA.mPlayer = aPlayer;
+            mBullshitIteratorA.mEntity = aEntity;
+            if (aPlayer != null) applyArrayOfBullshit(mBullshitIteratorA, aPlayer.getLastActiveItems());
+            if (aStack != null) applyBullshit(mBullshitIteratorA, aStack);
+        }
+
+        public static void applyBullshitB(EntityLivingBase aPlayer, Entity aEntity, ItemStack aStack) {
+            mBullshitIteratorB.mPlayer = aPlayer;
+            mBullshitIteratorB.mEntity = aEntity;
+            if (aPlayer != null) applyArrayOfBullshit(mBullshitIteratorB, aPlayer.getLastActiveItems());
+            if (aStack != null) applyBullshit(mBullshitIteratorB, aStack);
+        }
+
+        interface IBullshit {
+            void calculateModifier(Enchantment aEnchantment, int aLevel);
+        }
+
+        static final class BullshitIteratorA implements IBullshit {
+            public EntityLivingBase mPlayer;
+            public Entity mEntity;
+
+            BullshitIteratorA() {
+            }
+
+            @Override
+            public void calculateModifier(Enchantment aEnchantment, int aLevel) {
+                aEnchantment.func_151367_b(mPlayer, mEntity, aLevel);
+            }
+        }
+
+        static final class BullshitIteratorB implements IBullshit {
+            public EntityLivingBase mPlayer;
+            public Entity mEntity;
+
+            BullshitIteratorB() {
+            }
+
+            @Override
+            public void calculateModifier(Enchantment aEnchantment, int aLevel) {
+                aEnchantment.func_151368_a(mPlayer, mEntity, aLevel);
+            }
+        }
     }
 
     public static class ItemNBT {
@@ -2104,7 +2195,7 @@ public class GT_Utility {
             setBookTitle(aStack, "Raw Prospection Data");
 
             NBTTagCompound tNBT = GT_Utility.ItemNBT.getNBT(aStack);
-            
+
             tNBT.setByte("prospection_tier", aTier);
             tNBT.setString("prospection_pos", "Dim: " + aDim + "\nX: " + aX + " Y: " + aY + " Z: " + aZ);
 
@@ -2114,12 +2205,19 @@ public class GT_Utility {
             tNBT.setString("prospection_far", joinListToString(aFarOres));
 
             // oils
-            ArrayList<String> tOilsTransformed = new ArrayList<String>(aOils.size());
-            for (String aStr : aOils) {
-            	String[] aStats = aStr.split(",");
-            	tOilsTransformed.add(aStats[0] + ": " + aStats[1] + "L " + aStats[2]);
+            ArrayList<String> tOilsTransformed = new ArrayList<>(aOils.size());
+            if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
+                for (String aStr : aOils) {
+                    String[] aStats = aStr.split(",");
+                    tOilsTransformed.add(aStats[0] + ": " + aStats[1] + "L " + GT_Assemblyline_Server.lServerNames.get(aStats[2]));
+                }
+            } else {
+                for (String aStr : aOils) {
+                    String[] aStats = aStr.split(",");
+                    tOilsTransformed.add(aStats[0] + ": " + aStats[1] + "L " + aStats[2]);
+                }
             }
-            
+
             tNBT.setString("prospection_oils", joinListToString(tOilsTransformed));
 
             tNBT.setString("prospection_bounds", aNear + "|" + aMiddle + "|" + aRadius);
@@ -2168,18 +2266,18 @@ public class GT_Utility {
                     + "Mid <" + tBounds[1] + " blocks: " + (tMiddleOres != null ? tMiddleOres.length : 0) + "\n"
                     + "Far <" + tBounds[2] + " blocks: " + (tFarOres != null ? tFarOres.length : 0) + "\n"
                     + "Oils: " + (tOils != null ? tOils.length : 0) + "\n\n"
-                    + "Lists sorted by volume\n"
-                    + "Location is center of chunk with ore";
+                        + "Lists sorted by volume\n"
+                        + "Location is center of chunk with ore";
                 tNBTList.appendTag(new NBTTagString(tPageText));
-  
+
                 if (tNearOres != null)
                     fillBookWithList(tNBTList, "Close Range Ores%s\n\n", "\n", 7, tNearOres);
                 if (tMiddleOres != null)
                     fillBookWithList(tNBTList, "Mid Range Ores%s\n\n", "\n", 7, tMiddleOres);
                 if (tFarOres != null)
                     fillBookWithList(tNBTList, "Far Range Ores%s\n\n", "\n", 7, tFarOres);
-                
-               if (tOils != null)
+
+                if (tOils != null)
                     fillBookWithList(tNBTList, "Oils%s\n\n", "\n", 9, tOils);
 
                 tPageText = "Oil notes\n\n"
@@ -2242,99 +2340,6 @@ public class GT_Utility {
             }
             aStack.setTagCompound(tNBT);
         }
-    }
-
-    /**
-     * THIS IS BULLSHIT!!! WHY DO I HAVE TO DO THIS SHIT JUST TO HAVE ENCHANTS PROPERLY!?!
-     */
-    public static class GT_EnchantmentHelper {
-        private static final BullshitIteratorA mBullshitIteratorA = new BullshitIteratorA();
-        private static final BullshitIteratorB mBullshitIteratorB = new BullshitIteratorB();
-
-        private static void applyBullshit(IBullshit aBullshitModifier, ItemStack aStack) {
-            if (aStack != null) {
-                NBTTagList nbttaglist = aStack.getEnchantmentTagList();
-                if (nbttaglist != null) {
-                    try {
-                        for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-                            short short1 = nbttaglist.getCompoundTagAt(i).getShort("id");
-                            short short2 = nbttaglist.getCompoundTagAt(i).getShort("lvl");
-                            if (Enchantment.enchantmentsList[short1] != null)
-                                aBullshitModifier.calculateModifier(Enchantment.enchantmentsList[short1], short2);
-                        }
-                    } catch (Throwable e) {/**/}
-                }
-            }
-        }
-
-        private static void applyArrayOfBullshit(IBullshit aBullshitModifier, ItemStack[] aStacks) {
-            ItemStack[] aitemstack1 = aStacks;
-            int i = aStacks.length;
-            for (int j = 0; j < i; ++j) {
-                ItemStack itemstack = aitemstack1[j];
-                applyBullshit(aBullshitModifier, itemstack);
-            }
-        }
-
-        public static void applyBullshitA(EntityLivingBase aPlayer, Entity aEntity, ItemStack aStack) {
-            mBullshitIteratorA.mPlayer = aPlayer;
-            mBullshitIteratorA.mEntity = aEntity;
-            if (aPlayer != null) applyArrayOfBullshit(mBullshitIteratorA, aPlayer.getLastActiveItems());
-            if (aStack != null) applyBullshit(mBullshitIteratorA, aStack);
-        }
-
-        public static void applyBullshitB(EntityLivingBase aPlayer, Entity aEntity, ItemStack aStack) {
-            mBullshitIteratorB.mPlayer = aPlayer;
-            mBullshitIteratorB.mEntity = aEntity;
-            if (aPlayer != null) applyArrayOfBullshit(mBullshitIteratorB, aPlayer.getLastActiveItems());
-            if (aStack != null) applyBullshit(mBullshitIteratorB, aStack);
-        }
-
-        interface IBullshit {
-            void calculateModifier(Enchantment aEnchantment, int aLevel);
-        }
-
-        static final class BullshitIteratorA implements IBullshit {
-            public EntityLivingBase mPlayer;
-            public Entity mEntity;
-
-            BullshitIteratorA() {
-            }
-
-            @Override
-            public void calculateModifier(Enchantment aEnchantment, int aLevel) {
-                aEnchantment.func_151367_b(mPlayer, mEntity, aLevel);
-            }
-        }
-
-        static final class BullshitIteratorB implements IBullshit {
-            public EntityLivingBase mPlayer;
-            public Entity mEntity;
-
-            BullshitIteratorB() {
-            }
-
-            @Override
-            public void calculateModifier(Enchantment aEnchantment, int aLevel) {
-                aEnchantment.func_151368_a(mPlayer, mEntity, aLevel);
-            }
-        }
-    }
-
-    public static String toSubscript(long no){
-        char[] chars=Long.toString(no).toCharArray();
-        for(int i=0;i<chars.length;i++){
-            chars[i]+=8272;
-        }
-        return new String(chars);
-    }
-
-    public static boolean isPartOfMaterials(ItemStack aStack, Materials aMaterials){
-        return GT_OreDictUnificator.getAssociation(aStack) != null ? GT_OreDictUnificator.getAssociation(aStack).mMaterial.mMaterial.equals(aMaterials) : false;
-    }
-
-    public static boolean isPartOfOrePrefix(ItemStack aStack, OrePrefixes aPrefix){
-        return GT_OreDictUnificator.getAssociation(aStack) != null ? GT_OreDictUnificator.getAssociation(aStack).mPrefix.equals(aPrefix) : false;
     }
 
 }

@@ -146,7 +146,7 @@ public class GT_MetaTileEntity_Hatch_Maintenance extends GT_MetaTileEntity_Hatch
     }
 
     public boolean isRecipeInputEqual(boolean aDecreaseStacksizeBySuccess) {
-        ItemStack[] mInputs=new ItemStack[]{ItemList.Duct_Tape.get(4, new Object[]{}),
+        ItemStack[] mInputs = new ItemStack[]{ItemList.Duct_Tape.get(4),
                 GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Lubricant, 2),
                 GT_OreDictUnificator.get(OrePrefixes.screw, Materials.Steel, 4),
                 GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Advanced, 2)};

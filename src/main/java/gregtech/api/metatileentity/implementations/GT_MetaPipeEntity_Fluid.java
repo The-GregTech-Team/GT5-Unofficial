@@ -2,7 +2,10 @@ package gregtech.api.metatileentity.implementations;
 
 import gregtech.GT_Mod;
 import gregtech.api.GregTech_API;
-import gregtech.api.enums.*;
+import gregtech.api.enums.Dyes;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.OrePrefixes;
+import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.ICoverable;
@@ -406,7 +409,7 @@ public class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 
                 // Translocators return a TankInfo, but it's of 0 length - so check the class if we see this pattern
                 if (GregTech_API.mTranslocator  && tTileEntity instanceof codechicken.translocator.TileLiquidTranslocator) return true;
-                if (gTileEntity != null && gTileEntity.getCoverBehaviorAtSide(tSide) instanceof GT_Cover_FluidRegulator) return true;
+                return gTileEntity != null && gTileEntity.getCoverBehaviorAtSide(tSide) instanceof GT_Cover_FluidRegulator;
 
             }
        }

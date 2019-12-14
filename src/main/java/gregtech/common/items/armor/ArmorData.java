@@ -85,8 +85,7 @@ public class ArmorData {
 //	public int antiGravMaxWeight;
 
 	public ArmorData(EntityPlayer player, ItemStack stack, int type, int tier) {
-		if(updateArmorStatTypeList == null)
-		{
+		if (updateArmorStatTypeList == null) {
 			updateArmorStatTypeList = new ArrayList<StatType>();
 			updateArmorStatTypeList.add(StatType.MAGNET);
 			updateArmorStatTypeList.add(StatType.THORNS);
@@ -95,17 +94,17 @@ public class ArmorData {
 		}
 		this.type = type;
 		this.armorTier = tier;
-		ContainerModularArmor tmp = new ContainerBasicArmor((EntityPlayer) player, new InventoryArmor(ModularArmor_Item.class, stack));
+		ContainerModularArmor tmp = new ContainerBasicArmor(player, new InventoryArmor(ModularArmor_Item.class, stack));
 		calculateArmor(tmp.mInvArmor.parts);
 		switch (tier) {
-		case 0:
-			maxCharge = 0;
-			break;
-		case 1:
-			maxCharge = 250000;
-			break;
-		case 2:
-			maxCharge = 1000000;
+			case 0:
+				maxCharge = 0;
+				break;
+			case 1:
+				maxCharge = 250000;
+				break;
+			case 2:
+				maxCharge = 1000000;
 		}
 		readNBT(stack.getTagCompound());
 	}
@@ -369,27 +368,27 @@ public class ArmorData {
 			/*change(mStat, StatType.MAGNET, armorData.mStat.get(StatType.MAGNET));
 			change(mStat, StatType.THORNS, armorData.mStat.get(StatType.THORNS));
 			change(mStat, StatType.PROCESSINGPOWER, armorData.mStat.get(StatType.PROCESSINGPOWER));
-			change(mStat, StatType.PROCESSINGPOWERUSED, armorData.mStat.get(StatType.PROCESSINGPOWERUSED));*/			
+			change(mStat, StatType.PROCESSINGPOWERUSED, armorData.mStat.get(StatType.PROCESSINGPOWERUSED));*/
 		}
-		
-		
+
+
 	}
-	
-	public void set(Map aMap, StatType aType, boolean aSet){
-		if(aMap.containsKey(aType))aMap.remove(aType);
+
+	public void set(Map aMap, StatType aType, boolean aSet) {
+		aMap.remove(aType);
 		aMap.put(aType, aSet);
 	}
-	
-	public void set(Map aMap, StatType aType, float aSet){
-		if(aMap.containsKey(aType))aMap.remove(aType);
+
+	public void set(Map aMap, StatType aType, float aSet) {
+		aMap.remove(aType);
 		aMap.put(aType, aSet);
 	}
-	
-	public void change(Map aMap, StatType aType, float aChange){
+
+	public void change(Map aMap, StatType aType, float aChange) {
 		float tChange = 0;
-		if(aMap==null)
+		if (aMap == null)
 			GT_FML_LOGGER.info("changeMapnull");
-		if(aMap.containsKey(aType)){
+		if (aMap.containsKey(aType)) {
 			Object value = aMap.get(aType);
 			tChange = value != null ? (float) aMap.get(aType) : 0.0f;
 		aMap.remove(aType);

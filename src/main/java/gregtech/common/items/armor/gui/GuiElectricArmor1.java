@@ -29,13 +29,14 @@ public class GuiElectricArmor1 extends GuiContainer {
 		cont = containerModularArmor;
 		tab = 0;
 	}
+
 	@Override
-	public void onGuiClosed() 
-	{
+	public void onGuiClosed() {
 		cont.saveInventory(player);
 		super.onGuiClosed();
-	};
-	public String seperateNumber(long number){
+	}
+
+	public String seperateNumber(long number) {
 		DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
 		DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
 		symbols.setGroupingSeparator(' ');
@@ -91,25 +92,26 @@ public class GuiElectricArmor1 extends GuiContainer {
 		default:
 			break;
 		}
-		float tankCap = cont.mInvArmor.data.mStat.containsKey(StatType.TANKCAP) ? cont.mInvArmor.data.mStat.get(StatType.TANKCAP) :0.0f;
-		if(tankCap>0){
+		float tankCap = cont.mInvArmor.data.mStat.containsKey(StatType.TANKCAP) ? cont.mInvArmor.data.mStat.get(StatType.TANKCAP) : 0.0f;
+		if (tankCap > 0) {
 			drawTexturedModalRect(xStart + 94, yStart + 32, 231, 69, 16, 34);
 		}
 		float weight = cont.mInvArmor.data.mStat.containsKey(StatType.WEIGHT) ? cont.mInvArmor.data.mStat.get(StatType.WEIGHT) : 0.0f;
-		int bar = (int) Math.floor(18 * (weight)/(float)1000);
+		int bar = (int) Math.floor(18 * (weight) / (float) 1000);
 		drawTexturedModalRect(xStart + 15, yStart + 7, 217, 26, bar, 5);
-		drawTexturedModalRect(xStart + bar + 15, yStart + 7, 197+bar, 26, 18-bar, 5);
-		
-		if(tab==0){
+		drawTexturedModalRect(xStart + bar + 15, yStart + 7, 197 + bar, 26, 18 - bar, 5);
+
+		if (tab == 0) {
 			//processing power bar
-			bar = Math.min((int) Math.floor(52 * ((float)cont.mInvArmor.data.mStat.get(StatType.PROCESSINGPOWERUSED)/(float)cont.mInvArmor.data.mStat.get(StatType.PROCESSINGPOWER))),52);
+			bar = Math.min((int) Math.floor(52 * (cont.mInvArmor.data.mStat.get(StatType.PROCESSINGPOWERUSED) / cont.mInvArmor.data.mStat.get(StatType.PROCESSINGPOWER))), 52);
 			drawTexturedModalRect(xStart + 17, yStart + 17, 177, 146, bar, 5);
-			drawTexturedModalRect(xStart + bar + 17, yStart + 17, 177+bar, 139, 52-bar, 5);
-		}else if(tab==1){
-			
-		}else{
+			drawTexturedModalRect(xStart + bar + 17, yStart + 17, 177 + bar, 139, 52 - bar, 5);
+		} else if (tab == 1) {
+
+		} else {
 			//Def tab values
-			if(cont.mInvArmor.data.mStat.get(StatType.PHYSICALDEFENCE)>0)drawTexturedModalRect(xStart + 30, yStart + 20, 186, 33, 7, 7);
+			if (cont.mInvArmor.data.mStat.get(StatType.PHYSICALDEFENCE) > 0)
+				drawTexturedModalRect(xStart + 30, yStart + 20, 186, 33, 7, 7);
 			drawBars(31, 20, cont.mInvArmor.data.mStat.get(StatType.PHYSICALDEFENCE));
 			if(cont.mInvArmor.data.mStat.get(StatType.PROJECTILEDEFENCE)>0)drawTexturedModalRect(xStart + 30, yStart + 29, 186, 42, 7, 7);
 			drawBars(31, 29, cont.mInvArmor.data.mStat.get(StatType.PROJECTILEDEFENCE));
@@ -284,18 +286,20 @@ public class GuiElectricArmor1 extends GuiContainer {
 			} else if (y >= 42 && y <= 50) {
 				list.add(GT_LanguageManager.getTranslation("Wither Defence") + ": " + (Math.round(cont.mInvArmor.data.mStat.get(StatType.WITHERDEFENCE) * 1000) / 10.0) + "%");
 			} else if (y >= 51 && y <= 59) {
-				if(cont.mInvArmor.data.type!=3){
+				if (cont.mInvArmor.data.type != 3) {
 					list.add(GT_LanguageManager.getTranslation("Fall Damage absorbtion"));
 					list.add(GT_LanguageManager.getTranslation("Only for Boots"));
-				}else{
-				list.add(GT_LanguageManager.getTranslation("Absorbs") + " " + (int) Math.round(cont.mInvArmor.data.mStat.get(StatType.FALLDEFENCE)) + GT_LanguageManager.getTranslation("m of Fall Damage"));}
+				} else {
+					list.add(GT_LanguageManager.getTranslation("Absorbs") + " " + Math.round(cont.mInvArmor.data.mStat.get(StatType.FALLDEFENCE)) + GT_LanguageManager.getTranslation("m of Fall Damage"));
+				}
 			} else if (y >= 60 && y <= 68) {
-				if(x<69){
-				list.add(GT_LanguageManager.getTranslation("Thorns") + ": " + (int) Math.round(cont.mInvArmor.data.mStat.get(StatType.THORNSSINGLE)) + " Dmg");
-				list.add(GT_LanguageManager.getTranslation("Total Thorns") + ": " + (int) Math.round(cont.mInvArmor.data.mStat.get(StatType.THORNS)) + " Dmg");
-				}else{
-				list.add(GT_LanguageManager.getTranslation("Magnet") + ": " + cont.mInvArmor.data.mStat.get(StatType.MAGNETSINGLE) + " m");
-				list.add(GT_LanguageManager.getTranslation("Total Magnet") + ": " + cont.mInvArmor.data.mStat.get(StatType.MAGNET) + " m");}
+				if (x < 69) {
+					list.add(GT_LanguageManager.getTranslation("Thorns") + ": " + Math.round(cont.mInvArmor.data.mStat.get(StatType.THORNSSINGLE)) + " Dmg");
+					list.add(GT_LanguageManager.getTranslation("Total Thorns") + ": " + Math.round(cont.mInvArmor.data.mStat.get(StatType.THORNS)) + " Dmg");
+				} else {
+					list.add(GT_LanguageManager.getTranslation("Magnet") + ": " + cont.mInvArmor.data.mStat.get(StatType.MAGNETSINGLE) + " m");
+					list.add(GT_LanguageManager.getTranslation("Total Magnet") + ": " + cont.mInvArmor.data.mStat.get(StatType.MAGNET) + " m");
+				}
 			}
 		}
 		}
