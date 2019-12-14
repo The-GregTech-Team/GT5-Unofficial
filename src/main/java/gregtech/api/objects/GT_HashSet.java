@@ -1,6 +1,5 @@
 package gregtech.api.objects;
 
-import com.sun.istack.internal.NotNull;
 import gregtech.api.GregTech_API;
 import gregtech.api.util.GT_Utility;
 import net.minecraft.item.ItemStack;

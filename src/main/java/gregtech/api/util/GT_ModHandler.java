@@ -678,7 +678,7 @@ public class GT_ModHandler {
     public static void addIC2RecipesToGT(Map<IRecipeInput, RecipeOutput> aIC2RecipeList, GT_Recipe.GT_Recipe_Map aGTRecipeMap, boolean aAddGTRecipe, boolean aRemoveIC2Recipe, boolean aExcludeGTIC2Items) {
         Map<ItemStack, ItemStack> aRecipesToRemove = new HashMap<>();
         for (Entry<IRecipeInput, RecipeOutput> iRecipeInputRecipeOutputEntry : aIC2RecipeList.entrySet()) {
-            Entry tRecipe = (Entry) iRecipeInputRecipeOutputEntry;
+            Entry tRecipe = iRecipeInputRecipeOutputEntry;
             if (((RecipeOutput) tRecipe.getValue()).items.size() > 0) {
                 for (ItemStack tStack : ((IRecipeInput) tRecipe.getKey()).getInputs()) {
                     if (GT_Utility.isStackValid(tStack)) {
