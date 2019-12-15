@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,21 @@ public abstract class GT_MetaTileEntity_DrillerBase extends GT_MetaTileEntity_Mu
     private int xDrill, yDrill, zDrill, xPipe, zPipe, yHead;
     protected int workState;
     protected static final int STATE_DOWNWARD = 0, STATE_AT_BOTTOM = 1, STATE_UPWARD = 2;
+    protected byte mTier = 1;
+
+    public GT_MetaTileEntity_DrillerBase(int aID, String aName, String aNameRegional, byte tier) {
+        super(aID, aName, aNameRegional);
+        mTier = tier;
+        if (mTier < 1 || mTier > 4)
+            throw new NotImplementedException("This tier is not supported yet! Modify the base class to support it!");
+        initFields();
+    }
+
+    public GT_MetaTileEntity_DrillerBase(String aName, byte tier) {
+        super(aName);
+        mTier = tier;
+        initFields();
+    }
 
     public GT_MetaTileEntity_DrillerBase(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

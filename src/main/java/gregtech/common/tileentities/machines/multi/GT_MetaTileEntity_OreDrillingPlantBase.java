@@ -31,12 +31,19 @@ import static gregtech.api.enums.GT_Values.VN;
 public abstract class GT_MetaTileEntity_OreDrillingPlantBase extends GT_MetaTileEntity_DrillerBase {
 
     private final ArrayList<ChunkPosition> oreBlockPositions = new ArrayList<>();
-    protected byte mTier = 1;
 
     private int chunkRadiusConfig = getRadiusInChunks();
 
+    GT_MetaTileEntity_OreDrillingPlantBase(int aID, String aName, String aNameRegional, byte tier) {
+        super(aID, aName, aNameRegional, tier);
+    }
+
     GT_MetaTileEntity_OreDrillingPlantBase(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
+    }
+
+    GT_MetaTileEntity_OreDrillingPlantBase(String aName, byte tier) {
+        super(aName, tier);
     }
 
     GT_MetaTileEntity_OreDrillingPlantBase(String aName) {

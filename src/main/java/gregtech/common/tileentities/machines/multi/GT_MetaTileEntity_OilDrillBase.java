@@ -28,12 +28,20 @@ public abstract class GT_MetaTileEntity_OilDrillBase extends GT_MetaTileEntity_D
 
     private int chunkRangeConfig = getRangeInChunks();
 
+    public GT_MetaTileEntity_OilDrillBase(int aID, String aName, String aNameRegional, byte tier) {
+        super(aID, aName, aNameRegional, tier);
+    }
+
     public GT_MetaTileEntity_OilDrillBase(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
 
     public GT_MetaTileEntity_OilDrillBase(String aName) {
         super(aName);
+    }
+
+    public GT_MetaTileEntity_OilDrillBase(String aName, byte tier) {
+        super(aName, tier);
     }
 
     @Override

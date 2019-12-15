@@ -4,21 +4,16 @@ import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import org.apache.commons.lang3.NotImplementedException;
 
 import static gregtech.api.enums.GT_Values.ROMAN_LETTERS;
 
 public class GT_MetaTileEntity_OreDrillingPlantTiered extends GT_MetaTileEntity_OreDrillingPlantBase {
     public GT_MetaTileEntity_OreDrillingPlantTiered(int aID, String aName, String aNameRegional, int tier) {
-        super(aID, aName, aNameRegional);
-        mTier = (byte) tier;
-        if (mTier < 1 || mTier > 4)
-            throw new NotImplementedException("This tier is not supported yet! Modify the base class to support it!");
+        super(aID, aName, aNameRegional, (byte) tier);
     }
 
-    public GT_MetaTileEntity_OreDrillingPlantTiered(String aName, int tier) {
-        super(aName);
-        mTier = (byte) tier;
+    public GT_MetaTileEntity_OreDrillingPlantTiered(String aName, byte tier) {
+        super(aName, tier);
     }
 
     @Override
