@@ -25,12 +25,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 import static gregtech.api.enums.GT_Values.D1;
 import static gregtech.api.enums.GT_Values.V;
@@ -55,21 +50,24 @@ public class GT_MetaTileEntity_Pump extends GT_MetaTileEntity_Hatch {
     public Block mPrimaryPumpedBlock = null;
     public Block mSecondaryPumpedBlock = null;
 
-    private int radiusConfig = getMaxDistanceForTier(mTier); //Pump configured radius
+    private int radiusConfig; //Pump configured radius
 
     public GT_MetaTileEntity_Pump(int aID, String aName, String aNameRegional, int aTier) {
         super(aID, aName, aNameRegional, aTier, 3,
                 new String[]{"The best way to empty Oceans! Outputs on top",
-                        "Maximum pumping area: " + (getMaxDistanceForTier((byte)aTier) * 2 + 1) + "x" + (getMaxDistanceForTier((byte)aTier) * 2 + 1),
+                        "Maximum pumping area: " + (getMaxDistanceForTier((byte) aTier) * 2 + 1) + "x" + (getMaxDistanceForTier((byte) aTier) * 2 + 1),
                         "Use Screwdriver to regulate pumping area"});
+        radiusConfig = getMaxDistanceForTier(mTier);
     }
 
     public GT_MetaTileEntity_Pump(String aName, int aTier, String aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, 3, aDescription, aTextures);
+        radiusConfig = getMaxDistanceForTier(mTier);
     }
 
     public GT_MetaTileEntity_Pump(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, 3, aDescription, aTextures);
+        radiusConfig = getMaxDistanceForTier(mTier);
     }
 
     @Override
@@ -102,16 +100,27 @@ public class GT_MetaTileEntity_Pump extends GT_MetaTileEntity_Hatch {
     }
 
     @Override
+    public void setItemNBT(NBTTagCompound aNBT) {
+        super.setItemNBT(aNBT);
+        this.radiusConfig = aNBT.getInteger("radiusConfig");
+    }
+
+    @Override
     public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
         super.onScrewdriverRightClick(aSide, aPlayer, aX, aY, aZ);
+        int max = getMaxPumpableDistance();
         if (aPlayer.isSneaking()) {
-            if (radiusConfig > 1) {
+            if (radiusConfig >= 0) {
                 radiusConfig--;
             }
+            if (radiusConfig < 0)
+                radiusConfig = max;
         } else {
-            if (radiusConfig < getMaxPumpableDistance()) {
+            if (radiusConfig <= max) {
                 radiusConfig++;
             }
+            if (radiusConfig > max)
+                radiusConfig = 0;
         }
         GT_Utility.sendChatToPlayer(aPlayer, "Pumping area set to " + (radiusConfig * 2 + 1) + "x" + (radiusConfig * 2 + 1));//TODO Add translation support
 
