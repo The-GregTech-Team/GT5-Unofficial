@@ -58,6 +58,12 @@ public abstract class GT_MetaTileEntity_OilDrillBase extends GT_MetaTileEntity_D
         chunkRangeConfig = aNBT.getInteger("chunkRangeConfig");
     }
 
+    @Override
+    public void setItemNBT(NBTTagCompound aNBT) {
+        super.setItemNBT(aNBT);
+        aNBT.setInteger("chunkRangeConfig", chunkRangeConfig);
+    }
+
     protected String[] getDescriptionInternal(String tierSuffix) {
         String casings = getCasingBlockItem().get(0).getDisplayName();
         return new String[]{

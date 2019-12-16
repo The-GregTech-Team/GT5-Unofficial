@@ -230,6 +230,13 @@ public class GT_MetaTileEntity_Miner extends GT_MetaTileEntity_BasicMachine {
     }
 
     @Override
+    public void setItemNBT(NBTTagCompound aNBT) {
+        super.setItemNBT(aNBT);
+        aNBT.setByte("mTier", mTier);
+        aNBT.setInteger("radiusConfig", radiusConfig);
+    }
+
+    @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
         aNBT.setBoolean("isPickingPipe", isPickingPipes);

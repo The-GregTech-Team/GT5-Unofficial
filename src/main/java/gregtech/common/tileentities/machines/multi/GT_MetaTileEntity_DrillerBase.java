@@ -130,19 +130,28 @@ public abstract class GT_MetaTileEntity_DrillerBase extends GT_MetaTileEntity_Mu
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
         aNBT.setInteger("workState", workState);
+        aNBT.setByte("mTier", mTier);
     }
 
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
         workState = aNBT.getInteger("workState");
-        if (aNBT.hasKey("isPickingPipes")) workState = aNBT.getBoolean("isPickingPipes") ? STATE_UPWARD : STATE_DOWNWARD;
+        mTier = aNBT.getByte("mTier");
+        if (aNBT.hasKey("isPickingPipes"))
+            workState = aNBT.getBoolean("isPickingPipes") ? STATE_UPWARD : STATE_DOWNWARD;
+    }
+
+    @Override
+    public void setItemNBT(NBTTagCompound aNBT) {
+        super.setItemNBT(aNBT);
+        aNBT.setByte("mTier", mTier);
     }
 
     protected boolean tryPickPipe() {
         if (yHead == yDrill)
             return isPickingPipes = false;
-        if (tryOutputPipe()){
+        if (tryOutputPipe()) {
             if (checkBlockAndMeta(xPipe, yHead + 1, zPipe, miningPipeBlock, W))
                 getBaseMetaTileEntity().getWorld().setBlock(xPipe, yHead + 1, zPipe, miningPipeTipBlock);
             getBaseMetaTileEntity().getWorld().setBlockToAir(xPipe, yHead, zPipe);

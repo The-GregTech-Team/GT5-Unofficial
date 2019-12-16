@@ -4,7 +4,6 @@ import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import net.minecraft.nbt.NBTTagCompound;
 
 import static gregtech.api.enums.GT_Values.ROMAN_LETTERS;
 
@@ -17,18 +16,6 @@ public class GT_MetaTileEntity_OilDrillTiered extends GT_MetaTileEntity_OilDrill
 
     public GT_MetaTileEntity_OilDrillTiered(String aName, byte tier) {
         super(aName, tier);
-    }
-
-    @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        super.saveNBTData(aNBT);
-        aNBT.setByte("mTier", mTier);
-    }
-
-    @Override
-    public void loadNBTData(NBTTagCompound aNBT) {
-        super.loadNBTData(aNBT);
-        mTier = aNBT.getByte("mTier");
     }
 
     @Override
