@@ -11,6 +11,7 @@ import gregtech.api.enchants.Enchantment_Radioactivity;
 import gregtech.api.enums.*;
 import gregtech.api.interfaces.internal.IGT_Mod;
 import gregtech.api.objects.GT_ChunkManager;
+import gregtech.api.objects.GT_FluidManager;
 import gregtech.api.objects.ItemData;
 import gregtech.api.objects.XSTR;
 import gregtech.api.util.*;
@@ -25,8 +26,6 @@ import gregtech.common.items.armor.components.LoadArmorComponents;
 import gregtech.common.items.behaviors.Behaviour_DataOrb;
 import gregtech.common.tileentities.machines.basic.GT_MetaTileEntity_Massfabricator;
 import gregtech.common.tileentities.storage.GT_MetaTileEntity_DigitalChestBase;
-import gregtech.common.tileentities.storage.GT_MetaTileEntity_QuantumChest;
-import gregtech.common.tileentities.storage.GT_MetaTileEntity_SuperChest;
 import gregtech.loaders.load.GT_CoverBehaviorLoader;
 import gregtech.loaders.load.GT_FuelLoader;
 import gregtech.loaders.load.GT_ItemIterator;
@@ -660,6 +659,7 @@ public class GT_Mod implements IGT_Mod {
                 }
             }
         }
+        GT_FluidManager.init();
         GregTech_API.sPreloadFinished = true;
         GT_Log.out.println("GT_Mod: Preload-Phase finished!");
         GT_Log.ore.println("GT_Mod: Preload-Phase finished!");
