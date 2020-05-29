@@ -320,7 +320,7 @@ public class GT_Pollution {
 			for (int zChunk = -size; zChunk <= size; zChunk++) {
 				int newX = chunkCoordIntPair.chunkXPos + xChunk;
 				int newZ = chunkCoordIntPair.chunkZPos + zChunk;
-				pollution += Math.sqrt((coefficient / getDistanceToChunk(cX, cZ, xChunk, zChunk))) * getPollution(new ChunkCoordIntPair(newX,newZ), aDim);
+				pollution += Math.sqrt((5 / getDistanceToChunk(cX, cZ, xChunk, zChunk))) * getPollution(new ChunkCoordIntPair(newX,newZ), aDim);
 			}
 		}
         pollution = Math.max(pollution - cutoff, 0.0);
