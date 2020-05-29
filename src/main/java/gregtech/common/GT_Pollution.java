@@ -320,7 +320,7 @@ public class GT_Pollution {
 			for (int zChunk = -size; zChunk <= size; zChunk++) {
 				int newX = chunkCoordIntPair.chunkXPos + xChunk;
 				int newZ = chunkCoordIntPair.chunkZPos + zChunk;
-				pollution += Math.sqrt((coefficient / getDistanceToChunk(cX, cZ, xChunk, zChunk))) * getPollution(new ChunkCoordIntPair(newX,newZ), aDim));
+				pollution += Math.sqrt((coefficient / getDistanceToChunk(cX, cZ, xChunk, zChunk))) * getPollution(new ChunkCoordIntPair(newX,newZ), aDim);
 			}
 		}
         pollution = Math.max(pollution - cutoff, 0.0);
@@ -330,27 +330,24 @@ public class GT_Pollution {
 	public static double getDistanceToChunk(byte x, byte z, int xOffset, int zOffset) {
         //Middle chunk center is limited in deadzone radius circle
 		final int deadzone = 4;
-		final int xDiff = (Math.abs(xOffset)+0.5 * 16) - x;
-		final int zDiff = (Math.abs(zOffset)-0.5 * 16) + z;
+		final double xDiff = (Math.abs(xOffset)+0.5 * 16) - x;
+		final double zDiff = (Math.abs(zOffset)-0.5 * 16) + z;
         //First quadrant
 		if(xOffset >= 0 && zOffset < 0) {
 			return Math.max(Math.sqrt(Math.pow(xDiff, 2) + Math.pow(zDiff, 2)), deadzone);
 		}
 		//Second quadrant
 		else {
-			final int xDiff = (Math.abs(xOffset)-0.5 * 16) + x;
 			if(xOffset < 0 && zOffset < 0) {
 				return Math.max(Math.sqrt(Math.pow(xDiff, 2) + Math.pow(zDiff, 2)), deadzone);
 			}
 			//Third quadrant
 			else {
-				final int zDiff = (Math.abs(zOffset)+0.5 * 16) - z;
 				if(xOffset < 0) {
 					return Math.max(Math.sqrt(Math.pow(xDiff, 2) + Math.pow(zDiff, 2)), deadzone);
 				}
 				//Fourth quadrant + middle
 				else {
-                    final int xDiff = (Math.abs(xOffset)+0.5 * 16) - x;
 					return Math.max(Math.sqrt(Math.pow(xDiff, 2) + Math.pow(zDiff, 2)), deadzone);
 				}
 			}
