@@ -314,43 +314,44 @@ public class GT_Pollution {
 	public static int getPollutionPercentage(ChunkCoordIntPair chunkCoordIntPair, double posX, double posZ, int aDim, double coefficient, int size) {
 		byte cX = (byte) Math.abs(posX % 16);
 		byte cZ = (byte) Math.abs(posZ % 16);
-
+        final int cutoff = 25000;
 		double pollution = 0.0D;
 		for (int xChunk = -size; xChunk <= size; xChunk++) {
 			for (int zChunk = -size; zChunk <= size; zChunk++) {
 				int newX = chunkCoordIntPair.chunkXPos + xChunk;
 				int newZ = chunkCoordIntPair.chunkZPos + zChunk;
-				pollution += (coefficient / getDistanceToChunk(cX, cZ, xChunk, zChunk) * getPollution(new ChunkCoordIntPair(newX,newZ), aDim));
+				pollution += Math.sqrt((coefficient / getDistanceToChunk(cX, cZ, xChunk, zChunk))) * getPollution(new ChunkCoordIntPair(newX,newZ), aDim));
 			}
 		}
+        pollution = Math.max(pollution - cutoff, 0.0);
 		return (int) Math.ceil(pollution / Math.pow(size * 2 + 1, 2));
 	}
 
 	public static double getDistanceToChunk(byte x, byte z, int xOffset, int zOffset) {
-		//Avoid division by zero
-		//First quadrant + middle
-		final int clamp = 4;
-		final int exponent = 2;
-		final double xNegative = Math.pow((15 - x + Math.abs(xOffset) * 16 - 7.5D), exponent);
-		final double zPositive = Math.pow((z + Math.abs(zOffset) * 16 - 7.5D), exponent);
-		if(xOffset >= 0 && zOffset <= 0) {
-			return Math.max(Math.sqrt(xNegative + zPositive), clamp);
+        //Middle chunk center is limited in deadzone radius circle
+		final int deadzone = 4;
+		final int xDiff = (Math.abs(xOffset)+0.5 * 16) - x;
+		final int zDiff = (Math.abs(zOffset)-0.5 * 16) + z;
+        //First quadrant
+		if(xOffset >= 0 && zOffset < 0) {
+			return Math.max(Math.sqrt(Math.pow(xDiff, 2) + Math.pow(zDiff, 2)), deadzone);
 		}
 		//Second quadrant
 		else {
-			final double xPositive = Math.pow((x + Math.abs(xOffset) * 16 - 7.5), exponent);
-			if(xOffset < 0 && zOffset <= 0) {
-				return Math.max(Math.sqrt(xPositive + zPositive), clamp);
+			final int xDiff = (Math.abs(xOffset)-0.5 * 16) + x;
+			if(xOffset < 0 && zOffset < 0) {
+				return Math.max(Math.sqrt(Math.pow(xDiff, 2) + Math.pow(zDiff, 2)), deadzone);
 			}
 			//Third quadrant
 			else {
-				final double zNegative = Math.pow((15 - z + Math.abs(zOffset) * 16 - 7.5), exponent);
+				final int zDiff = (Math.abs(zOffset)+0.5 * 16) - z;
 				if(xOffset < 0) {
-					return Math.max(Math.sqrt(xPositive + zNegative), clamp);
+					return Math.max(Math.sqrt(Math.pow(xDiff, 2) + Math.pow(zDiff, 2)), deadzone);
 				}
-				//Fourth quadrant
+				//Fourth quadrant + middle
 				else {
-					return Math.max(Math.sqrt(xNegative + zNegative), clamp);
+                    final int xDiff = (Math.abs(xOffset)+0.5 * 16) - x;
+					return Math.max(Math.sqrt(Math.pow(xDiff, 2) + Math.pow(zDiff, 2)), deadzone);
 				}
 			}
 		}
