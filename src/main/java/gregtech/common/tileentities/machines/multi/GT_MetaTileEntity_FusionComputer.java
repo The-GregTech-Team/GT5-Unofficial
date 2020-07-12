@@ -331,7 +331,7 @@ public abstract class GT_MetaTileEntity_FusionComputer extends GT_MetaTileEntity
                 mEnergyHatches.clear();
                 mMufflerHatches.clear();
                 mMaintenanceHatches.clear();
-                mMachine = checkMachine(aBaseMetaTileEntity, mInventory[1]);
+//                mMachine = checkMachine(aBaseMetaTileEntity, mInventory[1]);
             }
             if (mStartUpCheck < 0) {
                 if (mMachine) {

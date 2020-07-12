@@ -10,6 +10,7 @@ import gregtech.api.interfaces.tileentity.IEnergyConnected;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_MultiBlockBase;
 import gregtech.api.net.GT_Packet_TileEntity;
 import gregtech.api.objects.GT_ItemStack;
 import gregtech.api.util.*;
@@ -555,7 +556,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
                             }
                         }
 
-                        if (mTickTimer > 10) {
+                        if (mTickTimer > 200) {
                             byte tData = (byte) ((mFacing & 7) | (mActive ? 8 : 0) | (mRedstone ? 16 : 0) | (mLockUpgrade ? 32 : 0));
                             if (tData != oTextureData) sendBlockEvent((byte) 0, oTextureData = tData);
 
@@ -1373,6 +1374,17 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 
                     if (GT_Utility.isStackInList(tCurrentItem, GregTech_API.sSoftHammerList)) {
                         if (GT_ModHandler.damageOrDechargeItem(tCurrentItem, 1, 1000, aPlayer)) {
+                            if (mMetaTileEntity instanceof GT_MetaTileEntity_MultiBlockBase) {
+                                GT_MetaTileEntity_MultiBlockBase multiBlock = (GT_MetaTileEntity_MultiBlockBase) mMetaTileEntity;
+                                multiBlock.mMachine = multiBlock.checkMachine(this, multiBlock.mInventory[1]);
+                                if (!multiBlock.mMachine) {
+                                    String tChat = "Multiblock Structure Valid: " + (multiBlock.mMachine ? trans("088", "Enabled") : trans("087", "Disabled"));
+                                    if (getMetaTileEntity() != null && getMetaTileEntity().hasAlternativeModeText())
+                                        tChat = getMetaTileEntity().getAlternativeModeText();
+                                    GT_Utility.sendChatToPlayer(aPlayer, tChat);
+                                    return true;
+                                }
+                            }
                             if (mWorks) disableWorking();
                             else enableWorking();
                             {

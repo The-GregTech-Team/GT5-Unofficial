@@ -143,6 +143,7 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity {
         aNBT.setBoolean("mHardHammer", mHardHammer);
         aNBT.setBoolean("mSolderingTool", mSolderingTool);
         aNBT.setBoolean("mCrowbar", mCrowbar);
+        aNBT.setBoolean("mMachine", mMachine);
     }
 
     @Override
@@ -176,6 +177,7 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity {
         mHardHammer = aNBT.getBoolean("mHardHammer");
         mSolderingTool = aNBT.getBoolean("mSolderingTool");
         mCrowbar = aNBT.getBoolean("mCrowbar");
+        mMachine = aNBT.getBoolean("mMachine");
     }
 
     @Override
@@ -218,7 +220,10 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity {
                 mEnergyHatches.clear();
                 mMufflerHatches.clear();
                 mMaintenanceHatches.clear();
-                mMachine = checkMachine(aBaseMetaTileEntity, mInventory[1]);
+
+                // Checks only on invalid
+                if (!mMachine)
+                    mMachine = checkMachine(aBaseMetaTileEntity, mInventory[1]);
             }
             if (mStartUpCheck < 0) {
                 if (mMachine) {
